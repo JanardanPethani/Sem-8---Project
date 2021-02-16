@@ -7,6 +7,10 @@ router.get('/test', (req, res) => {
     res.send('From a new file')
 })
 
+router.get('/', (req, res) => {
+    res.render('index')
+})
+
 router.post("/user/signup", async (req, res) => {
     const user = new User(req.body)
     console.log(user);
@@ -120,8 +124,6 @@ router.delete('/user/me', auth, async (req, res) => {
         res.status(500).send(e)
     }
 })
-
-
 
 
 module.exports = router
