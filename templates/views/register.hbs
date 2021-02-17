@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Get Your Ride</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    {{>navbar}}
+
+    <div class="main-content">
+        <form method="post" action="/">
+            <div class="box">
+
+                <input type="text" name="username" placeholder="User Name" class="input" />
+
+                <input type="number" name="number" placeholder="Mobile number" class="input" />
+
+                <input type="email" name="email" placeholder="Email" class="input" />
+
+                <input type="password" name="password" value="12345678" class="input" />
+
+                <button class="btn">Sign in</button> <!-- End Btn -->
+
+            </div> <!-- End Box -->
+
+        </form>
+    </div>
+
+    {{>footer}}
+
+</body>
+
+<script src='js/app.js'></script>
+
+</html>

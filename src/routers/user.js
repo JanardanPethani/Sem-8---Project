@@ -11,6 +11,14 @@ router.get('/', (req, res) => {
     res.render('index')
 })
 
+router.get('/register', (req, res) => {
+    res.render('register')
+})
+
+router.get('/login', (req, res) => {
+    res.render('login')
+})
+
 router.post("/user/signup", async (req, res) => {
     const user = new User(req.body)
     console.log(user);
@@ -30,7 +38,10 @@ router.post("/user/signup", async (req, res) => {
     // })
 })
 
+
+
 router.post('/user/login', async (req, res) => {
+
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
