@@ -1,12 +1,13 @@
 const mongoose = require('mongoose')
 
-const connectURL = 'mongodb://localhost:27017/GetYourRide'
+const connectURL = process.env.DB_URL
 
 mongoose.connect(connectURL, {
     //For deprication warnings
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: true
 }).then(() => {
     console.log('Connection successful!!');
 }).catch((e) => {
