@@ -4,20 +4,14 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; 
-  box-sizing: border-box;
 }
 
-.navbar-custom .navbar-nav .nav-link {
-  color: #fff;
+/* For map only */
+#map {
+  width: 100%;
+  height: 50vh;
 }
-.navbar-custom .nav-item:hover .nav-link {
-  color: #727272;
-}
-
-footer > p {
-  margin-left: 20px;
-  padding-top: 10px;
+.infoCls_map {
+  /* margin-top: 60px !important; */
+  min-width: 300px;
 }
