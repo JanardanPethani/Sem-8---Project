@@ -1,35 +1,25 @@
-<!DOCTYPE html>
-<html>
+{{>header}}
 
-<head>
-    <title>Get Your Ride</title>
-    <link rel="stylesheet" href="css/styles.css">
-</head>
-
-<body>
+<body class="d-flex flex-column h-100">
     {{>navbar}}
-
-    <div class="main-content">
-        <form method="post" action="/login">
-            <div class="box">
-                <h1>Sign in</h1>
-
-                <input type="email" name="email" value="email" class="email" />
-
-                <input type="password" name="password" value="password" class="email" />
-
-                <!--a href="/index">
-                    <div class="btn" >Sign In</div>
-                </a--> <!-- End Btn -->
-                <button class="btn" type="submit">Sign In</button>
-
-            </div> <!-- End Box -->
-
-        </form>
-    </div>
-
+    <main class="container">
+        <div class="d-flex pt-5 align-items-center justify-content-md-center">
+            <form class="border border-info rounded p-5">
+                <div class="form-outline mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    {{!-- <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    --}}
+                </div>
+                <div class="form-outline mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <button type="submit" class="btn btn-primary btn-block mb-3">Sign Up</button>
+            </form>
+        </div>
+    </main>
     {{>footer}}
-
 </body>
 
 <script src='js/app.js'></script>

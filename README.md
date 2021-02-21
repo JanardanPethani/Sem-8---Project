@@ -19,3 +19,5 @@ Mongoose is a MongoDB object modeling tool designed to work in an asynchronous e
 _Help_
 
 - https://dev.to/dipakkr/implementing-authentication-in-nodejs-with-express-and-jwt-codelab-1-j5i
+
+mongodb cmd : "C:\Users\Janardan Pethani\mongodb\bin\mongod.exe" --dbpath="C:\Users\Janardan Pethani\mongodb-data"
