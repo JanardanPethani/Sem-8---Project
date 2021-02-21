@@ -11,7 +11,14 @@ router.get('/', (req, res) => {
     res.render('index')
 })
 
-router.post("/user/signup", async (req, res) => {
+router.get('/register', (req, res) => {
+    res.render('register')
+})
+
+router.get('/login', (req, res) => {
+    res.render('login')
+})
+/* router.post("/user/signup", async (req, res) => {
     const user = new User(req.body)
     console.log(user);
 
@@ -28,15 +35,36 @@ router.post("/user/signup", async (req, res) => {
     // }).catch((err) => {
     //     res.status(400).send(err)
     // })
+}) */
+
+router.post("/register", async (req, res) => {
+    try {
+        const user = new User({
+            firstname: req.body.fn,
+            lastname: req.body.ln,
+            email: req.body.email,
+            phone: req.body.phone,
+            password: req.body.password
+        })
+        const registered = await user.save();
+        const token = await user.generateAuthToken();
+        res.status(201).render('index');
+        //res.status(201).render('index');
+    } catch(error) {
+         res.status(400).send(error);
+    }
 })
 
-router.post('/user/login', async (req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        res.send({ user, token })
+        //res.send({ user, token })
+        console.log(req.body.email);
+        res.render('index')
     } catch (e) {
-        res.status(400).send()
+        res.status(400).send(e);
+        console.log(e);
     }
 })
 
