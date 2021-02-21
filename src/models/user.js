@@ -5,7 +5,12 @@ const jwt = require('jsonwebtoken');
 
 //Schemas
 const userSchema = new mongoose.Schema({
-    name: {
+    firstname: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    lastname: {
         type: String,
         required: true,
         trim: true
@@ -33,7 +38,7 @@ const userSchema = new mongoose.Schema({
             }
         }
     },
-    age: {
+    /* age: {
         type: Number,
         default: 11,
         validate(value) {
@@ -41,6 +46,13 @@ const userSchema = new mongoose.Schema({
                 throw new Error('age must be greater than 10')
             }
         }
+    }, */
+    phone: {
+        type: Number,
+        unique: true,
+        required: true,
+        maxlength: 12
+
     },
     //token -> array has object as item
     tokens: [{
@@ -77,7 +89,7 @@ userSchema.methods.toJSON = function () {
 
     delete userObj.password
     delete userObj.tokens
-    delete userObj.avatar
+    //delete userObj.avatar
 
     return userObj
 }

@@ -7,6 +7,7 @@ const hbs = require('hbs')
 const app = express()
 
 app.use(express.json())
+app.use(express.urlencoded({extended:false}));
 app.use(userRouter)
 
 //Define paths for Express config
