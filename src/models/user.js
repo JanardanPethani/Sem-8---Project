@@ -90,6 +90,7 @@ userSchema.methods.toJSON = function () {
     delete userObj.password
     delete userObj.tokens
     //delete userObj.avatar
+    console.log('From toJSON');
 
     return userObj
 }
@@ -97,9 +98,8 @@ userSchema.methods.toJSON = function () {
 // own static method / model method 
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
-
     if (!user) {
-        throw new Error('Unable to login')
+        throw new Error('Unable to login from mail')
     }
 
     const isMatch = await bcrypt.compare(password, user.password)

@@ -18,24 +18,10 @@ router.get('/register', (req, res) => {
 router.get('/login', (req, res) => {
     res.render('login')
 })
-/* router.post("/user/signup", async (req, res) => {
-    const user = new User(req.body)
-    console.log(user);
 
-    try {
-        await user.save()
-        const token = await user.generateAuthToken()
-        res.status(201).send({ user, token })
-    } catch (e) {
-        res.status(400).send(e)
-    }
-
-    // user.save().then((result) => {
-    //     res.status(201).send(result)
-    // }).catch((err) => {
-    //     res.status(400).send(err)
-    // })
-}) */
+router.get('/user/logout', (req, res) => {
+    res.send('Logout Successfully')
+})
 
 router.post("/register", async (req, res) => {
     try {
@@ -46,12 +32,12 @@ router.post("/register", async (req, res) => {
             phone: req.body.phone,
             password: req.body.password
         })
-        const registered = await user.save();
+        await user.save();
         const token = await user.generateAuthToken();
         res.status(201).render('index');
         //res.status(201).render('index');
-    } catch(error) {
-         res.status(400).send(error);
+    } catch (error) {
+        res.status(400).send(error);
     }
 })
 
@@ -59,12 +45,12 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        //res.send({ user, token })
-        console.log(req.body.email);
         res.render('index')
+        // console.log(req.body.email);
+        // res.render('index')
     } catch (e) {
         res.status(400).send(e);
-        console.log(e);
+        // console.log(e);
     }
 })
 
