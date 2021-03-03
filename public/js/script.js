@@ -35,3 +35,4 @@ $("#btn-search").click(function () {
 // $('your selector').bind("click", function () {
     // your statements;
 // });
+
