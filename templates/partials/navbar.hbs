@@ -9,15 +9,21 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    {{#if token}}
                     <li class="nav-item">
-                        <a class="nav-link" href="/register">Sign Up</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">Sign in</a>
+                        <a class="nav-link" href="/logout">Logout</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/map">Map</a>
                     </li>
+                    {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    {{/if}}
                 </ul>
                 {{!-- <form class="d-flex">
                     <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">

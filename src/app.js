@@ -1,5 +1,6 @@
 require('./db/conn') //* to run file
 const express = require('express')
+const cookieParser = require('cookie-parser')
 const userRouter = require('./routers/user')
 const mapRouter = require('./routers/map')
 const path = require('path')
@@ -8,7 +9,8 @@ const hbs = require('hbs')
 const app = express()
 
 app.use(express.json())
-app.use(express.urlencoded({extended:false}));
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser())
 app.use(userRouter)
 app.use(mapRouter)
 

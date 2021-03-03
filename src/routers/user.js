@@ -3,24 +3,45 @@ const router = new express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 
-router.get('/test', (req, res) => {
-    res.send('From a new file')
-})
-
 router.get('/', (req, res) => {
-    res.render('index')
+    // console.log(req.cookies.jwt);
+
+    res.render('index', {
+        token: req.cookies.jwt
+    })
 })
 
 router.get('/register', (req, res) => {
-    res.render('register')
+    // console.log(req.cookies.jwt);
+    res.render('register', {
+        token: req.cookies.jwt
+    })
 })
 
 router.get('/login', (req, res) => {
-    res.render('login')
+    // console.log(req.cookies.jwt);
+
+    res.render('login', {
+        token: req.cookies.jwt
+    })
 })
 
-router.get('/user/logout', (req, res) => {
-    res.send('Logout Successfully')
+router.get('/logout', auth, async (req, res) => {
+    try {
+
+        res.clearCookie('jwt')
+        req.user.tokens = req.user.tokens.filter((token) => {
+            return token.token !== req.token
+        })
+
+        await req.user.save()
+        console.log(req.cookies.jwt);
+
+        res.redirect('/login')
+
+    } catch (e) {
+        res.status(500).send({ error: "Error" + e })
+    }
 })
 
 router.post("/register", async (req, res) => {
@@ -34,7 +55,12 @@ router.post("/register", async (req, res) => {
         })
         await user.save();
         const token = await user.generateAuthToken();
-        res.status(201).render('index');
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            // 10 sec = 10000 ms
+            expires: new Date(Date.now() + 500000)
+        })
+        res.status(201).redirect('/');
         //res.status(201).render('index');
     } catch (error) {
         res.status(400).send(error);
@@ -45,7 +71,12 @@ router.post('/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        res.render('index')
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            expires: new Date(Date.now() + 500000)
+        })
+
+        res.redirect('/')
         // console.log(req.body.email);
         // res.render('index')
     } catch (e) {
@@ -54,25 +85,27 @@ router.post('/login', async (req, res) => {
     }
 })
 
-router.post('/user/logout', auth, async (req, res) => {
-    try {
-        req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token !== req.token
-        })
+// router.post('/user/logout', auth, async (req, res) => {
+//     try {
 
-        await req.user.save()
+//         res.clearCookie('jwt')
+//         req.user.tokens = req.user.tokens.filter((token) => {
+//             return token.token !== req.token
+//         })
 
-        res.send()
+//         await req.user.save()
 
-    } catch (e) {
-        res.status(500).send({ error: "Error" + e })
-    }
-})
+//         res.send()
+
+//     } catch (e) {
+//         res.status(500).send({ error: "Error" + e })
+//     }
+// })
 
 router.post('/user/logoutAll', auth, async (req, res) => {
     try {
         req.user.tokens = []
-
+        res.clearCookie('jwt')
         await req.user.save()
 
         res.send()
@@ -138,6 +171,5 @@ router.delete('/user/me', auth, async (req, res) => {
         res.status(500).send(e)
     }
 })
-
 
 module.exports = router
