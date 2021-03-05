@@ -3,29 +3,6 @@ const router = new express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 
-router.get('/', (req, res) => {
-    // console.log(req.cookies.jwt);
-
-    res.render('index', {
-        token: req.cookies.jwt
-    })
-})
-
-router.get('/register', (req, res) => {
-    // console.log(req.cookies.jwt);
-    res.render('register', {
-        token: req.cookies.jwt
-    })
-})
-
-router.get('/login', (req, res) => {
-    // console.log(req.cookies.jwt);
-
-    res.render('login', {
-        token: req.cookies.jwt
-    })
-})
-
 router.get('/logout', auth, async (req, res) => {
     try {
 
@@ -35,10 +12,7 @@ router.get('/logout', auth, async (req, res) => {
         })
 
         await req.user.save()
-        console.log(req.cookies.jwt);
-
-        res.redirect('/login')
-
+        res.status(201).send(req.user);
     } catch (e) {
         res.status(500).send({ error: "Error" + e })
     }
@@ -47,21 +21,16 @@ router.get('/logout', auth, async (req, res) => {
 router.post("/register", async (req, res) => {
     try {
         const user = new User({
-            firstname: req.body.fn,
-            lastname: req.body.ln,
-            email: req.body.email,
-            phone: req.body.phone,
-            password: req.body.password
+            ...req.body
         })
         await user.save();
         const token = await user.generateAuthToken();
         res.cookie('jwt', token, {
             httpOnly: true,
             // 10 sec = 10000 ms
-            expires: new Date(Date.now() + 500000)
+            expires: new Date(Date.now() + (60 * 60 * 1000))
         })
-        res.status(201).redirect('/');
-        //res.status(201).render('index');
+        res.status(201).send(user);
     } catch (error) {
         res.status(400).send(error);
     }
@@ -73,36 +42,17 @@ router.post('/login', async (req, res) => {
         const token = await user.generateAuthToken()
         res.cookie('jwt', token, {
             httpOnly: true,
-            expires: new Date(Date.now() + 500000)
+            expires: new Date(Date.now() + (60 * 60 * 1000))
         })
 
-        res.redirect('/')
-        // console.log(req.body.email);
-        // res.render('index')
+        res.status(201).send(user);
     } catch (e) {
-        res.status(400).send(e);
+        res.status(400).send(e.message);
         // console.log(e);
     }
 })
 
-// router.post('/user/logout', auth, async (req, res) => {
-//     try {
-
-//         res.clearCookie('jwt')
-//         req.user.tokens = req.user.tokens.filter((token) => {
-//             return token.token !== req.token
-//         })
-
-//         await req.user.save()
-
-//         res.send()
-
-//     } catch (e) {
-//         res.status(500).send({ error: "Error" + e })
-//     }
-// })
-
-router.post('/user/logoutAll', auth, async (req, res) => {
+router.post('/logoutAll', auth, async (req, res) => {
     try {
         req.user.tokens = []
         res.clearCookie('jwt')
@@ -117,22 +67,10 @@ router.post('/user/logoutAll', auth, async (req, res) => {
 
 //* finding/reading users and tasks
 //* middleware fun. added : auth
-router.get('/user/me', auth, async (req, res) => {
+router.get('/me', auth, async (req, res) => {
 
     res.send(req.user)
 
-    // try {
-    //     const users = await User.find({})
-    //     res.send(users)
-    // } catch (e) {
-    //     res.status(500).send()
-    // }
-
-    // User.find({}).then((result) => {
-    //     res.send(result)
-    // }).catch((e) => {
-    //     res.status(500).send(e)
-    // })
 })
 
 //* updating endpoints use the PATCH HTTP method

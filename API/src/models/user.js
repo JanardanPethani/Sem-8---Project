@@ -31,22 +31,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        minlength: 7,
+        minlength: 3,
         validate(value) {
             if (value.toLowerCase().includes('password')) {
                 throw new Error('password must not contain "password" word')
             }
         }
     },
-    /* age: {
+    age: {
         type: Number,
-        default: 11,
+        default: 13,
         validate(value) {
             if (value < 10) {
                 throw new Error('age must be greater than 10')
             }
         }
-    }, */
+    },
     phone: {
         type: Number,
         unique: true,
@@ -54,7 +54,6 @@ const userSchema = new mongoose.Schema({
         maxlength: 12
 
     },
-    //token -> array has object as item
     tokens: [{
         token: {
             type: String,
@@ -65,10 +64,11 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
-
-// need to separate out schema to use middleware
-// pre and post method to do something before and after 
-// arrow fun is not used bcz of binding problem
+userSchema.virtual('requests', {
+    ref: 'Requests',
+    localField: '_id',
+    foreignField: 'reqBy'
+})
 
 // ( instance method ) std function bcz of binding
 userSchema.methods.generateAuthToken = async function () {
