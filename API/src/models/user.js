@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const Requests = require('./ReqRide')
 
 //Schemas
 const userSchema = new mongoose.Schema({
@@ -19,42 +20,22 @@ const userSchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: true,
-        trim: true,
-        lowercase: true,
-        validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error('Email is invalid')
-            }
-        }
+        trim: true
     },
     password: {
         type: String,
         required: true,
-        trim: true,
-        minlength: 7,
-        validate(value) {
-            if (value.toLowerCase().includes('password')) {
-                throw new Error('password must not contain "password" word')
-            }
-        }
+        trim: true
     },
-    /* age: {
+    age: {
         type: Number,
-        default: 11,
-        validate(value) {
-            if (value < 10) {
-                throw new Error('age must be greater than 10')
-            }
-        }
-    }, */
+        default: 13
+    },
     phone: {
         type: Number,
         unique: true,
-        required: true,
-        maxlength: 12
-
+        required: true
     },
-    //token -> array has object as item
     tokens: [{
         token: {
             type: String,
@@ -65,17 +46,26 @@ const userSchema = new mongoose.Schema({
     timestamps: true
 })
 
-
-// need to separate out schema to use middleware
-// pre and post method to do something before and after 
-// arrow fun is not used bcz of binding problem
+userSchema.virtual('requests', {
+    ref: 'Requests',
+    localField: '_id',
+    foreignField: 'reqBy'
+})
 
 // ( instance method ) std function bcz of binding
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, process.env.SECRET_KEY)
-
+    const payload = {
+        user: {
+            id: user.id.toString()
+        }
+    }
+    const token = jwt.sign(payload,
+        process.env.SECRET_KEY,
+        { expiresIn: '3600s' },
+    )
     user.tokens = user.tokens.concat({ token })
+
     await user.save()
 
     return token
@@ -90,7 +80,7 @@ userSchema.methods.toJSON = function () {
     delete userObj.password
     delete userObj.tokens
     //delete userObj.avatar
-    console.log('From toJSON');
+    // console.log('From toJSON');
 
     return userObj
 }
@@ -99,13 +89,12 @@ userSchema.methods.toJSON = function () {
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
     if (!user) {
-        throw new Error('Unable to login from mail')
+        throw new Error('Invalid Credentials')
     }
 
     const isMatch = await bcrypt.compare(password, user.password)
-
     if (!isMatch) {
-        throw new Error('Unable to login')
+        throw new Error('Invalid Credentials')
     }
 
     return user
@@ -124,10 +113,9 @@ userSchema.pre('save', async function (next) {
 // Delete user tasks when user removed
 userSchema.pre('remove', async function (next) {
     const user = this
-    await Task.deleteMany({ owner: user._id })
+    await Requests.deleteMany({ reqBy: user.id })
     next()
 })
 
-const User = mongoose.model('User', userSchema)
 
-module.exports = User
+module.exports = User = mongoose.model('User', userSchema)

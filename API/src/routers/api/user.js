@@ -1,0 +1,72 @@
+const express = require('express')
+const { check, validationResult } = require('express-validator/check');
+const router = new express.Router()
+const User = require('../../models/User')
+const auth = require('../../middleware/auth');
+
+router.post("/register", [
+    check('firstname', "First name is required").not().isEmpty(),
+    check('lastname', "Last name is required").not().isEmpty(),
+    check('email', "Include valid email").isEmail(),
+    check('password', "Please enter password with six or more characters").isLength({
+        min: 6
+    }),
+    check('phone', "Please enter phone number of length 10").isLength({
+        min: 10,
+        max: 10
+    })
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        // console.log(errors);
+        return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+        const user = new User({
+            ...req.body
+        })
+        await user.save();
+        const token = await user.generateAuthToken();
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            // 1 sec = 1000 ms
+            expires: new Date(Date.now() + (60 * 60 * 1000))
+        })
+        res.status(201).send(user);
+    } catch (error) {
+        res.status(400).json({ errors: [{ msg: error.message }] });
+    }
+})
+
+router.patch('/me', auth, async (req, res) => {
+    // req.body keys to array of keys
+    const updates = Object.keys(req.body)
+    const allowedUpdates = ['name', 'email', 'password', 'age']
+    const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
+
+    if (!isValidOperation) {
+        return res.status(400).send({ error: 'Invalid updates!' })
+    }
+
+    try {
+        updates.forEach((update) => req.user[update] = req.body[update])
+
+        //by this middleware will be executed
+        await req.user.save()
+
+        res.send(req.user)
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
+
+router.delete('/me', auth, async (req, res) => {
+    try {
+        await req.user.remove()
+        res.send(req.user)
+    } catch (e) {
+        res.status(500).json({ errors: [{ msg: error.message }] })
+    }
+})
+
+module.exports = router
