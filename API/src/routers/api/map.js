@@ -1,28 +1,20 @@
 const express = require('express')
 const router = new express.Router()
-const User = require('../../models/User')
 const auth = require('../../middleware/auth')
+const getLngLat = require('../../utils/geocode')
 
-router.get('/map', auth, (req, res) => {
-    if (req.token) {
-        res.render('locationSearch', {
-            token: req.cookies.jwt
+router.get('/geocode', (req, res) => {
+
+    if (!req.query.address) {
+        return res.json({
+            errors: [{ msg: 'Address must be provided in URL' }]
         })
-    } else {
-        res.render('login')
     }
-
-    // if (!req.query.address) {
-    //     return res.render("404", {
-    //         title: '404',
-    //         name: 'Janardan pethani',
-    //         errorMsg: 'Address must be provided in URL'
-    //     })
-    // }
     if (req.query.address) {
-        geoData(req.query.address, (error, { longitude, latitude, place } = {}) => {
+        // console.log('From map api');
+        getLngLat(req.query.address, (error, { longitude, latitude, place } = {}) => {
             if (error) {
-                return res.send({ error })
+                return res.json({ errors: [{ msg: error }] })
             }
             res.json({
                 place: place,

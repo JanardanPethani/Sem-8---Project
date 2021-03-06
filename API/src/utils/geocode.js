@@ -1,7 +1,7 @@
 const request = require('request')
 
-const getLatLong = (city, callback) => {
-    const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + encodeURIComponent(city) + ".json" + "?access_token=pk.eyJ1IjoiamFuYXJkYW4xNyIsImEiOiJja2x0OXkycW8wYXhkMm9uOHZrajFsZ3M0In0.5eBpRfGUyCxjRV9JY9s97w&limit=1"
+const getLngLat = (city, callback) => {
+    const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + encodeURIComponent(city) + ".json" + "?access_token=" + process.env.MAP_ACCESS_TOKEN + "&limit=1"
 
     //mapbox request
     request({ url, json: true }, (error, { body }) => {
@@ -19,4 +19,4 @@ const getLatLong = (city, callback) => {
     })
 }
 
-module.exports = getLatLong
+module.exports = getLngLat

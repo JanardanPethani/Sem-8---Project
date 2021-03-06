@@ -16,8 +16,6 @@ app.use(cookieParser())
 app.use('/api/user', userRouter)
 app.use('/api/ride', reqRouter)
 app.use('/api/auth', authRouter)
-app.use(mapRouter)
-
-
+app.use('/api/map', mapRouter)
 
 module.exports = app

@@ -41,7 +41,7 @@ router.post("/register", [
 router.patch('/me', auth, async (req, res) => {
     // req.body keys to array of keys
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['name', 'email', 'password', 'age']
+    const allowedUpdates = ['firstname', 'lastname', 'phone', 'age']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
@@ -50,13 +50,12 @@ router.patch('/me', auth, async (req, res) => {
 
     try {
         updates.forEach((update) => req.user[update] = req.body[update])
-
-        //by this middleware will be executed
+        //* Do not create new object
         await req.user.save()
-
         res.send(req.user)
-    } catch (e) {
-        res.status(400).send(e)
+
+    } catch (error) {
+        res.status(400).send({ errors: [{ msg: error.message }] })
     }
 })
 
