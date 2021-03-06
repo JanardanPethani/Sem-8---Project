@@ -3,22 +3,6 @@ const { check, validationResult } = require('express-validator/check');
 const router = new express.Router()
 const User = require('../../models/User')
 const auth = require('../../middleware/auth');
-const { validate } = require('../../models/User');
-
-router.get('/logout', auth, async (req, res) => {
-    try {
-
-        res.clearCookie('jwt')
-        req.user.tokens = req.user.tokens.filter((token) => {
-            return token.token !== req.token
-        })
-
-        await req.user.save()
-        res.status(201).send(req.user);
-    } catch (e) {
-        res.status(500).send({ error: "Error" + e })
-    }
-})
 
 router.post("/register", [
     check('firstname', "First name is required").not().isEmpty(),
@@ -35,7 +19,7 @@ router.post("/register", [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         // console.log(errors);
-        res.status(400).json({ errors: errors.array() });
+        return res.status(400).json({ errors: errors.array() });
     }
     try {
         const user = new User({
@@ -45,54 +29,16 @@ router.post("/register", [
         const token = await user.generateAuthToken();
         res.cookie('jwt', token, {
             httpOnly: true,
-            // 10 sec = 10000 ms
+            // 1 sec = 1000 ms
             expires: new Date(Date.now() + (60 * 60 * 1000))
         })
         res.status(201).send(user);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(400).json({ errors: [{ msg: error.message }] });
     }
 })
 
-router.post('/login', async (req, res) => {
-    try {
-        const user = await User.findByCredentials(req.body.email, req.body.password)
-        const token = await user.generateAuthToken()
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            expires: new Date(Date.now() + (60 * 60 * 1000))
-        })
-
-        res.status(201).send(user);
-    } catch (e) {
-        res.status(400).send(e.message);
-        // console.log(e);
-    }
-})
-
-router.post('/logoutAll', auth, async (req, res) => {
-    try {
-        req.user.tokens = []
-        res.clearCookie('jwt')
-        await req.user.save()
-
-        res.send()
-
-    } catch (e) {
-        res.status(500).send({ error: "Error" + e })
-    }
-})
-
-//* finding/reading users and tasks
-//* middleware fun. added : auth
-router.get('/me', auth, async (req, res) => {
-
-    res.send(req.user)
-
-})
-
-//* updating endpoints use the PATCH HTTP method
-router.patch('/user/me', auth, async (req, res) => {
+router.patch('/me', auth, async (req, res) => {
     // req.body keys to array of keys
     const updates = Object.keys(req.body)
     const allowedUpdates = ['name', 'email', 'password', 'age']
@@ -114,17 +60,12 @@ router.patch('/user/me', auth, async (req, res) => {
     }
 })
 
-router.delete('/user/me', auth, async (req, res) => {
+router.delete('/me', auth, async (req, res) => {
     try {
-        // const user = await User.findByIdAndDelete(req.user._id)
-
-        // if (!user) {
-        //     return res.status(404).send()
-        // }
         await req.user.remove()
         res.send(req.user)
     } catch (e) {
-        res.status(500).send(e)
+        res.status(500).json({ errors: [{ msg: error.message }] })
     }
 })
 
