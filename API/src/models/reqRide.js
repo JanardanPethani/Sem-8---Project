@@ -16,7 +16,7 @@ const reqRideSchema = new mongoose.Schema({
     departAt: {
         type: Date,
         required: true,
-        default: () => moment().add(20, 'minutes')
+        default: moment().add(20, 'minutes')
     }
 })
 
@@ -28,6 +28,5 @@ reqRideSchema.statics.findByLoc = async (userId, from, to) => {
     return ride
 }
 
-const ReqRide = mongoose.model('Requests', reqRideSchema)
 
-module.exports = ReqRide
+module.exports = ReqRide = mongoose.model('Requests', reqRideSchema)

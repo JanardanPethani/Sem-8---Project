@@ -20,39 +20,21 @@ const userSchema = new mongoose.Schema({
         unique: true,
         required: true,
         trim: true,
-        lowercase: true,
-        validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error('Email is invalid')
-            }
-        }
+        lowercase: true
     },
     password: {
         type: String,
         required: true,
-        trim: true,
-        minlength: 3,
-        validate(value) {
-            if (value.toLowerCase().includes('password')) {
-                throw new Error('password must not contain "password" word')
-            }
-        }
+        trim: true
     },
     age: {
         type: Number,
-        default: 13,
-        validate(value) {
-            if (value < 10) {
-                throw new Error('age must be greater than 10')
-            }
-        }
+        default: 13
     },
     phone: {
         type: Number,
         unique: true,
-        required: true,
-        maxlength: 12
-
+        required: true
     },
     tokens: [{
         token: {
@@ -90,7 +72,7 @@ userSchema.methods.toJSON = function () {
     delete userObj.password
     delete userObj.tokens
     //delete userObj.avatar
-    console.log('From toJSON');
+    // console.log('From toJSON');
 
     return userObj
 }
@@ -99,7 +81,7 @@ userSchema.methods.toJSON = function () {
 userSchema.statics.findByCredentials = async (email, password) => {
     const user = await User.findOne({ email })
     if (!user) {
-        throw new Error('Unable to login from mail')
+        throw new Error('Unable to login')
     }
 
     const isMatch = await bcrypt.compare(password, user.password)
@@ -128,6 +110,5 @@ userSchema.pre('remove', async function (next) {
     next()
 })
 
-const User = mongoose.model('User', userSchema)
 
-module.exports = User
+module.exports = User = mongoose.model('User', userSchema)
