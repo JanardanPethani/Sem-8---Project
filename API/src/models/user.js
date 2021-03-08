@@ -3,6 +3,7 @@ const validator = require('validator')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Requests = require('./ReqRide')
+const Offers = require('./OffRide')
 
 //Schemas
 const userSchema = new mongoose.Schema({
@@ -114,6 +115,8 @@ userSchema.pre('save', async function (next) {
 userSchema.pre('remove', async function (next) {
     const user = this
     await Requests.deleteMany({ reqBy: user.id })
+    await Offers.deleteMany({ offBy: user.id })
+
     next()
 })
 

@@ -3,7 +3,10 @@ const router = new express.Router()
 const auth = require('../../middleware/auth')
 const getLngLat = require('../../utils/geocode')
 
-router.get('/geocode', (req, res) => {
+// @route   GET api/map
+// @desc    Get lng lat
+// @access  Public
+router.get('/fgeocode', (req, res) => {
 
     if (!req.query.address) {
         return res.json({
