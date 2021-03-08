@@ -27,3 +27,5 @@ mongodb cmd : `"C:\Users\Janardan Pethani\mongodb\bin\mongod.exe" --dbpath="C:\U
 ---
 
 - _21.7398° N, 70.4491° E_ : 21 to north from equator(parallels), 70 to east from prime meridian(meridians)
+
+- npm start --prefix client 
