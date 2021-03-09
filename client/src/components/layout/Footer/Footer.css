@@ -1,0 +1,76 @@
+/* footer */
+.footer {
+  margin-top: 3rem;
+  padding: 1rem;
+  z-index: 1;
+  border-top: solid 1px var(--primary-color);
+  background-color: var(--light-color);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0.9;
+}
+
+.footer ul {
+  display: flex;
+  justify-content: center;
+}
+
+.footer li {
+  padding: 0 1rem 0 1rem;
+  transform: scale(1.4);
+}
+
+.footer a {
+  color: rgb(0, 0, 0);
+  padding: 0.45rem;
+  margin: 0 0.25rem;
+}
+
+i.fa-twitter:hover {
+  color: #0091ff;
+}
+i.fa-facebook:hover {
+  color: #2c4e97;
+}
+i.fa-instagram:hover {
+  color: #9b3f93;
+}
+i.fa-youtube:hover {
+  color: #c4302b;
+}
+i.fa-github:hover {
+  color: #000000;
+}
+
+.footer a {
+  color: var(--primary-color);
+}
+
+.footer .welcome span {
+  margin-right: 0.6rem;
+}
+
+/* Mobile Styles */
+@media (max-width: 700px) {
+  /* footer */
+  .footer {
+    display: block;
+    text-align: center;
+  }
+
+  .footer ul {
+    text-align: center;
+    justify-content: center;
+    transform: scale(1);
+  }
+
+  .footer h1 {
+    margin-bottom: 1rem;
+  }
+
+  .footer .welcome {
+    display: none;
+  }
+}

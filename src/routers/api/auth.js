@@ -17,6 +17,9 @@ router.get('/', auth, async (req, res) => {
     }
 })
 
+// @route   POST api/auth
+// @desc    Log in user
+// @access  Public
 router.post('/login', [
     check('email', "Include valid email").isEmail(),
     check('password', "Please enter password")
@@ -41,6 +44,9 @@ router.post('/login', [
     }
 })
 
+// @route   POST api/auth
+// @desc    Log out user
+// @access  Private
 router.post('/logout', auth, async (req, res) => {
     try {
         res.clearCookie('jwt')
@@ -55,6 +61,9 @@ router.post('/logout', auth, async (req, res) => {
     }
 })
 
+// @route   POST api/auth
+// @desc    Log Out from all devices
+// @access  Private
 router.post('/logoutAll', auth, async (req, res) => {
     try {
         req.user.tokens = []

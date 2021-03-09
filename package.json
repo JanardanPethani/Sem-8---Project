@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "server": "nodemon src/index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "author": "",
   "license": "ISC",
@@ -23,6 +25,7 @@
     "moment": "^2.29.1",
     "mongoose": "^5.11.16",
     "path": "^0.12.7",
+    "request": "^2.88.2",
     "validator": "^13.5.2"
   },
   "devDependencies": {

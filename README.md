@@ -20,4 +20,12 @@ _Help_
 
 - https://dev.to/dipakkr/implementing-authentication-in-nodejs-with-express-and-jwt-codelab-1-j5i
 
-mongodb cmd : "C:\Users\Janardan Pethani\mongodb\bin\mongod.exe" --dbpath="C:\Users\Janardan Pethani\mongodb-data"
+---
+
+mongodb cmd : `"C:\Users\Janardan Pethani\mongodb\bin\mongod.exe" --dbpath="C:\Users\Janardan Pethani\mongodb-data"`
+
+---
+
+- _21.7398° N, 70.4491° E_ : 21 to north from equator(parallels), 70 to east from prime meridian(meridians)
+
+- npm start --prefix client 
