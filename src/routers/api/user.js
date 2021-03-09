@@ -35,8 +35,10 @@ router.post("/register", [
             // 1 sec = 1000 ms
             expires: new Date(Date.now() + (60 * 60 * 1000))
         })
+        // console.log(user);
         res.status(201).send(user);
     } catch (error) {
+        // console.log(error);
         res.status(400).json({ errors: [{ msg: error.message }] });
     }
 })
