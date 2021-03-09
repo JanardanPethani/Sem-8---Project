@@ -18,7 +18,7 @@ const Footer = () => {
                     <i className="fab fa-twitter"></i>
                 </a></li>
             </ul>
-            <p style={{ display: 'flex', justifyContent: 'center', paddingTop: '1rem' }}>Janardan Pethani</p>
+            <p style={{ display: 'flex', justifyContent: 'center', paddingTop: '1rem', textShadow:'1px 1px 1px #e3e3e3' }}> Janardan Pethani </p>
         </div>
     )
 }

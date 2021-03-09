@@ -1,6 +1,6 @@
 /* footer */
 .footer {
-  margin-top: 1rem;
+  margin-top: 3rem;
   padding: 1rem;
   z-index: 1;
   border-top: solid 1px var(--primary-color);
@@ -15,7 +15,11 @@
 .footer ul {
   display: flex;
   justify-content: center;
-  transform: scale(1.2);
+}
+
+.footer li {
+  padding: 0 1rem 0 1rem;
+  transform: scale(1.4);
 }
 
 .footer a {
@@ -24,7 +28,23 @@
   margin: 0 0.25rem;
 }
 
-.footer a:hover {
+i.fa-twitter:hover {
+  color: #0091ff;
+}
+i.fa-facebook:hover {
+  color: #2c4e97;
+}
+i.fa-instagram:hover {
+  color: #9b3f93;
+}
+i.fa-youtube:hover {
+  color: #c4302b;
+}
+i.fa-github:hover {
+  color: #000000;
+}
+
+.footer a {
   color: var(--primary-color);
 }
 
