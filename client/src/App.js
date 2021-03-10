@@ -13,7 +13,7 @@ import Login from './components/auth/Login/Login';
 import Register from './components/auth/Register/Register';
 import Alert from './components/layout/Alert/Alert'
 import { loadUser } from './store/actions/auth';
-import setAuthToken from './utils.js/setAuthToken';
+import setAuthToken from './utils/setAuthToken';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token)

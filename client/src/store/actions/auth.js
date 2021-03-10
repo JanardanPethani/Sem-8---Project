@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import setAuthToken from '../../utils.js/setAuthToken';
+import setAuthToken from '../../utils/setAuthToken';
 import { setAlert } from './alert'
 import {
     REGISTER_SUCCESS,
@@ -34,7 +34,7 @@ export const loadUser = () => async dispatch => {
 };
 
 // login
-export const login = (email, password ) => async dispatch => {
+export const login = (email, password) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -47,10 +47,14 @@ export const login = (email, password ) => async dispatch => {
     console.log(email, password);
     try {
         const res = await axios.post('/api/auth/login', body, config)
+        console.log(res);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
         });
+
+        // To set user data in store
+        dispatch(loadUser());
     } catch (error) {
         const errors = error.response.data.errors;
         if (errors) {
@@ -80,6 +84,8 @@ export const register = ({ firstname, lastname, email, phone, password }) => asy
             type: REGISTER_SUCCESS,
             payload: res.data
         });
+        dispatch(loadUser());
+
     } catch (error) {
         const errors = error.response.data.errors;
         if (errors) {
