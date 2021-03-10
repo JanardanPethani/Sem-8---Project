@@ -7,7 +7,7 @@ import './Register.css'
 
 // Actions
 import { setAlert } from '../../../store/actions/alert'
-import { register } from '../../../store/actions/auth'
+import { login, register } from '../../../store/actions/auth'
 
 // props is destructured into ({setAlert, ... })
 const Register = ({ setAlert, register }) => {
@@ -33,6 +33,7 @@ const Register = ({ setAlert, register }) => {
             setAlert('Passwords do not match', 'danger', 2000);
         } else {
             register({ firstname, lastname, phone, email, password })
+            login(email, password)
             console.log(formData);
         }
     }
