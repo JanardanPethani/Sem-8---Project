@@ -2,7 +2,7 @@ const express = require('express')
 const router = new express.Router()
 const Offer = require('../../models/OffRide')
 const auth = require('../../middleware/auth')
-const { check, validationResult } = require('express-validator/check');
+const { check, validationResult } = require('express-validator');
 
 // @route   POST api/ride
 // @desc    offer a ride

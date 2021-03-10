@@ -8,7 +8,8 @@ import {
     AUTH_ERROR,
     USER_LOADED,
     LOGIN_SUCCESS,
-    LOGIN_FAIL
+    LOGIN_FAIL,
+    LOGOUT
 } from './types'
 
 
@@ -47,7 +48,7 @@ export const login = (email, password) => async dispatch => {
     console.log(email, password);
     try {
         const res = await axios.post('/api/auth/login', body, config)
-        console.log(res);
+        // console.log(res);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
@@ -65,6 +66,9 @@ export const login = (email, password) => async dispatch => {
         });
     }
 }
+
+// Logout
+export const logout = () => dispatch => dispatch({ type: LOGOUT }); 
 
 // Register a user
 export const register = ({ firstname, lastname, email, phone, password }) => async dispatch => {

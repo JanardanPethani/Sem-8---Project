@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 // Redux
 import { Provider } from 'react-redux'
-import store from './store'
+import store from './store/store'
 
 import './App.css';
 
@@ -24,6 +24,7 @@ const App = () => {
   //When the state update it will keep looping to stop, [] is provided to run once
   //this tells reacts that effect doesn't depend on any values
   useEffect(() => {
+    console.log('Loading user from app component');
     store.dispatch(loadUser())
   }, [])
 

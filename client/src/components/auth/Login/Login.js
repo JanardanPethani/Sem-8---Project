@@ -24,6 +24,7 @@ const Login = ({ login, isAuthenticated }) => {
         login(email, password);
     }
 
+    // Redirect after login
     if (isAuthenticated) {
         return <Redirect to="/" />;
     }
