@@ -5,8 +5,6 @@ import { Link, Redirect } from 'react-router-dom'
 
 import { login } from '../../../store/actions/auth';
 
-import './Login.css'
-
 // destructured props ↘
 const Login = ({ login, isAuthenticated }) => {
 
