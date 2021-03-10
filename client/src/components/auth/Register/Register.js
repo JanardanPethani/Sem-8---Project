@@ -7,9 +7,10 @@ import './Register.css'
 
 // Actions
 import { setAlert } from '../../../store/actions/alert'
+import { register } from '../../../store/actions/auth'
 
-// props is destructured into ({setAlert})
-const Register = ({ setAlert }) => {
+// props is destructured into ({setAlert, ... })
+const Register = ({ setAlert, register }) => {
     const [formData, setFormData] = useState({
         firstname: '',
         lastname: '',
@@ -29,8 +30,9 @@ const Register = ({ setAlert }) => {
             console.log('error');
 
             // this wil call setAlert action
-            setAlert('Passwords do not match', 'danger', 3000);
+            setAlert('Passwords do not match', 'danger', 2000);
         } else {
+            register({ firstname, lastname, phone, email, password })
             console.log(formData);
         }
     }
@@ -107,7 +109,8 @@ const Register = ({ setAlert }) => {
 }
 
 Register.propTypes = {
-    setAlert: PropTypes.func.isRequired
+    setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired
 }
 
-export default connect(null, { setAlert })(Register)
+export default connect(null, { setAlert, register })(Register)

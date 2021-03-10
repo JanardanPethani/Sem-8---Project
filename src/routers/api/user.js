@@ -30,13 +30,13 @@ router.post("/register", [
         })
         await user.save();
         const token = await user.generateAuthToken();
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            // 1 sec = 1000 ms
-            expires: new Date(Date.now() + (60 * 60 * 1000))
-        })
+        // res.cookie('jwt', token, {
+        //     httpOnly: true,
+        //     // 1 sec = 1000 ms
+        //     expires: new Date(Date.now() + (60 * 60 * 1000))
+        // })
         // console.log(user);
-        res.status(201).send(user);
+        res.status(201).json({ token });
     } catch (error) {
         // console.log(error);
         res.status(400).json({ errors: [{ msg: error.message }] });

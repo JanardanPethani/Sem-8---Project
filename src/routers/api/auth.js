@@ -6,11 +6,11 @@ const auth = require('../../middleware/auth');
 
 // @route   GET api/auth
 // @desc    Test route
-// @access  Public
+// @access  Private
 router.get('/', auth, async (req, res) => {
     try {
         // console.log(req.user);
-        res.send(req.user)
+        res.json(req.user)
     } catch (error) {
         // console.log(error);
         res.status(500).send({ errors: [{ msg: error.message }] })
@@ -32,12 +32,12 @@ router.post('/login', [
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            expires: new Date(Date.now() + (60 * 60 * 1000))
-        })
+        // res.cookie('jwt', token, {
+        //     httpOnly: true,
+        //     expires: new Date(Date.now() + (60 * 60 * 1000))
+        // })
 
-        res.status(201).send(user);
+        res.status(201).json({ token });
     } catch (error) {
         res.status(400).json({ errors: [{ msg: error.message }] });
         // console.log(e);
@@ -49,7 +49,7 @@ router.post('/login', [
 // @access  Private
 router.post('/logout', auth, async (req, res) => {
     try {
-        res.clearCookie('jwt')
+        // res.clearCookie('jwt')
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token
         })
@@ -67,7 +67,7 @@ router.post('/logout', auth, async (req, res) => {
 router.post('/logoutAll', auth, async (req, res) => {
     try {
         req.user.tokens = []
-        res.clearCookie('jwt')
+        // res.clearCookie('jwt')
         await req.user.save()
 
         res.send('Logged out from all devices')
