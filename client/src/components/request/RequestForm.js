@@ -8,7 +8,7 @@ import { sendRequest } from '../../store/actions/request'
 
 //TODO: Select type -> seats 
 
-const RequestForm = ({ sendRequest }) => {
+const RequestForm = ({ sendRequest, history }) => {
     const [formData, setFormData] = useState({
         from: '',
         to: '',
@@ -25,9 +25,7 @@ const RequestForm = ({ sendRequest }) => {
 
     const onSubmit = e => {
         e.preventDefault();
-        // console.log('OnSubmit exec');
-        // console.log(formData);
-        sendRequest(formData)
+        sendRequest(formData, history)
     }
 
     return (
@@ -83,7 +81,7 @@ const RequestForm = ({ sendRequest }) => {
 }
 
 RequestForm.propTypes = {
-    sendRequest: PropTypes.func.isRequired,
+    sendRequest: PropTypes.func.isRequired
 }
 
 export default connect(null, { sendRequest })(RequestForm)

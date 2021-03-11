@@ -8,8 +8,8 @@ import {
 // Get current users profile
 export const getCurrentProfile = () => async dispatch => {
     try {
-        const req = await axios('/api/ride/allRequests')
-        const off = await axios('/api/ride/allOffers')
+        const req = await axios.get('/api/ride/allRequests')
+        const off = await axios.get('/api/ride/allOffers')
 
         // console.log(res);
         dispatch({
