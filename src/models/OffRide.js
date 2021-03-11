@@ -39,4 +39,4 @@ offRideSchema.statics.findByLoc = async (userId, from, to) => {
     return ride
 }
 
-module.exports = OffRide = mongoose.model('Offeres', offRideSchema)
+module.exports = OffRide = mongoose.model('Offers', offRideSchema)

@@ -14,6 +14,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     lastname: '',
     email: '',
     phone: '',
+    age: '',
     password: '',
     confirmPassword: '',
   })
@@ -23,6 +24,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     lastname,
     phone,
     email,
+    age,
     password,
     confirmPassword,
   } = formData
@@ -36,7 +38,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
       // this wil call setAlert action
       setAlert('Passwords do not match', 'danger', 2000)
     } else {
-      register({ firstname, lastname, phone, email, password })
+      register({ firstname, lastname, age, phone, email, password })
       // console.log(formData);
     }
   }
@@ -90,6 +92,18 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             name='phone'
             value={phone}
             onChange={(e) => onChange(e)}
+            required
+          />
+        </div>
+        <div className='form-group'>
+          <input
+            type='number'
+            placeholder='age'
+            name='age'
+            value={age}
+            onChange={(e) => onChange(e)}
+            min='13'
+            max='80'
             required
           />
         </div>
