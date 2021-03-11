@@ -25,8 +25,6 @@ const RequestForm = ({ sendRequest }) => {
 
     const onSubmit = e => {
         e.preventDefault();
-        // console.log('OnSubmit exec');
-        // console.log(formData);
         sendRequest(formData)
     }
 
@@ -83,7 +81,7 @@ const RequestForm = ({ sendRequest }) => {
 }
 
 RequestForm.propTypes = {
-    sendRequest: PropTypes.func.isRequired,
+    sendRequest: PropTypes.func.isRequired
 }
 
 export default connect(null, { sendRequest })(RequestForm)

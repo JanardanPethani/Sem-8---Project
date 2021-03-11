@@ -5,7 +5,7 @@ import { getCurrentProfile } from './profile'
 import { PROFILE_ERROR } from './types'
 
 // Create or Update request
-export const sendRequest = (formData, history, edit = false) => async dispatch => {
+export const sendOffer = (formData, history, edit = false) => async dispatch => {
     try {
         const config = {
             headers: {
@@ -13,10 +13,10 @@ export const sendRequest = (formData, history, edit = false) => async dispatch =
             }
         }
         // console.log(formData);
-        const res = await axios.post('/api/ride/request', formData, config)
+        const res = await axios.post('/api/ride/offer', formData, config)
         dispatch(getCurrentProfile())
 
-        dispatch(setAlert(edit ? 'Request Updated' : 'Request Created', 'light'))
+        dispatch(setAlert(edit ? 'Offer Updated' : 'Offer Accepted', 'light'))
 
         // can't use Redirect bcz Action is not react 
         // history.push('/dashboard')

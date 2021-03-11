@@ -1,13 +1,14 @@
 import React, { Fragment, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import {
+import { sendOffer } from '../../store/actions/offer'
 
-} from '../../store/actions/types'
 
-const OfferForm = props => {
+//TODO: Select type -> seats 
+
+const OfferForm = ({ sendOffer }) => {
     const [formData, setFormData] = useState({
         from: '',
         to: '',
@@ -24,6 +25,7 @@ const OfferForm = props => {
 
     const onSubmit = e => {
         e.preventDefault();
+        sendOffer(formData)
     }
     return (
         <Fragment>
@@ -31,14 +33,14 @@ const OfferForm = props => {
             <p className="lead">
                 Add details
             </p>
-            <form className="form" onSubmit={onSubmit}>
+            <form className="form" onSubmit={e => onSubmit(e)}>
                 <div className="form-group">
                     <input
                         type="text"
                         placeholder="Enter Pickup Location"
                         name="from"
                         value={from}
-                        onChange={onChange}
+                        onChange={(e) => onChange(e)}
                     />
                     <small className="form-text">
                         Starting point
@@ -50,7 +52,7 @@ const OfferForm = props => {
                         placeholder="Enter Destination Location"
                         name="to"
                         value={to}
-                        onChange={onChange}
+                        onChange={(e) => onChange(e)}
                     />
                     <small className="form-text">
                         Destination point
@@ -58,26 +60,16 @@ const OfferForm = props => {
                 </div>
                 <div className="form-group">
                     <input
-                        type="date"
+                        type="datetime-local"
                         name="departAt"
                         value={departAt}
-                        onChange={onChange}
+                        onChange={(e) => onChange(e)}
                     />
                     <small className="form-text">
-                        Date
-                            </small>
+                        Date/Time
+                    </small>
                 </div>
-                <div className="form-group">
-                    <input
-                        type="time"
-                        name="departAt"
-                        value={departAt}
-                        onChange={onChange}
-                    />
-                    <small className="form-text">
-                        Time
-                            </small>
-                </div>
+
                 <input type="submit" className="btn btn-primary my-1" />
                 <Link className="btn btn-light my-1" to="/dashboard">
                     Go Back
@@ -89,7 +81,7 @@ const OfferForm = props => {
 }
 
 OfferForm.propTypes = {
-
+    sendOffer: PropTypes.func.isRequired
 }
 
-export default OfferForm
+export default connect(null, { sendOffer })(OfferForm)
