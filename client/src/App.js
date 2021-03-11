@@ -14,9 +14,11 @@ import Register from './components/auth/Register/Register'
 import Alert from './components/layout/Alert/Alert'
 import Dashboard from './components/dashboard/Dashboard'
 import PrivateRoute from './components/routing/PrivateRoute'
+import Request from './components/request/RequestForm'
 
 import { loadUser } from './store/actions/auth'
 import setAuthToken from './utils/setAuthToken'
+import Offer from './components/offer/OfferForm'
 
 if (localStorage.token) {
   setAuthToken(localStorage.token)
@@ -42,6 +44,8 @@ const App = () => {
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <PrivateRoute exact path='/request' component={Request} />
+              <PrivateRoute exact path='/offer' component={Offer} />
             </Switch>
           </section>
           <Footer></Footer>

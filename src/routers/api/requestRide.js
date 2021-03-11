@@ -9,7 +9,8 @@ const { check, validationResult } = require('express-validator');
 // @access  Private
 router.post("/request", [
     check('from', "Pick up point is required").not().isEmpty(),
-    check('to', "Destination is required").not().isEmpty()
+    check('to', "Destination is required").not().isEmpty(),
+    check('departAt', "Date/Time is required").not().isEmpty()
 ],
     auth, async (req, res) => {
         const errors = validationResult(req);
@@ -25,7 +26,7 @@ router.post("/request", [
             // console.log(req);
             const ride = await Request.findByLoc(req.user._id, req.body.from, req.body.to)
             await request.save();
-            res.status(201).send(request);
+            res.status(201).json(request);
         } catch (error) {
             console.log(error);
             res.status(400).json({ errors: [{ msg: error.message }] });
@@ -38,7 +39,7 @@ router.post("/request", [
 router.get('/allRequests', auth, async (req, res) => {
     try {
         const result = await Request.find({ reqBy: req.user._id }).populate('reqBy', ['firstname', 'lastname', 'phone'])
-        res.status(200).send(result)
+        res.status(200).json(result)
     } catch (error) {
         res.status(500).json({ errors: [{ msg: error.message }] })
     }

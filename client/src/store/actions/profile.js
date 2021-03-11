@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { setAlert } from './alert'
 
 import {
     GET_PROFILE,
@@ -9,18 +8,19 @@ import {
 // Get current users profile
 export const getCurrentProfile = () => async dispatch => {
     try {
-        const res = await axios('/api/user/me')
+        const req = await axios('/api/ride/allRequests')
+        const off = await axios('/api/ride/allOffers')
+
         // console.log(res);
         dispatch({
             type: GET_PROFILE,
-            payload: res.data
+            payload: { req: req.data, off: off.data }
         })
     } catch (error) {
-        console.log(error);
-        // setAlert(error)
+        // console.log(error);
         dispatch({
             type: PROFILE_ERROR,
-            payload: { msg: error.response.statusText, status: error.response.status }
+            payload: { msg: error }
         })
     }
 }

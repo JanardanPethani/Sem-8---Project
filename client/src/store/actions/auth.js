@@ -9,7 +9,8 @@ import {
     USER_LOADED,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    LOGOUT
+    LOGOUT,
+    CLEAR_PROFILE
 } from './types'
 
 
@@ -45,7 +46,7 @@ export const login = (email, password) => async dispatch => {
     const body = JSON.stringify({
         email, password
     })
-    console.log(email, password);
+    // console.log(email, password);
     try {
         const res = await axios.post('/api/auth/login', body, config)
         // console.log(res);
@@ -68,7 +69,10 @@ export const login = (email, password) => async dispatch => {
 }
 
 // Logout
-export const logout = () => dispatch => dispatch({ type: LOGOUT }); 
+export const logout = () => dispatch => {
+    dispatch({ type: LOGOUT });
+    dispatch({ type: CLEAR_PROFILE });
+};
 
 // Register a user
 export const register = ({ firstname, lastname, email, phone, password }) => async dispatch => {

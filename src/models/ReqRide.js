@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const moment = require('moment');
+
 const reqRideSchema = new mongoose.Schema({
     reqBy: {
         type: mongoose.Types.ObjectId,
@@ -12,8 +12,19 @@ const reqRideSchema = new mongoose.Schema({
     to: {
         type: String,
         required: true
+    },
+    departAt: {
+        type: Date,
+        required: true
     }
 })
+
+reqRideSchema.methods.toJSON = function () {
+    const request = this
+    const reqObj = request.toObject()
+    reqObj.departAt = reqObj.departAt.getDate().toString()
+    return reqObj
+}
 
 reqRideSchema.statics.findByLoc = async (userId, from, to) => {
     const ride = await ReqRide.findOne({ reqBy: userId, from: from, to: to })

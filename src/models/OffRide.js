@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const moment = require('moment');
 
 const offRideSchema = new mongoose.Schema({
     offBy: {
@@ -16,18 +15,13 @@ const offRideSchema = new mongoose.Schema({
     },
     departAt: {
         type: Date,
-        required: true,
-        default: () => moment().add(20, 'minutes')
+        required: true
     }
 })
 offRideSchema.methods.toJSON = function () {
     const request = this
     const reqObj = request.toObject()
-
-    reqObj.departAt = moment(reqObj.departAt).format("dddd, MMMM Do YYYY, h:mm a")
-    //delete reqObj.avatar
-    // console.log('From toJSON');
-
+    reqObj.departAt = reqObj.departAt.getDate().toString()
     return reqObj
 }
 

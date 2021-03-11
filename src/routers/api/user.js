@@ -50,25 +50,6 @@ router.post(
   }
 )
 
-// @route   GET api/auth
-// @desc    Get all data for user
-// @access  Private
-router.get('/me', auth, async (req, res) => {
-  try {
-    await req.user.populate('requests').execPopulate()
-    await req.user.populate('offers').execPopulate()
-    // user will not save requests field in DB. 
-
-    const data = {
-      req: [...req.user.requests],
-      off: [...req.user.offers]
-    }
-    res.json(data)
-  } catch (error) {
-    // console.log(error);
-    res.status(500).send({ errors: [{ msg: error.message }] })
-  }
-})
 
 // @route   PATCH api/user
 // @desc    Update a user

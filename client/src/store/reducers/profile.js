@@ -1,12 +1,11 @@
 import {
     PROFILE_ERROR,
-    GET_PROFILE
+    GET_PROFILE,
+    CLEAR_PROFILE
 } from '../actions/types'
 
 const initialState = {
     profile: null,
-    requests: [],
-    offers: [],
     loading: true,
     error: {}
 }
@@ -21,13 +20,19 @@ function profileReducer(state = initialState, action) {
                 profile: payload,
                 loading: false
             }
+        case CLEAR_PROFILE:
+            return {
+                ...state,
+                profile: null,
+                loading: false
+            }
         case PROFILE_ERROR:
             return {
                 ...state,
                 error: payload,
                 loading: false
             }
- 
+
         default:
             return { ...state }
     }
