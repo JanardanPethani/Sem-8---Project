@@ -38,9 +38,10 @@ router.post("/request", [
 // @access  Private
 router.get('/allRequests', auth, async (req, res) => {
     try {
-        const result = await Request.find({ reqBy: req.user._id }).populate('reqBy', ['firstname', 'lastname', 'phone'])
+        const result = await Request.find({ reqBy: req.user._id })
         res.status(200).json(result)
     } catch (error) {
+        console.log(error);
         res.status(500).json({ errors: [{ msg: error.message }] })
     }
 })

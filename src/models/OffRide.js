@@ -21,7 +21,7 @@ const offRideSchema = new mongoose.Schema({
 offRideSchema.methods.toJSON = function () {
     const request = this
     const reqObj = request.toObject()
-    reqObj.departAt = reqObj.departAt.getDate().toString()
+    reqObj.departAt = reqObj.departAt.toString()
     return reqObj
 }
 

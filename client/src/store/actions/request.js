@@ -16,7 +16,6 @@ export const sendRequest = (formData, history, edit = false) => async dispatch =
         }
         // console.log(formData);
         const res = await axios.post('/api/ride/request', formData, config)
-        console.log(res);
         dispatch(getCurrentProfile())
 
         dispatch(setAlert(edit ? 'Request Updated' : 'Request Created', 'light'))
