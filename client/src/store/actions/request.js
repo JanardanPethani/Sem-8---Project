@@ -19,7 +19,7 @@ export const sendRequest = (formData, history, edit = false) => async dispatch =
         dispatch(setAlert(edit ? 'Request Updated' : 'Request Created', 'light'))
 
         // can't use Redirect bcz Action is not react 
-        history.push('/dashboard')
+        // history.push('/dashboard')
     } catch (error) {
         const errors = error.response.data.errors;
         if (errors) {
