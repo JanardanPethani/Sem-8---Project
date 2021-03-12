@@ -15,6 +15,7 @@ import Alert from './components/layout/Alert/Alert'
 import Dashboard from './components/dashboard/Dashboard'
 import PrivateRoute from './components/routing/PrivateRoute'
 import Request from './components/request/RequestForm'
+import EditProfile from './components/profile/EditProfile'
 
 import { loadUser } from './store/actions/auth'
 import setAuthToken from './utils/setAuthToken'
@@ -46,6 +47,7 @@ const App = () => {
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <PrivateRoute exact path='/request' component={Request} />
               <PrivateRoute exact path='/offer' component={Offer} />
+              <PrivateRoute exact path='/edit-profile' component={EditProfile} />
             </Switch>
           </section>
           <Footer></Footer>

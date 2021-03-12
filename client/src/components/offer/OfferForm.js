@@ -84,4 +84,4 @@ OfferForm.propTypes = {
     sendOffer: PropTypes.func.isRequired
 }
 
-export default connect(null, { sendOffer })(OfferForm)
+export default connect(null, { sendOffer })(withRouter(OfferForm))

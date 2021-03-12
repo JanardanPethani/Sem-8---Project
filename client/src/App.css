@@ -1,3 +1,7 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
 /* Global Styles */
 :root {
   --primary-color: #17a2b8;
@@ -258,11 +262,15 @@ img {
 button {
   font: inherit;
 }
+.table {
+  width: 100%;
+  box-shadow: 1px 1px 3px #888;
+}
 
 .table th,
 .table td {
   padding: 1rem;
-  text-align: left;
+  text-align: center;
 }
 
 .table th {

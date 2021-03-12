@@ -13,10 +13,10 @@ export const sendOffer = (formData, history, edit = false) => async dispatch => 
             }
         }
         // console.log(formData);
-        const res = await axios.post('/api/ride/offer', formData, config)
+        await axios.post('/api/ride/offer', formData, config)
         dispatch(getCurrentProfile())
 
-        dispatch(setAlert(edit ? 'Offer Updated' : 'Offer Accepted', 'light'))
+        dispatch(setAlert(edit ? 'Offer Updated' : 'Offer Accepted', 'success'))
 
         // can't use Redirect bcz Action is not react 
         history.push('/dashboard')

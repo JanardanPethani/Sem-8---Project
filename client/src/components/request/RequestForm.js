@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 
 import { sendRequest } from '../../store/actions/request'
 
-
 //TODO: Select type -> seats 
 
 const RequestForm = ({ sendRequest, history }) => {
@@ -84,4 +83,4 @@ RequestForm.propTypes = {
     sendRequest: PropTypes.func.isRequired
 }
 
-export default connect(null, { sendRequest })(RequestForm)
+export default connect(null, { sendRequest })(withRouter(RequestForm))

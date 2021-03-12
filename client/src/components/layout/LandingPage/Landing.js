@@ -15,7 +15,7 @@ const Landing = ({ isAuthenticated }) => {
     <section className='landing'>
       <div className='dark-overlay'>
         <div className='landing-inner'>
-          <h1 className='x-large'>Share happiness.</h1>
+          <h1 className='x-large'>Share happiness through rides.</h1>
           <p className='lead'>Find or Share your journy with people.</p>
           <div className='dash-buttons'>
             <Link to='/register' className='btn btn-primary'>

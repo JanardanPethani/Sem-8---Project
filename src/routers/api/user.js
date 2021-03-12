@@ -57,13 +57,13 @@ router.post(
 router.patch('/me', auth, async (req, res) => {
   // req.body keys to array of keys
   const updates = Object.keys(req.body)
-  const allowedUpdates = ['firstname', 'lastname', 'phone', 'age']
+  const allowedUpdates = ['firstname', 'lastname', 'phone', 'age', 'email']
   const isValidOperation = updates.every((update) =>
     allowedUpdates.includes(update)
   )
 
   if (!isValidOperation) {
-    return res.status(400).send({ error: 'Invalid updates!' })
+    return res.status(400).json({ errors: [{ msg: 'Invalid Updates' }] })
   }
 
   try {

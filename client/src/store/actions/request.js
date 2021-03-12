@@ -13,13 +13,13 @@ export const sendRequest = (formData, history, edit = false) => async dispatch =
             }
         }
         // console.log(formData);
-        const res = await axios.post('/api/ride/request', formData, config)
+        await axios.post('/api/ride/request', formData, config)
         dispatch(getCurrentProfile())
 
-        dispatch(setAlert(edit ? 'Request Updated' : 'Request Created', 'light'))
+        dispatch(setAlert(edit ? 'Request Updated' : 'Request Created', 'success'))
 
         // can't use Redirect bcz Action is not react 
-        // history.push('/dashboard')
+        history.push('/dashboard')
     } catch (error) {
         const errors = error.response.data.errors;
         if (errors) {

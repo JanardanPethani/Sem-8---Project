@@ -1,46 +1,42 @@
 import React, { Fragment, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import Spinner from '../layout/Spinner/Spinner'
+import DashboardActions from './DashboardActions'
+import Requests from './Requests'
+import Offers from './Offers'
 
 import { getCurrentProfile } from '../../store/actions/profile'
 
 const Dashboard = ({ getCurrentProfile,
-    auth: { user },
+    auth,
     profile: { profile, loading } }) => {
     useEffect(() => {
         getCurrentProfile();
     }, [])
 
-    return loading && profile === null ? <Spinner /> : <Fragment>
+    return loading && profile && auth.loading === null ? <Spinner /> : <Fragment>
+
         <h1 className="large text-primary">Dashboard</h1>
         <p className="lead">
             {/*logic : if user exist then show name */}
-            <i className="fas fa-user" /> Welcome {user && (user.firstname + ' ' + user.lastname)}
+            <i className="fas fa-user" /> Welcome {auth.user && (auth.user.firstname + ' ' + auth.user.lastname)}
         </p>
-        {profile !== null && profile.req.length !== 0 && profile.off.length !== 0 ? (
+        {profile !== null && (profile.req.length !== 0 || profile.off.length !== 0) ? (
             <Fragment>
-                <Link to='/request' className="btn btn-primary my-1">
-                    Request Ride
-                </Link>
-                <Link to='/offer' className="btn btn-primary my-1">
-                    Offer Ride
-                </Link>
+                <DashboardActions />
+                <Requests request={profile.req} />
+                <Offers offer={profile.off} />
             </Fragment>
         ) : (
             <Fragment>
                 <p>You have not requested / offered a ride</p>
-                <Link to='/request' className="btn btn-primary my-1">
-                    Request Ride
-                </Link>
-                <Link to='/offer' className="btn btn-primary my-1">
-                    Offer Ride
-                </Link>
+                <br />
+                <DashboardActions />
             </Fragment>
         )}
-    </Fragment>
+    </Fragment >
 }
 
 Dashboard.propTypes = {
