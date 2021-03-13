@@ -3,25 +3,30 @@ import Moment from 'react-moment'
 import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
+import { deleteReq } from '../../store/actions/request'
 
-const Requests = ({ request }) => {
+const Requests = ({ request, deleteReq }) => {
 
-    const requests = request.map((req) => (
+    const requests = request.map((req, index) => (
         <tr key={req._id}>
+            <td>{index + 1}</td>
             <td>{req.from}</td>
             <td>{req.to}</td>
             <td><Moment>{req.departAt}</Moment></td>
             <td>
-                <button className='btn btn-danger'><i className="fas fa-trash-alt"></i></button>
+                <button className='btn btn-danger' onClick={() => {
+                    deleteReq(req._id)
+                }}><i className="fas fa-trash-alt"></i></button>
             </td>
         </tr>
     ))
     return (
         <Fragment>
-            <h2 className="my-2">Requests</h2>
+            <h2 className="p-6 text-xl font-medium">Requests</h2>
             <table className="table">
-                <thead>
+                <thead className="bg-primaryColor text-white">
                     <tr>
+                        <th>#</th>
                         <th>From</th>
                         <th>To</th>
                         <th>Time</th>
@@ -40,4 +45,4 @@ Requests.propTypes = {
     request: PropTypes.array.isRequired,
 }
 
-export default connect()(Requests)
+export default connect(null, { deleteReq })(Requests)

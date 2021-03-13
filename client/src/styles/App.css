@@ -45,7 +45,7 @@ img {
   overflow: hidden;
   padding: 0 2rem;
   margin-top: 6rem;
-  margin-bottom: 6rem;
+  margin-bottom: 8rem;
 }
 
 /* Text Styles*/
@@ -265,16 +265,13 @@ button {
 .table {
   width: 100%;
   box-shadow: 1px 1px 3px #888;
+  margin-bottom: 1rem;
 }
 
 .table th,
 .table td {
   padding: 1rem;
   text-align: center;
-}
-
-.table th {
-  background: var(--light-color);
 }
 
 /* Profiles Page */
@@ -420,6 +417,7 @@ button {
 @media (max-width: 700px) {
   .container {
     margin-top: 8rem;
+    margin-bottom: 2rem;
   }
 
   .hide-sm {

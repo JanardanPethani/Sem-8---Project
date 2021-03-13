@@ -32,3 +32,17 @@ export const sendRequest = (formData, history, edit = false) => async dispatch =
     }
 
 }
+
+export const deleteReq = id => async dispatch => {
+    try {
+        await axios.delete(`/api/ride/request/${id}`)
+        dispatch(getCurrentProfile())
+        dispatch(setAlert('Request Deleted', 'success'))
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error }
+        })
+    }
+
+}

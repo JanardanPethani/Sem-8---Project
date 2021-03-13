@@ -1,7 +1,8 @@
 import {
     PROFILE_ERROR,
     GET_PROFILE,
-    CLEAR_PROFILE
+    CLEAR_PROFILE,
+    UPDATE_PROFILE
 } from '../actions/types'
 
 const initialState = {
@@ -15,6 +16,7 @@ function profileReducer(state = initialState, action) {
 
     switch (type) {
         case GET_PROFILE:
+        case UPDATE_PROFILE:
             return {
                 ...state,
                 profile: payload,

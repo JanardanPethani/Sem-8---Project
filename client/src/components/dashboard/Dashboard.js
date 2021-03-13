@@ -8,39 +8,52 @@ import Requests from './Requests'
 import Offers from './Offers'
 
 import { getCurrentProfile } from '../../store/actions/profile'
+import { deleteUser } from '../../store/actions/auth'
 
 const Dashboard = ({ getCurrentProfile,
     auth,
-    profile: { profile, loading } }) => {
+    profile: { profile, loading },
+    deleteUser }) => {
+
     useEffect(() => {
         getCurrentProfile();
     }, [])
 
     return loading && profile && auth.loading === null ? <Spinner /> : <Fragment>
+        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden  text-center">
+            <div className="p-5">
+                <div className="uppercase tracking-wide font-bold">Welcome </div>
+                <p className="mt-2 text-800 font-bold leading-relaxed">{auth.user && (auth.user.firstname + ' ' + auth.user.lastname)}</p>
+            </div>
+        </div>
 
-        <h1 className="large text-primary">Dashboard</h1>
-        <p className="lead">
-            {/*logic : if user exist then show name */}
-            <i className="fas fa-user" /> Welcome {auth.user && (auth.user.firstname + ' ' + auth.user.lastname)}
-        </p>
-        {profile !== null && (profile.req.length !== 0 || profile.off.length !== 0) ? (
-            <Fragment>
-                <DashboardActions />
-                <Requests request={profile.req} />
-                <Offers offer={profile.off} />
-            </Fragment>
-        ) : (
-            <Fragment>
-                <p>You have not requested / offered a ride</p>
-                <br />
-                <DashboardActions />
-            </Fragment>
-        )}
+        {
+            profile !== null && (profile.req.length !== 0 || profile.off.length !== 0) ? (
+                <Fragment>
+                    <DashboardActions />
+                    <Requests request={profile.req} />
+                    <Offers offer={profile.off} />
+                </Fragment>
+            ) : (
+                <Fragment>
+                    <DashboardActions />
+                    <br />
+                    <p className="max-w-md mx-auto mt-2 text-center text-500 leading-relaxed">You have not requested / offered a ride</p>
+                </Fragment>
+            )
+        }
+        <div className="justify-center flex  mt-6">
+            <button className="btn btn-danger p-2 rounded" onClick={() => deleteUser()}>
+                <i className="fas fa-user-minus"></i>{' '}
+                Delete Account
+            </button>
+        </div>
     </Fragment >
 }
 
 Dashboard.propTypes = {
     getCurrentProfile: PropTypes.func.isRequired,
+    deleteUser: PropTypes.func.isRequired,
     auth: PropTypes.object.isRequired,
     profile: PropTypes.object.isRequired
 }
@@ -50,4 +63,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 })
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard)
+export default connect(mapStateToProps, { getCurrentProfile, deleteUser })(Dashboard)

@@ -10,7 +10,9 @@ import {
     LOGIN_SUCCESS,
     LOGIN_FAIL,
     LOGOUT,
-    CLEAR_PROFILE
+    CLEAR_PROFILE,
+    DELETE_ACCOUNT,
+    PROFILE_ERROR
 } from './types'
 
 
@@ -75,7 +77,7 @@ export const logout = () => dispatch => {
 };
 
 // Register a user
-export const register = ({ firstname, lastname, email, phone, password }) => async dispatch => {
+export const register = ({ firstname, lastname, email, age, phone, password }) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -83,7 +85,7 @@ export const register = ({ firstname, lastname, email, phone, password }) => asy
     }
 
     const body = JSON.stringify({
-        firstname, lastname, email, phone, password
+        firstname, lastname, email, age, phone, password
     })
 
     try {
@@ -93,6 +95,7 @@ export const register = ({ firstname, lastname, email, phone, password }) => asy
             payload: res.data
         });
         dispatch(loadUser());
+        dispatch(setAlert('Account successfuly created', 'success'))
 
     } catch (error) {
         const errors = error.response.data.errors;
@@ -102,5 +105,24 @@ export const register = ({ firstname, lastname, email, phone, password }) => asy
         dispatch({
             type: REGISTER_FAIL
         });
+    }
+}
+export const deleteUser = () => async dispatch => {
+    if (window.confirm('Sure? this can not be undone..!')) {
+        try {
+            await axios.delete(`/api/user/me`)
+            dispatch({
+                type: DELETE_ACCOUNT
+            });
+            dispatch({
+                type: CLEAR_PROFILE
+            });
+            dispatch(setAlert('Account successfuly removed'))
+        } catch (error) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: { msg: error }
+            })
+        }
     }
 }

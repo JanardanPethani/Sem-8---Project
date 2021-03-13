@@ -4,7 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './store/store'
 
-import './App.css'
+import './styles/App.css'
+
 
 import Footer from './components/layout/Footer/Footer'
 import Landing from './components/layout/LandingPage/Landing'

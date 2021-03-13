@@ -13,6 +13,7 @@ router.post(
     check('firstname', 'First name is required').not().isEmpty(),
     check('lastname', 'Last name is required').not().isEmpty(),
     check('email', 'Include valid email').isEmail(),
+    check('age', 'Age is required').not().isEmpty(),
     check(
       'password',
       'Please enter password with six or more characters'
@@ -36,11 +37,7 @@ router.post(
       })
       await user.save()
       const token = await user.generateAuthToken()
-      // res.cookie('jwt', token, {
-      //     httpOnly: true,
-      //     // 1 sec = 1000 ms
-      //     expires: new Date(Date.now() + (60 * 60 * 1000))
-      // })
+
       // console.log(user);
       res.status(201).json({ token })
     } catch (error) {

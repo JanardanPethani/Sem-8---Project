@@ -32,3 +32,17 @@ export const sendOffer = (formData, history, edit = false) => async dispatch => 
     }
 
 }
+
+export const deleteOff = id => async dispatch => {
+    try {
+        await axios.delete(`/api/ride/offer/${id}`)
+        dispatch(getCurrentProfile())
+        dispatch(setAlert('Offer Deleted', 'success'))
+    } catch (error) {
+        dispatch({
+            type: PROFILE_ERROR,
+            payload: { msg: error }
+        })
+    }
+
+}
