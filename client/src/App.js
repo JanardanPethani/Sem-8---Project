@@ -6,7 +6,6 @@ import store from './store/store'
 
 import './styles/App.css'
 
-
 import Footer from './components/layout/Footer/Footer'
 import Landing from './components/layout/LandingPage/Landing'
 import Navbar from './components/layout/Navbar/Navbar'

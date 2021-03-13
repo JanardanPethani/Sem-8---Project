@@ -12,7 +12,7 @@ export const sendRequest = (formData, history, edit = false) => async dispatch =
                 'Content-Type': 'application/json'
             }
         }
-        // console.log(formData);
+
         await axios.post('/api/ride/request', formData, config)
         dispatch(getCurrentProfile())
 

@@ -20,9 +20,28 @@ const RequestForm = ({ sendRequest, history }) => {
         departAt
     } = formData;
 
-    const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
+    const onChange = e => {
+        if (e.target.name == 'departAt') {
+            // Only in chrome
+            const currDate = new Date().getDate()
+            const currTime = new Date().getTime()
+
+            const dateTime = new Date(e.target.value)
+            const date = dateTime.getDate()
+            const time = dateTime.getTime()
+            console.log('From Form: ' + date + ' ' + time)
+            if (date - currDate >= 0) {
+                console.log('DateDiff is ok:' + (date - currDate));
+            }
+            if (time - currTime >= 60000) {
+                console.log('TimeDiff is ok:' + (time - currTime));
+            }
+        }
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
 
     const onSubmit = e => {
+
         e.preventDefault();
         sendRequest(formData, history)
     }

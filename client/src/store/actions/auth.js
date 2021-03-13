@@ -71,7 +71,10 @@ export const login = (email, password) => async dispatch => {
 }
 
 // Logout
-export const logout = () => dispatch => {
+export const logout = (all = null) => async dispatch => {
+    if (all === 'all') {
+        await axios.post('/api/auth/logoutAll')
+    }
     dispatch({ type: LOGOUT });
     dispatch({ type: CLEAR_PROFILE });
 };

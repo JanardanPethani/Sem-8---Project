@@ -23,6 +23,12 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
                     <span className="hide-sm">Logout</span>
                 </a>
             </li>
+            <li>
+                <a onClick={() => logout('all')} href="#!">
+                    <i className="fas fa-sign-out-alt" />{' '}
+                    <span className="hide-sm">Logout All</span>
+                </a>
+            </li>
         </ul>
     )
 

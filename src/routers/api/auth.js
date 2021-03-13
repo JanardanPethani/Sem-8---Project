@@ -70,7 +70,7 @@ router.post('/logoutAll', auth, async (req, res) => {
         // res.clearCookie('jwt')
         await req.user.save()
 
-        res.send('Logged out from all devices')
+        res.status(200).send(req.user)
 
     } catch (error) {
         res.status(400).json({ errors: [{ msg: error.message }] })
