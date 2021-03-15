@@ -2,10 +2,10 @@ import axios from 'axios'
 import { setAlert } from './alert'
 import { getCurrentProfile } from './profile'
 
-import { PROFILE_ERROR } from './types'
+import { PROFILE_ERROR, GET_REQUEST, REQUEST_FAIL, MATCH_FAILED, MATCH_REQ } from './types'
 
 // Create or Update request
-export const sendRequest = (formData, history, edit = false) => async dispatch => {
+export const sendRequest = (formData, history) => async dispatch => {
     try {
         const config = {
             headers: {
@@ -16,7 +16,7 @@ export const sendRequest = (formData, history, edit = false) => async dispatch =
         await axios.post('/api/ride/request', formData, config)
         dispatch(getCurrentProfile())
 
-        dispatch(setAlert(edit ? 'Request Updated' : 'Request Created', 'success'))
+        dispatch(setAlert('Request Created', 'success'))
 
         // can't use Redirect bcz Action is not react 
         history.push('/dashboard')
@@ -34,15 +34,60 @@ export const sendRequest = (formData, history, edit = false) => async dispatch =
 }
 
 export const deleteReq = id => async dispatch => {
+    if (window.confirm('Sure? this can not be undone..!')) {
+        try {
+            await axios.delete(`/api/ride/request/${id}`)
+            dispatch(getCurrentProfile())
+            dispatch(setAlert('Request Deleted', 'success'))
+        } catch (error) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: { msg: error }
+            })
+        }
+    }
+}
+
+export const getRequest = id => async dispatch => {
     try {
-        await axios.delete(`/api/ride/request/${id}`)
+        const res = await axios.get(`/api/ride/request/${id}`)
         dispatch(getCurrentProfile())
-        dispatch(setAlert('Request Deleted', 'success'))
+        // console.log(res);
+        dispatch({
+            type: GET_REQUEST,
+            payload: res.data
+        })
     } catch (error) {
         dispatch({
-            type: PROFILE_ERROR,
+            type: REQUEST_FAIL,
             payload: { msg: error }
         })
     }
+}
 
+export const matchRides = (from) => async dispatch => {
+    try {
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const body = {
+            from
+        }
+        
+        const res = await axios.post('/api/match/request', body, config)
+        dispatch(getCurrentProfile())
+        // console.log(res);
+        dispatch({
+            type: MATCH_REQ,
+            payload: res.data
+        })
+    } catch (error) {
+        dispatch({
+            type: MATCH_FAILED,
+            payload: { msg: error }
+        })
+    }
 }

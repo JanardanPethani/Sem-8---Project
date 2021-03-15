@@ -17,11 +17,14 @@ const offRideSchema = new mongoose.Schema({
         type: Date,
         required: true
     }
+}, {
+    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
 })
 offRideSchema.methods.toJSON = function () {
     const request = this
     const reqObj = request.toObject()
     reqObj.departAt = reqObj.departAt.toString()
+    reqObj.created_at = reqObj.created_at.toString()
     return reqObj
 }
 

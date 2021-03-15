@@ -73,6 +73,31 @@ router.patch('/me', auth, async (req, res) => {
   }
 })
 
+// @route   PATCH api/user
+// @desc    Update password
+// @access  Public
+router.patch('/updatePassword', async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email })
+    if (!user) {
+      throw new Error('User not found')
+    }
+    // const pass = await bcrypt.hash(req.body.password, 8)
+    user.password = req.body.password
+    await user.save()
+
+    res.status(200).json({
+      msg: "Password updated"
+    })
+  } catch (error) {
+    res.status(400).json({
+      errors: [{
+        msg: error.message
+      }]
+    })
+  }
+})
+
 // @route   DELETE api/user
 // @desc    Delete a user
 // @access  Private

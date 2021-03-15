@@ -2,10 +2,10 @@ import axios from 'axios'
 import { setAlert } from './alert'
 import { getCurrentProfile } from './profile'
 
-import { PROFILE_ERROR } from './types'
+import { GET_OFFER, OFFER_FAIL, PROFILE_ERROR } from './types'
 
 // Create or Update request
-export const sendOffer = (formData, history, edit = false) => async dispatch => {
+export const sendOffer = (formData, history) => async dispatch => {
     try {
         const config = {
             headers: {
@@ -16,7 +16,7 @@ export const sendOffer = (formData, history, edit = false) => async dispatch => 
         await axios.post('/api/ride/offer', formData, config)
         dispatch(getCurrentProfile())
 
-        dispatch(setAlert(edit ? 'Offer Updated' : 'Offer Accepted', 'success'))
+        dispatch(setAlert('Offer Accepted', 'success'))
 
         // can't use Redirect bcz Action is not react 
         history.push('/dashboard')
@@ -34,15 +34,32 @@ export const sendOffer = (formData, history, edit = false) => async dispatch => 
 }
 
 export const deleteOff = id => async dispatch => {
+    if (window.confirm('Sure? this can not be undone..!')) {
+        try {
+            await axios.delete(`/api/ride/offer/${id}`)
+            dispatch(getCurrentProfile())
+            dispatch(setAlert('Offer Deleted', 'success'))
+        } catch (error) {
+            dispatch({
+                type: PROFILE_ERROR,
+                payload: { msg: error }
+            })
+        }
+    }
+}
+
+export const getOffer = id => async dispatch => {
     try {
-        await axios.delete(`/api/ride/offer/${id}`)
+        const res = await axios.get(`/api/ride/offer/${id}`)
         dispatch(getCurrentProfile())
-        dispatch(setAlert('Offer Deleted', 'success'))
+        dispatch({
+            type: GET_OFFER,
+            payload: res.data
+        })
     } catch (error) {
         dispatch({
-            type: PROFILE_ERROR,
+            type: OFFER_FAIL,
             payload: { msg: error }
         })
     }
-
 }

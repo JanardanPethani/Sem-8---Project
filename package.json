@@ -24,6 +24,7 @@
     "mapbox-gl": "^2.1.1",
     "moment": "^2.29.1",
     "mongoose": "^5.11.16",
+    "nodemailer": "^6.5.0",
     "path": "^0.12.7",
     "request": "^2.88.2",
     "validator": "^13.5.2"

@@ -61,5 +61,19 @@ router.delete('/offer/:id', auth, async (req, res) => {
     }
 })
 
-
+// @route   GET api/ride
+// @desc    get offer data
+// @access  Private
+router.get('/offer/:id', auth, async (req, res) => {
+    try {
+        const ride = await Offer.findOne({ _id: req.params.id, offBy: req.user.id })
+        if (!ride) {
+            throw new Error('Offer is not available')
+        } else {
+            res.status(200).json(ride)
+        }
+    } catch (error) {
+        res.status(500).json({ errors: [{ msg: error.message }] })
+    }
+})
 module.exports = router

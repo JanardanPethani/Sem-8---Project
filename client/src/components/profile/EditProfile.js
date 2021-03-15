@@ -44,69 +44,71 @@ const EditProfile = ({ editProfile, auth: { user, loading }, history }) => {
     }
 
     return (
-        <Fragment>
-            <h1 className='large text-primary'>Edit</h1>
-            <p className='lead'>
-                <i className='fas fa-user'></i> Change details
-      </p>
-            <form className='form' onSubmit={(e) => onSubmit(e)}>
-                <div className='form-group'>
-                    <input
-                        type='text'
-                        placeholder='First Name'
-                        name='firstname'
-                        value={firstname}
-                        onChange={(e) => onChange(e)}
-                        required
-                    />
-                </div>
-                <div className='form-group'>
-                    <input
-                        type='text'
-                        placeholder='Last Name'
-                        name='lastname'
-                        value={lastname}
-                        onChange={(e) => onChange(e)}
-                        required
-                    />
-                </div>
-                <div className='form-group'>
-                    <input
-                        type='email'
-                        placeholder='Email Address'
-                        name='email'
-                        value={email}
-                        onChange={(e) => onChange(e)}
-                        required
-                    />
-                </div>
-                <div className='form-group'>
-                    <input
-                        type='tel'
-                        placeholder='Phone number'
-                        name='phone'
-                        value={phone}
-                        onChange={(e) => onChange(e)}
-                        required
-                    />
-                </div>
-                <div className='form-group'>
-                    <input
-                        type='number'
-                        placeholder='age'
-                        name='age'
-                        value={age}
-                        onChange={(e) => onChange(e)}
-                        min='13'
-                        max='80'
-                        required
-                    />
-                </div>
-                <input type='submit' className='btn btn-primary' value='Update' />
-                <Link className="btn btn-light my-1" to="/dashboard">
-                    Go Back
+        <Fragment >
+            <div className='mt-5 mb-5 shadow-lg p-3 rounded-lg'>
+                <h1 className='large text-primary'>Edit</h1>
+                <p className='lead'>
+                    <i className='fas fa-user'></i> Change details
+            </p>
+                <form className='form ' onSubmit={(e) => onSubmit(e)}>
+                    <div className='form-group'>
+                        <input
+                            type='text'
+                            placeholder='First Name'
+                            name='firstname'
+                            value={firstname}
+                            onChange={(e) => onChange(e)}
+                            required
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <input
+                            type='text'
+                            placeholder='Last Name'
+                            name='lastname'
+                            value={lastname}
+                            onChange={(e) => onChange(e)}
+                            required
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <input
+                            type='email'
+                            placeholder='Email Address'
+                            name='email'
+                            value={email}
+                            onChange={(e) => onChange(e)}
+                            required
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <input
+                            type='tel'
+                            placeholder='Phone number'
+                            name='phone'
+                            value={phone}
+                            onChange={(e) => onChange(e)}
+                            required
+                        />
+                    </div>
+                    <div className='form-group'>
+                        <input
+                            type='number'
+                            placeholder='age'
+                            name='age'
+                            value={age}
+                            onChange={(e) => onChange(e)}
+                            min='13'
+                            max='80'
+                            required
+                        />
+                    </div>
+                    <input type='submit' className='btn btn-primary' value='Update' />
+                    <Link className="btn btn-light my-1" to="/dashboard">
+                        Go Back
                 </Link>
-            </form>
+                </form>
+            </div>
         </Fragment>
     )
 }

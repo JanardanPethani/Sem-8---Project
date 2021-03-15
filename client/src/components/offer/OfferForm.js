@@ -55,11 +55,11 @@ const OfferForm = ({ sendOffer, history }) => {
         <Fragment>
             <h1 className="large text-primary">Offer a ride</h1>
             <div className="grid">
-                <div className="relative h-96">
+                <div className="relative h-96 shadow-lg rounded-lg overflow-hidden">
                     <Map />
                 </div>
 
-                <div className="relative mt-5 mb-5">
+                <div className="relative mt-5 mb-5 shadow-lg p-3 rounded-lg">
                     <p className="lead">
                         Add details
                 </p>

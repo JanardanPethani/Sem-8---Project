@@ -15,7 +15,11 @@ import Alert from './components/layout/Alert/Alert'
 import Dashboard from './components/dashboard/Dashboard'
 import PrivateRoute from './components/routing/PrivateRoute'
 import Request from './components/request/RequestForm'
+import RequestPage from './components/request/RequestPage'
+import OfferPage from './components/offer/OfferPage'
 import EditProfile from './components/profile/EditProfile'
+import ForgotPassword from './components/auth/PasswordRecovery/ForgotPassword'
+import PasswordRecover from './components/auth/PasswordRecovery/PasswordRecover'
 
 import { loadUser } from './store/actions/auth'
 import setAuthToken from './utils/setAuthToken'
@@ -29,7 +33,6 @@ const App = () => {
   //When the state update it will keep looping to stop, [] is provided to run once
   //this tells reacts that effect doesn't depend on any values
   useEffect(() => {
-    console.log('Loading user from app component')
     store.dispatch(loadUser())
   }, [])
 
@@ -44,9 +47,13 @@ const App = () => {
             <Switch>
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
+              <Route exact path='/forgotPassword' component={ForgotPassword} />
+              <Route exact path='/passwordRecovery' component={PasswordRecover} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <PrivateRoute exact path='/request' component={Request} />
+              <PrivateRoute exact path='/requestpage' component={RequestPage} />
               <PrivateRoute exact path='/offer' component={Offer} />
+              <PrivateRoute exact path='/offerpage' component={OfferPage} />
               <PrivateRoute exact path='/edit-profile' component={EditProfile} />
             </Switch>
           </section>
