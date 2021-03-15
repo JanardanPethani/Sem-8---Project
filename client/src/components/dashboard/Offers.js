@@ -22,7 +22,7 @@ const Requests = ({ offer, deleteOff }) => {
     ))
     return (
         <Fragment>
-            <h2 className="p-6 text-xl font-medium">Offers</h2>
+            <h2 className="p-6 text-xl font-medium">All Offers</h2>
             <table className="table">
                 <thead className="bg-primaryColor text-white">
                     <tr>
@@ -34,10 +34,10 @@ const Requests = ({ offer, deleteOff }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {offers.length !== 0 ? offers : <tr>No Offers found</tr>}
+                    {offers.length !== 0 ? offers : <tr><td colSpan={5}>No offer found</td></tr>}
                 </tbody>
             </table>
-        </Fragment>
+        </Fragment >
     )
 }
 

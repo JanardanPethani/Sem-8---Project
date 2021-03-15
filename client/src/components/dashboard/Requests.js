@@ -16,13 +16,14 @@ const Requests = ({ request, deleteReq }) => {
             <td>
                 <button className='btn btn-danger' onClick={() => {
                     deleteReq(req._id)
-                }}><i className="fas fa-trash-alt"></i></button>
+                }}><i className="fas fa-trash-alt"></i>
+                </button>
             </td>
         </tr>
     ))
     return (
         <Fragment>
-            <h2 className="p-6 text-xl font-medium">Requests</h2>
+            <h2 className="p-6 text-xl font-medium">All Requests</h2>
             <table className="table">
                 <thead className="bg-primaryColor text-white">
                     <tr>
@@ -34,10 +35,10 @@ const Requests = ({ request, deleteReq }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {requests.length !== 0 ? requests : <tr>No requests found</tr>}
+                    {requests.length !== 0 ? requests : <tr><td colSpan={5}>No requests found</td></tr>}
                 </tbody>
             </table>
-        </Fragment>
+        </Fragment >
     )
 }
 
