@@ -30,7 +30,7 @@ const getPlaceName = ({ latitude, longitude }, callback) => {
         } else if (body.message) {
             callback('Mapbox API. \nmsg:' + body.message, undefined)
         } else {
-            console.log(body);
+            // console.log(body);
             callback(undefined, {
                 placeName: body.features[0].place_name
             })

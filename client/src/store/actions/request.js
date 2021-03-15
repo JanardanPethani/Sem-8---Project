@@ -44,5 +44,4 @@ export const deleteReq = id => async dispatch => {
             payload: { msg: error }
         })
     }
-
 }

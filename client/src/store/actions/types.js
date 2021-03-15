@@ -19,5 +19,7 @@ export const PROFILE_ERROR = 'PROFILE_ERROR'
 
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT'
 
+export const GET_PLACENAME = "GET_PLACENAME"
+export const MAP_ERROR = "MAP_ERROR"
 
 
