@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
@@ -58,11 +58,11 @@ const RequestForm = ({ sendRequest, history }) => {
 
             <h1 className="large text-primary">Request a ride</h1>
             <div className="grid">
-                <div className="relative h-96">
+                <div className="relative h-96 shadow-lg rounded-lg overflow-hidden">
                     <Map />
                 </div>
 
-                <div className="relative mt-5 mb-5">
+                <div className="relative mt-5 mb-5 shadow-lg p-3 rounded-lg">
                     <p className="lead">
                         Add details
                 </p>

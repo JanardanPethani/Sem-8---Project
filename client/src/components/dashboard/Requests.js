@@ -24,8 +24,8 @@ const Requests = ({ request, deleteReq }) => {
     return (
         <Fragment>
             <h2 className="p-6 text-xl font-medium">All Requests</h2>
-            <table className="table">
-                <thead className="bg-primaryColor text-white">
+            <table className="table shadow-lg p-3 rounded-lg overflow-hidden">
+                <thead className="bg-primaryColor text-white ">
                     <tr>
                         <th>#</th>
                         <th>From</th>

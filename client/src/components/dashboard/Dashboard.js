@@ -20,7 +20,7 @@ const Dashboard = ({ getCurrentProfile,
     }, [])
 
     return loading && profile && auth.loading === null ? <Spinner /> : <Fragment>
-        <div className="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden  text-center">
+        <div className="max-w-md mx-auto bg-white shadow-lg p-2 rounded-lg overflow-hidden  text-center">
             <div className="p-5">
                 <div className="uppercase tracking-wide font-bold">Welcome </div>
                 <p className="mt-2 text-800 font-bold leading-relaxed">{auth.user && (auth.user.firstname + ' ' + auth.user.lastname)}</p>

@@ -23,7 +23,7 @@ const Requests = ({ offer, deleteOff }) => {
     return (
         <Fragment>
             <h2 className="p-6 text-xl font-medium">All Offers</h2>
-            <table className="table">
+            <table className="table shadow-lg p-3 rounded-lg overflow-hidden">
                 <thead className="bg-primaryColor text-white">
                     <tr>
                         <th>#</th>

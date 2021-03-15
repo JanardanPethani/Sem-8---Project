@@ -54,3 +54,11 @@ export const editProfile = (formData, history) => async dispatch => {
     }
 }
 
+export const getLocName = (geoData) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+    await axios.patch('/api/user/me', geoData, config)
+}

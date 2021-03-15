@@ -1,7 +1,7 @@
 const express = require('express')
 const router = new express.Router()
 const auth = require('../../middleware/auth')
-const getLngLat = require('../../utils/geocode')
+const { getLngLat, getPlaceName } = require('../../utils/geocode')
 
 // @route   GET api/map
 // @desc    Get lng lat
@@ -27,5 +27,26 @@ router.get('/fgeocode', (req, res) => {
         })
     }
 })
+
+router.get('/getPlace', (req, res) => {
+
+    if (!req.body.LatLong) {
+        return res.json({
+            errors: [{ msg: 'LatLong must be provided' }]
+        })
+    }
+    if (req.body.LatLong) {
+        console.log(req.body.LatLong);
+        getPlaceName(req.body.LatLong, (error, { placeName } = {}) => {
+            if (error) {
+                return res.json({ errors: [{ msg: error }] })
+            }
+            res.json({
+                place: placeName
+            })
+        })
+    }
+})
+
 
 module.exports = router

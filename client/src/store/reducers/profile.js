@@ -8,6 +8,8 @@ import {
 const initialState = {
     profile: null,
     loading: true,
+    currRequestData: {},
+    currOfferData: {},
     error: {}
 }
 
