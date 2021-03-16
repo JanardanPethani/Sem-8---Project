@@ -61,18 +61,20 @@ router.post('/getUser', async (req, res) => {
 // @desc    validate otp
 // @access  Public
 router.post('/checkOtp', async (req, res) => {
-    console.log(req);
+    // console.log(req);
     if (mainOtp == req.body.otp) {
         console.log(mainOtp);
-        return res.status(200).json({ msg: "Valid Otp" })
+        res.status(200).json({ msg: "Valid Otp" })
+    } else {
+        res.status(400).json({
+            errors: [{
+                msg: 'Invalid Otp'
+            }]
+        })
     }
     // console.log(mainOtp);
 
-    return res.status(400).json({
-        errors: [{
-            msg: 'Invalid Otp'
-        }]
-    })
+
 })
 
 // @route   POST api/auth

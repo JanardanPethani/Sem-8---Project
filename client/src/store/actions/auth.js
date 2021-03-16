@@ -12,7 +12,9 @@ import {
     LOGOUT,
     CLEAR_PROFILE,
     DELETE_ACCOUNT,
-    PROFILE_ERROR
+    PROFILE_ERROR,
+    CHECK_OTP,
+    OTP_FAILED
 } from './types'
 
 
@@ -163,7 +165,7 @@ export const checkUser = (email, history) => async dispatch => {
     }
 }
 
-export const checkOtp = (email, otp, history) => async dispatch => {
+export const checkOtp = (otp, history) => async dispatch => {
     const config = {
         headers: {
             'Content-Type': 'application/json'
@@ -179,7 +181,8 @@ export const checkOtp = (email, otp, history) => async dispatch => {
         if (res) {
             // console.log(res);
             dispatch(setAlert(res.data.msg, 'success'))
-            
+
+            return true
         }
     }
     catch (error) {
@@ -188,6 +191,6 @@ export const checkOtp = (email, otp, history) => async dispatch => {
         if (errors) {
             errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
         }
-        
+        return false
     }
 }

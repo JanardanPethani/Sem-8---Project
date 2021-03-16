@@ -12,6 +12,9 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 
 export const LOGOUT = 'LOGOUT';
 
+export const CHECK_OTP = "CHECK_OTP"
+export const OTP_FAILED = "OTP_FAILED"
+
 export const GET_PROFILE = 'GET_PROFILE'
 export const UPDATE_PROFILE = 'UPDATE_PROFILE'
 export const CLEAR_PROFILE = 'CLEAR_PROFILE'
@@ -21,5 +24,7 @@ export const DELETE_ACCOUNT = 'DELETE_ACCOUNT'
 
 export const GET_PLACENAME = "GET_PLACENAME"
 export const MAP_ERROR = "MAP_ERROR"
+
+
 
 
