@@ -16,6 +16,8 @@ import Dashboard from './components/dashboard/Dashboard'
 import PrivateRoute from './components/routing/PrivateRoute'
 import Request from './components/request/RequestForm'
 import EditProfile from './components/profile/EditProfile'
+import ForgotPassword from './components/auth/PasswordRecovery/ForgotPassword'
+import PasswordRecover from './components/auth/PasswordRecovery/PasswordRecover'
 
 import { loadUser } from './store/actions/auth'
 import setAuthToken from './utils/setAuthToken'
@@ -44,6 +46,8 @@ const App = () => {
             <Switch>
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
+              <Route exact path='/forgotPassword' component={ForgotPassword} />
+              <Route exact path='/passwordRecovery' component={PasswordRecover} />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <PrivateRoute exact path='/request' component={Request} />
               <PrivateRoute exact path='/offer' component={Offer} />

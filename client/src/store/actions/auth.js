@@ -16,7 +16,6 @@ import {
 } from './types'
 
 
-
 // Load User
 export const loadUser = () => async dispatch => {
     if (localStorage.token) {
@@ -110,6 +109,8 @@ export const register = ({ firstname, lastname, email, age, phone, password }) =
         });
     }
 }
+
+// delete current user
 export const deleteUser = () => async dispatch => {
     if (window.confirm('Sure? this can not be undone..!')) {
         try {
@@ -127,5 +128,66 @@ export const deleteUser = () => async dispatch => {
                 payload: { msg: error }
             })
         }
+    }
+}
+
+// check availability of user
+export const checkUser = (email, history) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = {
+        email
+    }
+
+    try {
+        const res = await axios.post('/api/auth/getUser', body, config)
+        if (res) {
+            // console.log(res);
+            dispatch(setAlert(res.data.msg, 'success'))
+            history.push({
+                pathname: '/passwordRecovery',
+                state: { id: email }
+            })
+        }
+    }
+    catch (error) {
+        console.log(error);
+        const errors = error.response.data.errors;
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+        }
+    }
+}
+
+export const checkOtp = (email, otp, history) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = {
+        otp
+    }
+
+    try {
+        const res = await axios.post('/api/auth/checkOtp', body, config)
+        if (res) {
+            // console.log(res);
+            dispatch(setAlert(res.data.msg, 'success'))
+            
+        }
+    }
+    catch (error) {
+        console.log(error);
+        const errors = error.response.data.errors;
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+        }
+        
     }
 }
