@@ -31,7 +31,6 @@ const App = () => {
   //When the state update it will keep looping to stop, [] is provided to run once
   //this tells reacts that effect doesn't depend on any values
   useEffect(() => {
-    console.log('Loading user from app component')
     store.dispatch(loadUser())
   }, [])
 

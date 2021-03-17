@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, withRouter, useLocation } from 'react-router-dom'
@@ -9,10 +9,6 @@ import { setAlert } from '../../../store/actions/alert'
 // destructured props ↘
 const PasswordRecover = ({ checkOtp, updatePassword, history, setAlert }) => {
     const location = useLocation()
-
-    useEffect(() => {
-        console.log(location.state.id);
-    }, [])
 
     const [formData, setFormData] = useState({
         otp: '',

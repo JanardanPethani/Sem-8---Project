@@ -10,15 +10,14 @@ export const getPlace = (latitude, longitude) => async dispatch => {
             }
         }
 
-        const body = {
-            LatLong: {
-                latitude,
-                longitude
-            }
-        }
         // console.log(body);
-        if (latitude && longitude) {
-            const res = await axios.post('/api/map/getPlace', body, config)
+        if (latitude !== '' && longitude !== '') {
+            const res = await axios.post('/api/map/getPlace', {
+                LatLong: {
+                    latitude,
+                    longitude
+                }
+            }, config)
             // console.log(res);
             dispatch({
                 type: GET_PLACENAME,

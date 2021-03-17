@@ -12,9 +12,7 @@ import {
     LOGOUT,
     CLEAR_PROFILE,
     DELETE_ACCOUNT,
-    PROFILE_ERROR,
-    CHECK_OTP,
-    OTP_FAILED
+    PROFILE_ERROR
 } from './types'
 
 

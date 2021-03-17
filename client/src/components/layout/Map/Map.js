@@ -22,7 +22,7 @@ const Map = () => {
     const [viewport, setViewport] = useState({
         latitude: 21.1702,
         longitude: 72.8311,
-        zoom: 3.5,
+        zoom: 10,
         bearing: 0,
         pitch: 0
     });
@@ -44,11 +44,12 @@ const Map = () => {
     // }, []);
 
     const onMarkerDragEnd = useCallback(event => {
-        logEvents({ onDragEnd: event.lngLat });
         setMarker({
             longitude: event.lngLat[0],
             latitude: event.lngLat[1]
         });
+        // console.log(event);
+        logEvents({ onDragEnd: event.lngLat });
     }, []);
 
 
@@ -68,7 +69,12 @@ const Map = () => {
                     trackUserLocation={true}
                     showAccuracyCircle={false}
                     onGeolocate={(loc) => {
-                        console.log(loc);
+                        console.log(loc.coords.latitude);
+                        setMarker({
+                            longitude: loc.coords.longitude,
+                            latitude: loc.coords.latitude
+                        })
+                        logEvents({ onDragEnd: [loc.coords.longitude, loc.coords.latitude] });
                     }}
                     auto={false}
                 />

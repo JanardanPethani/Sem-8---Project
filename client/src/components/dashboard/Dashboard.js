@@ -15,9 +15,7 @@ const Dashboard = ({ getCurrentProfile,
     profile: { profile, loading },
     deleteUser }) => {
 
-    useEffect(() => {
-        getCurrentProfile();
-    }, [])
+    useEffect(() => { getCurrentProfile() }, [getCurrentProfile])
 
     return loading && profile && auth.loading === null ? <Spinner /> : <Fragment>
         <div className="max-w-md mx-auto bg-white shadow-lg p-2 rounded-lg overflow-hidden  text-center">
