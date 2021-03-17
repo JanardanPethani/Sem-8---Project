@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -6,31 +6,40 @@ import './Control-panel.css'
 
 import { getPlace } from '../../../store/actions/map'
 
-
-const eventNames = ['onDragEnd'];
-
-function round5(value) {
-    return (Math.round(value * 1e5) / 1e5).toFixed(5);
+const toFix = (value) => {
+    if (value) {
+        return value.toFixed(4)
+    }
+    return value
 }
 
+const ControlPanel = ({ events, getPlace, place }) => {
+    const [locData, setData] = useState({
+        latitude: '',
+        longitude: ''
+    })
 
-function ControlPanel({ events, getPlace }) {
+    const { latitude, longitude } = locData
+
+    useEffect(() => {
+        setData({
+            ...locData,
+            latitude: toFix(events.onDragEnd[1]),
+            longitude: toFix(events.onDragEnd[0])
+        })
+        getPlace(latitude, longitude)
+    }, [events])
+
     return (
         <div className="control-panel">
-            <div>
-                {eventNames.map(eventName => {
-                    const lngLat = events[eventName];
-                    // console.log(lngLat);
-                    // getPlace(lngLat)
-                    return (
-                        <div key={eventName}>
-                            <strong>Place:</strong> {lngLat ? lngLat.map(round5).join(', ') : <em>null</em>}
-                        </div>
-                    );
-                })}
-            </div>
+            <strong>Address:</strong> {place.place ? `${place.place}` : <em>null</em>}
         </div>
     );
+}
+
+ControlPanel.prototype = {
+    getPlace: PropTypes.func.isRequired,
+    place: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({

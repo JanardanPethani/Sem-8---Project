@@ -20,7 +20,7 @@ const getLngLat = (city, callback) => {
 }
 
 const getPlaceName = ({ latitude, longitude }, callback) => {
-    console.log(latitude + ',' + longitude);
+    // console.log(latitude + ',' + longitude);
     const url = "https://api.mapbox.com/geocoding/v5/mapbox.places/" + longitude + ',' + latitude + ".json?access_token=" + process.env.MAP_ACCESS_TOKEN
 
     //mapbox request

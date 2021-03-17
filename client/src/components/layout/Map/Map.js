@@ -31,7 +31,9 @@ const Map = () => {
         latitude: 21.1702,
         longitude: 72.8311,
     });
-    const [events, logEvents] = useState({});
+    const [events, logEvents] = useState({
+        onDragEnd: ''
+    });
 
     // const onMarkerDragStart = useCallback(event => {
     //     logEvents(_events => ({ ..._events, onDragStart: event.lngLat }));
@@ -42,7 +44,7 @@ const Map = () => {
     // }, []);
 
     const onMarkerDragEnd = useCallback(event => {
-        logEvents(_events => ({ ..._events, onDragEnd: event.lngLat }));
+        logEvents({ onDragEnd: event.lngLat });
         setMarker({
             longitude: event.lngLat[0],
             latitude: event.lngLat[1]

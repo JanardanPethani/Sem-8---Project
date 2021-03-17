@@ -28,15 +28,16 @@ router.get('/fgeocode', (req, res) => {
     }
 })
 
-router.get('/getPlace', (req, res) => {
-
+router.post('/getPlace', (req, res) => {
+    // console.log('From getPlace');
     if (!req.body.LatLong) {
+        // console.log(req.body);
         return res.json({
             errors: [{ msg: 'LatLong must be provided' }]
         })
     }
     if (req.body.LatLong) {
-        console.log(req.body.LatLong);
+        // console.log(req.body);
         getPlaceName(req.body.LatLong, (error, { placeName } = {}) => {
             if (error) {
                 return res.json({ errors: [{ msg: error }] })
