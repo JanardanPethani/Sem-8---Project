@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, withRouter, useLocation } from 'react-router-dom'
 
-import { checkOtp } from '../../../store/actions/auth';
+import { checkOtp, updatePassword } from '../../../store/actions/auth';
 import { setAlert } from '../../../store/actions/alert'
 
 // destructured props ↘
-const PasswordRecover = ({ checkOtp, history }) => {
+const PasswordRecover = ({ checkOtp, updatePassword, history, setAlert }) => {
     const location = useLocation()
 
     useEffect(() => {
@@ -16,33 +16,53 @@ const PasswordRecover = ({ checkOtp, history }) => {
 
     const [formData, setFormData] = useState({
         otp: '',
-        isTrue: false,
+        isTrue: false
+    });
+    const [passData, setPassData] = useState({
         password: '',
         confirmPassword: ''
     });
 
-    const { otp, password, confirmPassword, isTrue } = formData;
+    const { otp, isTrue } = formData;
+    const { password, confirmPassword } = passData;
 
-    const onChange = e => setFormData({ [e.target.name]: e.target.value });
+    const onChange = e => setFormData({
+        ...formData,
+        [e.target.name]: e.target.value
+    });
 
-    const onSubmit = async e => {
+    const onConfirm = e => {
+        // console.log(e);
+
+        setPassData({
+            ...passData,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const onSubmitOtp = async e => {
         e.preventDefault();
         // history.push('/login')
         const res = await checkOtp(otp, history)
+        console.log(res);
         setFormData({ isTrue: res })
+    }
+
+    const onSubmitPass = e => {
+        e.preventDefault();
+        console.log('Called on password submit and values: ', `${password}`, `${confirmPassword}`);
         if (password !== confirmPassword) {
-            // this wil call setAlert action
             setAlert('Passwords do not match', 'danger', 2000)
         } else {
             console.log('Password changed');
-            // console.log(formData);
+            updatePassword(location.state.id, password, history)
         }
     }
 
-    const unVerified = (
-        <Fragment>
+    return (<Fragment>
+        {!isTrue ? <div>
             <h1 className="large text-primary">Enter Otp</h1>
-            <form className="form" onSubmit={e => onSubmit(e)}>
+            <form className="form" onSubmit={e => onSubmitOtp(e)}>
                 <div className="form-group">
                     <input
                         type="number"
@@ -53,25 +73,22 @@ const PasswordRecover = ({ checkOtp, history }) => {
                         required
                     />
                 </div>
-                <input type="submit" className="btn btn-primary" value="Confirm" />
+                <input type="submit" className="btn btn-primary" value="Check Otp" />
                 <Link className="btn btn-light my-1" to="/login">
                     Go Back
             </Link>
             </form>
-        </Fragment>
-    )
-
-    const verified = (
-        <Fragment>
+        </div> : null}
+        {isTrue ? <div>
             <h1 className="large text-primary">Enter new password</h1>
-            <form className="form" onSubmit={e => onSubmit(e)}>
+            <form className="form" onSubmit={e => onSubmitPass(e)}>
                 <div className='form-group'>
                     <input
                         type='password'
                         placeholder='Password'
                         name='password'
                         value={password}
-                        onChange={(e) => onChange(e)}
+                        onChange={(e) => onConfirm(e)}
                         minLength='6'
                         required
                     />
@@ -82,7 +99,7 @@ const PasswordRecover = ({ checkOtp, history }) => {
                         placeholder='Confirm Password'
                         name='confirmPassword'
                         value={confirmPassword}
-                        onChange={(e) => onChange(e)}
+                        onChange={(e) => onConfirm(e)}
                         minLength='6'
                         required
                     />
@@ -92,20 +109,17 @@ const PasswordRecover = ({ checkOtp, history }) => {
                     Go Back
             </Link>
             </form>
-        </Fragment>
-    )
-
-
-    return (<Fragment>
-        {!isTrue ? unVerified : null}
-        {isTrue ? verified : null}
+        </div> : null}
     </Fragment>)
 }
 
 PasswordRecover.propTypes = {
     checkOtp: PropTypes.func.isRequired,
+    setAlert: PropTypes.func.isRequired,
+    updatePassword: PropTypes.func.isRequired
+
 };
 
 
-export default connect(null, { checkOtp })(withRouter(PasswordRecover));
+export default connect(null, { checkOtp, setAlert, updatePassword })(withRouter(PasswordRecover));
 

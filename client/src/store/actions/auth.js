@@ -194,3 +194,32 @@ export const checkOtp = (otp, history) => async dispatch => {
         return false
     }
 }
+
+export const updatePassword = (email, pass, history) => async dispatch => {
+    const config = {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }
+
+    const body = {
+        email,
+        password: pass
+    }
+
+    try {
+        const res = await axios.patch('/api/user/updatePassword', body, config)
+        if (res.data.msg === 'Password updated') {
+            console.log(res);
+            dispatch(setAlert(res.data.msg, 'success'))
+            history.push('/login')
+        }
+    }
+    catch (error) {
+        console.log(error);
+        const errors = error.response.data.errors;
+        if (errors) {
+            errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
+        }
+    }
+}
