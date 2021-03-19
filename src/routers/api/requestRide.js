@@ -2,14 +2,15 @@ const express = require('express')
 const router = new express.Router()
 const Request = require('../../models/ReqRide')
 const auth = require('../../middleware/auth')
-const { check, validationResult } = require('express-validator/check');
+const { check, validationResult } = require('express-validator');
 
 // @route   POST api/ride
 // @desc    Request a ride
 // @access  Private
 router.post("/request", [
     check('from', "Pick up point is required").not().isEmpty(),
-    check('to', "Destination is required").not().isEmpty()
+    check('to', "Destination is required").not().isEmpty(),
+    check('departAt', "Date/Time is required").not().isEmpty()
 ],
     auth, async (req, res) => {
         const errors = validationResult(req);
@@ -25,7 +26,7 @@ router.post("/request", [
             // console.log(req);
             const ride = await Request.findByLoc(req.user._id, req.body.from, req.body.to)
             await request.save();
-            res.status(201).send(request);
+            res.status(201).json(request);
         } catch (error) {
             console.log(error);
             res.status(400).json({ errors: [{ msg: error.message }] });
@@ -37,9 +38,10 @@ router.post("/request", [
 // @access  Private
 router.get('/allRequests', auth, async (req, res) => {
     try {
-        const result = await Request.find({ reqBy: req.user._id }).populate('reqBy', ['firstname', 'lastname', 'phone'])
-        res.status(200).send(result)
+        const result = await Request.find({ reqBy: req.user._id })
+        res.status(200).json(result)
     } catch (error) {
+        console.log(error);
         res.status(500).json({ errors: [{ msg: error.message }] })
     }
 })
@@ -61,5 +63,19 @@ router.delete('/request/:id', auth, async (req, res) => {
     }
 })
 
-
+// @route   GET api/ride
+// @desc    get request data
+// @access  Private
+router.get('/request/:id', auth, async (req, res) => {
+    try {
+        const ride = await Request.findOne({ _id: req.params.id, reqBy: req.user.id })
+        if (!ride) {
+            throw new Error('Request is not available')
+        } else {
+            res.status(200).json(ride)
+        }
+    } catch (error) {
+        res.status(500).json({ errors: [{ msg: error.message }] })
+    }
+})
 module.exports = router

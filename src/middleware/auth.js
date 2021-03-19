@@ -4,7 +4,7 @@ const User = require('../models/User')
 const auth = async (req, res, next) => {
     // verify token
     try {
-        const token = req.cookies.jwt
+        const token = req.header('x-auth-token')
         // console.log(token);
         if (!token) {
             throw new Error('Authenticate first [no jwt found]')

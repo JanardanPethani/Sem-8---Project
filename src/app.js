@@ -7,6 +7,7 @@ const mapRouter = require('./routers/api/map')
 const reqRouter = require('./routers/api/requestRide')
 const offRouter = require('./routers/api/offerRide')
 const authRouter = require('./routers/api/auth')
+const matchRouter = require('./routers/api/matchRide')
 
 const app = express()
 
@@ -19,5 +20,6 @@ app.use('/api/ride', reqRouter)
 app.use('/api/ride', offRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/map', mapRouter)
+app.use('/api/match', matchRouter)
 
 module.exports = app
