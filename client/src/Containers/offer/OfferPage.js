@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { useLocation } from 'react-router'
 
 import { getOffer } from '../../store/actions/offer'
-import Spinner from '../layout/Spinner/Spinner'
+import Spinner from '../../Components/Spinner/Spinner'
 
 const getStatus = (time) => {
     const curDate = new Date()
@@ -88,4 +88,4 @@ const mapStateToProps = state => ({
     profile: state.profile
 })
 
-export default connect(mapStateToProps, { getOffer})(OfferPage)
+export default connect(mapStateToProps, { getOffer })(OfferPage)

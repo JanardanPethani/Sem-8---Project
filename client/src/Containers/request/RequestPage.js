@@ -4,8 +4,9 @@ import { connect } from 'react-redux'
 import { useLocation } from 'react-router'
 
 import { getRequest, matchRides } from '../../store/actions/request'
+import getStatus from '../../utils/getStatus'
 
-import Spinner from '../layout/Spinner/Spinner'
+import Spinner from '../../Components/Spinner/Spinner'
 import MatchCard from '../../Components/MatchCard/MatchCard'
 import RequestInfo from '../../Components/RequestInfoPage/RequestInfoPage'
 
@@ -26,13 +27,12 @@ const RequestPage = ({
 
     const { from, to, created_at, departAt } = requestData
     const status = getStatus(departAt)
-
     const data = (
         <Fragment>
             <div className=' pb-6 text-center text-2xl font-semibold '>
                 Request Information
-      </div>
-            <RequestInfo array={from, to, created_at, departAt, status} />
+            </div>
+            <RequestInfo data={{ ...requestData }} />
             {status.props.children !== 'Expired' ? (
                 <div className='flex p-3 m-1 justify-center'>
                     <button
@@ -58,6 +58,7 @@ const RequestPage = ({
                     ><i className="fas fa-times-circle text-3xl"></i>
                     </button>
                     <div className='flex flex-wrap -mx-1 lg:-mx-4'>
+                        {/*//TODO click={sendReq} - send to offer owner*/}
                         <MatchCard array={matchesArray} />
                     </div>
                 </div>
