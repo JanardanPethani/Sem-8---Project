@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Spinner from '../layout/Spinner/Spinner'
+import Spinner from '../../Components/Spinner/Spinner'
 import DashboardActions from './DashboardActions'
 import Requests from './Requests'
 import Offers from './Offers'

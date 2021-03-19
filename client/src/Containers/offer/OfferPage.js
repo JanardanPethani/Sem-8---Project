@@ -1,10 +1,9 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { useLocation } from 'react-router'
 
-import { getRequest, matchRides } from '../../store/actions/request'
-import { getCurrentProfile } from '../../store/actions/profile'
+import { getOffer } from '../../store/actions/offer'
 import Spinner from '../layout/Spinner/Spinner'
 
 const getStatus = (time) => {
@@ -19,26 +18,21 @@ const getStatus = (time) => {
     }
 }
 
-const RequestPage = ({ getRequest, requestData, getCurrentProfile, loading, matches, matchRides }) => {
+const OfferPage = ({ getOffer, offerData, getCurrentProfile, profile: { loading } }) => {
     const location = useLocation()
-
-    const [getMatch, setMatch] = useState(false)
-
     useEffect(() => {
-        getRequest(location.state.reqId)
-        getCurrentProfile()
+        getOffer(location.state.offId)
     }, [])
 
-    const { from, to, created_at, departAt } = requestData
-    const status = (getStatus(departAt))
+    const { from, to, created_at, departAt } = offerData
     const data = (
         <Fragment>
-            <div className=" pb-6 text-center text-2xl font-semibold ">
-                Request Information
+            <div className="p-6 text-center text-2xl font-semibold ">
+                Offer Information
             </div>
             <div className="p-6 m-4 max-w-xl mx-auto bg-white rounded-xl shadow-md">
                 <div className="flex p-3 m-1 ">
-                    <div className="w-1/4 flex-shrink-0 pr-2 text-sm font-medium self-center">
+                    <div className="w-1/4 flex-shrink-0 pr-2 textsm font-medium self-center">
                         From :
                     </div>
                     <div className='self-center text-left  ml-2'>{from}</div>
@@ -71,44 +65,27 @@ const RequestPage = ({ getRequest, requestData, getCurrentProfile, loading, matc
                     <div className="w-1/4 flex-shrink-0 pr-2 text-sm font-medium self-center">
                         Status :
                     </div>
-                    <div className='self-center text-left ml-2'>{status}</div>
+                    <div className='self-center text-left ml-2'>{getStatus(departAt)}</div>
                 </div>
 
             </div>
-            {status.props.children !== 'Expired' ?
-                <div className="flex p-3 m-1 justify-center">
-                    <button className="btn btn-primary" onClick={() => {
-                        setMatch(true)
-                        matchRides(from)
-                    }}>Get Matching Offers</button>
-                </div>
-                : null}
 
-            {getMatch ?
-                <div className="flex p-3 m-1 justify-center">
-                    Offers
-                </div>
-                : null}
         </Fragment>
     )
 
     return (
-        loading && requestData ? <Spinner /> : data
+        loading ? <Spinner /> : data
     )
 }
 
-RequestPage.propTypes = {
-    getRequest: PropTypes.func.isRequired,
-    matchRides: PropTypes.func.isRequired,
-    requestData: PropTypes.object.isRequired,
-    loading: PropTypes.bool,
-    matches: PropTypes.array,
+OfferPage.propTypes = {
+    getOffer: PropTypes.func.isRequired,
+    offerData: PropTypes.object.isRequired
 }
 
 const mapStateToProps = state => ({
-    requestData: state.profile.currRequestData,
-    loading: state.profile.loading,
-    matches: state.profile.currRequestMatches
+    offerData: state.profile.currOfferData,
+    profile: state.profile
 })
 
-export default connect(mapStateToProps, { getRequest, getCurrentProfile, matchRides })(RequestPage)
+export default connect(mapStateToProps, { getOffer})(OfferPage)
