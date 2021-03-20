@@ -8,7 +8,7 @@ import getStatus from '../../utils/getStatus'
 
 import Spinner from '../../Components/Spinner/Spinner'
 import MatchCard from '../../Components/MatchCard/MatchCard'
-import RequestInfo from '../../Components/RequestInfoPage/RequestInfoPage'
+import RequestInfo from '../../Components/InfoPage/InfoPage'
 
 const RequestPage = ({
     getRequest,
