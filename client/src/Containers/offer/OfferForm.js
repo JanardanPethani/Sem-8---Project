@@ -15,7 +15,7 @@ const OfferForm = ({ sendOffer, history }) => {
         to: '',
         price: '',
         seats: '',
-        vehicletype: '',
+        vehicletype: 'car',
         departAt: ''
     });
 
@@ -60,15 +60,13 @@ const OfferForm = ({ sendOffer, history }) => {
     return (
         <Fragment>
             <h1 className="large text-primary">Offer a ride</h1>
-            <div className="grid grid-cols-2 gap-4">
-                <div className="mt-5 mb-5 shadow-lg rounded-lg overflow-hidden">
+            <div className="grid-row">
+                <div className="relative h-96  shadow-lg rounded-lg overflow-hidden">
                     <Map />
                 </div>
 
-                <div className="mt-5 mb-5 shadow-lg p-4 rounded-lg">
-                    <p className="lead">
-                        Add details
-                </p>
+                <div className="relative mt-5 mb-5 shadow-lg p-4 rounded-lg">
+                    <p className="lead">Add details</p>
                     <form className="form" onSubmit={e => onSubmit(e)}>
                         <div className="form-group">
                             <input
@@ -80,7 +78,7 @@ const OfferForm = ({ sendOffer, history }) => {
                             />
                             <small className="form-text">
                                 Starting point
-                    </small>
+                            </small>
                         </div>
                         <div className="form-group">
                             <input
@@ -92,7 +90,7 @@ const OfferForm = ({ sendOffer, history }) => {
                             />
                             <small className="form-text">
                                 Destination point
-                    </small>
+                            </small>
                         </div>
                         <div className="form-group">
                             <input
@@ -105,7 +103,7 @@ const OfferForm = ({ sendOffer, history }) => {
                             />
                             <small className="form-text">
                                 Price
-                    </small>
+                            </small>
                         </div>
                         <div className="form-group">
                             <input
@@ -118,7 +116,7 @@ const OfferForm = ({ sendOffer, history }) => {
                             />
                             <small className="form-text">
                                 Seats to offer
-                    </small>
+                            </small>
                         </div>
                         <div className="form-group">
                             <input
@@ -131,7 +129,21 @@ const OfferForm = ({ sendOffer, history }) => {
                                 Date/Time <span className="bg-yellow-100 pl-2 pr-2 rounded-md">Set time after 10 min from {new Date().toString()}</span>
                             </small>
                         </div>
-
+                        <div className="form-group flex-col">
+                            <div className="flex items-center">
+                                <div className="mr-2">
+                                    {vehicletype !== '' ? vehicletype === 'car' ? <i class="fas fa-car"></i> : <i class="fas fa-motorcycle"></i> : null}
+                                </div>
+                                <select name="vehicletype" value={vehicletype} onChange={(e) => onChange(e)} >
+                                    <option disabled>Select Vehicle</option>
+                                    <option value="car" >Car</option>
+                                    <option value="bike">Bike</option>
+                                </select>
+                            </div>
+                            <small className="form-text flex-shrink-0">
+                                Vehicle Type
+                            </small>
+                        </div>
                         <input type="submit" className="btn btn-primary my-1" />
                         <Link className="btn btn-light my-1" to="/dashboard">
                             Go Back
@@ -140,7 +152,7 @@ const OfferForm = ({ sendOffer, history }) => {
                 </div>
             </div>
 
-        </Fragment>
+        </Fragment >
     )
 }
 

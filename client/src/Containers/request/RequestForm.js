@@ -60,12 +60,12 @@ const RequestForm = ({ sendRequest, history, matchRides, matchesArray }) => {
         <Fragment>
 
             <h1 className="large text-primary">Request a ride</h1>
-            <div className="grid  grid-cols-2 gap-4">
-                <div className=" mt-5 mb-5 shadow-lg rounded-lg overflow-hidden">
+            <div className="grid">
+                <div className="relative h-96  shadow-lg rounded-lg overflow-hidden">
                     <Map />
                 </div>
 
-                <div className=" mt-5 mb-5 shadow-lg p-3 rounded-lg">
+                <div className="relative mt-5 mb-5 shadow-lg p-4 rounded-lg">
                     <p className="lead">
                         Add details
                 </p>
@@ -113,7 +113,7 @@ const RequestForm = ({ sendRequest, history, matchRides, matchesArray }) => {
                     </form>
                 </div>
 
-                <div className="flex mx-auto col-span-2">
+                <div className="flex max-w-full">
                     {from !== '' ?
                         <Fragment>
                             {!getMatch ?
