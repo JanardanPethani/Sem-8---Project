@@ -13,13 +13,19 @@ const OfferForm = ({ sendOffer, history }) => {
     const [formData, setFormData] = useState({
         from: '',
         to: '',
+        price: '',
+        seats: '',
+        vehicletype: '',
         departAt: ''
     });
 
     const {
         from,
         to,
-        departAt
+        departAt,
+        price,
+        seats,
+        vehicletype
     } = formData;
 
     const onChange = e => {
@@ -54,12 +60,12 @@ const OfferForm = ({ sendOffer, history }) => {
     return (
         <Fragment>
             <h1 className="large text-primary">Offer a ride</h1>
-            <div className="grid">
-                <div className="relative h-96 shadow-lg rounded-lg overflow-hidden">
+            <div className="grid grid-cols-2 gap-4">
+                <div className="mt-5 mb-5 shadow-lg rounded-lg overflow-hidden">
                     <Map />
                 </div>
 
-                <div className="relative mt-5 mb-5 shadow-lg p-3 rounded-lg">
+                <div className="mt-5 mb-5 shadow-lg p-4 rounded-lg">
                     <p className="lead">
                         Add details
                 </p>
@@ -86,6 +92,32 @@ const OfferForm = ({ sendOffer, history }) => {
                             />
                             <small className="form-text">
                                 Destination point
+                    </small>
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="number"
+                                placeholder="Enter Price i.e. 20"
+                                name="price"
+                                value={price}
+                                onChange={(e) => onChange(e)}
+                                required
+                            />
+                            <small className="form-text">
+                                Price
+                    </small>
+                        </div>
+                        <div className="form-group">
+                            <input
+                                type="number"
+                                placeholder="Enter Number of Seats"
+                                name="seats"
+                                value={seats}
+                                onChange={(e) => onChange(e)}
+                                required
+                            />
+                            <small className="form-text">
+                                Seats to offer
                     </small>
                         </div>
                         <div className="form-group">

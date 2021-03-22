@@ -23,7 +23,7 @@ router.post("/offer", [
     })
     try {
         // console.log(req);
-        const ride = await Offer.findByLoc(req.user._id, req.body.from, req.body.to)
+        const ride = await Offer.findByLoc(req.user._id, req.body.from, req.body.to, req.body.price, req.body.seats, req.body.vehicletype)
         await offer.save();
         res.status(201).json(offer);
     } catch (error) {

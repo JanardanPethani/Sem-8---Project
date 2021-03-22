@@ -13,6 +13,18 @@ const offRideSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    price: {
+        type: Number,
+        required: true
+    },
+    vehicletype: {
+        type: String,
+        required: true
+    },
+    seats: {
+        type: Number,
+        required: true
+    },
     departAt: {
         type: Date,
         required: true
@@ -28,8 +40,8 @@ offRideSchema.methods.toJSON = function () {
     return reqObj
 }
 
-offRideSchema.statics.findByLoc = async (userId, from, to) => {
-    const ride = await OffRide.findOne({ offBy: userId, from: from, to: to })
+offRideSchema.statics.findByLoc = async (userId, from, to, vehicletype) => {
+    const ride = await OffRide.findOne({ offBy: userId, from: from, to: to, vehicletype: vehicletype })
     if (ride) {
         throw new Error('Already Offered')
     }
