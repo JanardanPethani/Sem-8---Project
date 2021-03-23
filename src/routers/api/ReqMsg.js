@@ -4,7 +4,7 @@ const SendReq = require('../../models/SendReqToDriver')
 const User = require('../../models/User')
 const auth = require('../../middleware/auth')
 
-const { sendReqMail } = require('../../utils/sendmail')
+const { sendReqMail, sendDecMail } = require('../../utils/sendmail')
 
 // @route   POST api/sendReqMsg
 // @desc    Sent request to rider
@@ -92,9 +92,19 @@ router.delete('/receMsg/:id', auth, async (req, res) => {
       _id: req.params.id,
       to: req.user.id,
     })
+      .populate('reqBy')
+      .populate('forWhich')
     if (!ride) {
       throw new Error('Request Msg is not available')
     } else {
+      await sendDecMail(ride.reqBy.email, {
+        request_to: `${req.user.firstname} ${req.user.lastname}`,
+        phone: req.user.phone,
+        from: ride.forWhich.from,
+        Destination: ride.forWhich.to,
+        type: ride.forWhich.vehicletype,
+        status: 'Declined',
+      })
       await ride.remove()
       res.send(ride)
     }
