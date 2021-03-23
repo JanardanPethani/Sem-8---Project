@@ -10,7 +10,8 @@ import OfferInfo from '../../Components/InfoPage/InfoPage'
 const OfferPage = ({ getOffer, offerData, profile: { loading } }) => {
     const location = useLocation()
     useEffect(() => {
-        getOffer(location.state.offId)
+      getOffer(location.state.offId)
+      // eslint-disable-next-line
     }, [])
 
     const data = (

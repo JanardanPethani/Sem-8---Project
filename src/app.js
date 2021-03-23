@@ -8,12 +8,13 @@ const reqRouter = require('./routers/api/requestRide')
 const offRouter = require('./routers/api/offerRide')
 const authRouter = require('./routers/api/auth')
 const matchRouter = require('./routers/api/matchRide')
+const sendReqMsg = require('./routers/api/sendReqMsg')
 
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use('/api/user', userRouter)
 app.use('/api/ride', reqRouter)
@@ -21,5 +22,6 @@ app.use('/api/ride', offRouter)
 app.use('/api/auth', authRouter)
 app.use('/api/map', mapRouter)
 app.use('/api/match', matchRouter)
+app.use('/api/sendReqMsg', sendReqMsg)
 
 module.exports = app

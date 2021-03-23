@@ -1,9 +1,5 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
-
-import { deleteReq } from '../../store/actions/request'
 
 const getTimeInfo = (time) => {
   const info = new Date(time).toString().split(' ')
@@ -28,20 +24,21 @@ const getTimeInfo = (time) => {
     })
 }
 
-const Requests = ({ request, deleteReq, history }) => {
-  const requests = request.map((req, index) => (
-    <tr key={req._id} className='hover:bg-gray-100'>
+const SentReqs = ({ sentRequest, history }) => {
+  console.log(sentRequest)
+  const requests = sentRequest.map((msg, index) => (
+    <tr key={msg._id} className='hover:bg-gray-100'>
       <td>{index + 1}</td>
-      <td>{req.from.slice(0, 10) + ' ...'}</td>
-      <td>{req.to.slice(0, 10) + ' ...'}</td>
-      <td>{getTimeInfo(req.departAt)}</td>
+      <td>{msg.forWhich.from.slice(0, 10) + ' ...'}</td>
+      <td>{msg.to.firstname}</td>
+      <td>{getTimeInfo(msg.created_at)}</td>
       <td>
         <button
           className='btn btn-primary'
           onClick={() =>
             history.push({
               pathname: '/requestpage',
-              state: { reqId: req._id },
+              state: { reqId: msg._id },
             })
           }
         >
@@ -49,12 +46,7 @@ const Requests = ({ request, deleteReq, history }) => {
         </button>
       </td>
       <td>
-        <button
-          className='btn btn-danger'
-          onClick={() => {
-            deleteReq(req._id)
-          }}
-        >
+        <button className='btn btn-danger' onClick={() => {}}>
           <i className='fas fa-trash-alt'></i>
         </button>
       </td>
@@ -63,7 +55,7 @@ const Requests = ({ request, deleteReq, history }) => {
 
   return (
     <Fragment>
-      <h2 className='p-6 text-xl font-medium'>All Requests By You</h2>
+      <h2 className='p-6 text-xl font-medium'>Requests Sent By You</h2>
       <table className='table shadow-lg rounded-lg overflow-hidden'>
         <thead className='bg-primaryColor text-white '>
           <tr>
@@ -80,7 +72,7 @@ const Requests = ({ request, deleteReq, history }) => {
             requests
           ) : (
             <tr>
-              <td colSpan={6}>No requests found</td>
+              <td colSpan={6}>No requests sent</td>
             </tr>
           )}
         </tbody>
@@ -89,8 +81,4 @@ const Requests = ({ request, deleteReq, history }) => {
   )
 }
 
-Requests.propTypes = {
-  request: PropTypes.array.isRequired,
-}
-
-export default connect(null, { deleteReq })(withRouter(Requests))
+export default withRouter(SentReqs)

@@ -9,6 +9,7 @@
   --light-color: #f4f4f4;
   --danger-color: #dc3545;
   --success-color: #28a745;
+  --warning-color: #f6f340;
 }
 
 * {
@@ -216,6 +217,14 @@ img {
   background: #fff;
   color: #333;
   border: #ccc solid 1px;
+}
+
+.btn-warning,
+.bg-warning,
+.badge-warning,
+.alert-warning {
+  background: var(--warning-color);
+  color: #333;
 }
 
 .btn:hover {

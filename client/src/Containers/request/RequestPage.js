@@ -3,14 +3,12 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { useLocation } from 'react-router'
 
-import { getRequest, matchRides } from '../../store/actions/request'
+import { getRequest, matchRides, sendMsg } from '../../store/actions/request'
 import getStatus from '../../utils/getStatus'
 
 import Spinner from '../../Components/Spinner/Spinner'
 import MatchCard from '../../Components/MatchCard/MatchCard'
 import RequestInfo from '../../Components/InfoPage/InfoPage'
-
-//TODO click={sendReq} - send to offer owner*/
 
 const RequestPage = ({
   getRequest,
@@ -18,6 +16,7 @@ const RequestPage = ({
   loading,
   matchesArray,
   matchRides,
+  sendMsg,
 }) => {
   const location = useLocation()
 
@@ -25,9 +24,10 @@ const RequestPage = ({
 
   useEffect(() => {
     getRequest(location.state.reqId)
+    // eslint-disable-next-line
   }, [])
 
-  const { from, to, created_at, departAt } = requestData
+  const { from, departAt } = requestData
   const status = getStatus(departAt)
   const data = (
     <Fragment>
@@ -61,7 +61,7 @@ const RequestPage = ({
             <i className='fas fa-times-circle text-3xl'></i>
           </button>
           <div className='flex flex-wrap -mx-1 lg:-mx-4'>
-            <MatchCard array={matchesArray} />
+            <MatchCard array={matchesArray} send={sendMsg} />
           </div>
         </div>
       ) : null}
@@ -73,6 +73,7 @@ const RequestPage = ({
 
 RequestPage.propTypes = {
   getRequest: PropTypes.func.isRequired,
+  sendMsg: PropTypes.func.isRequired,
   matchRides: PropTypes.func.isRequired,
   requestData: PropTypes.object.isRequired,
   loading: PropTypes.bool,
@@ -88,4 +89,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getRequest,
   matchRides,
+  sendMsg,
 })(RequestPage)
