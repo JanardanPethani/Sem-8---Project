@@ -30,7 +30,7 @@ router.post(
       const result = rides.filter((rideObj) => {
         const offString = rideObj.from
         const matchedWords = matchCount(reqString, offString)
-        console.log(matchedWords)
+        // console.log(matchedWords)
         if (matchedWords.length >= 2) {
           return true
         } else {

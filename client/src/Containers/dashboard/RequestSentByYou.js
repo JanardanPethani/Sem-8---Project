@@ -1,30 +1,12 @@
 import React, { Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-const getTimeInfo = (time) => {
-  const info = new Date(time).toString().split(' ')
-  return info
-    .filter((value, idx) => idx < 5)
-    .map((i, index) => {
-      if (i.includes(':')) {
-        return (
-          <p
-            className='inline-block font-medium pr-1 text-green-400'
-            key={index}
-          >
-            {i}
-          </p>
-        )
-      }
-      return (
-        <p className='inline-block font-medium pr-1' key={index}>
-          {i}
-        </p>
-      )
-    })
-}
+import { deleteReqMsg } from '../../store/actions/request'
+import getTimeInfo from '../../utils/getTimeInfo'
 
-const SentReqs = ({ sentRequest, history }) => {
+const SentReqs = ({ sentRequest, history, deleteReqMsg }) => {
   console.log(sentRequest)
   const requests = sentRequest.map((msg, index) => (
     <tr key={msg._id} className='hover:bg-gray-100'>
@@ -46,7 +28,12 @@ const SentReqs = ({ sentRequest, history }) => {
         </button>
       </td>
       <td>
-        <button className='btn btn-danger' onClick={() => {}}>
+        <button
+          className='btn btn-danger'
+          onClick={() => {
+            deleteReqMsg(msg._id)
+          }}
+        >
           <i className='fas fa-trash-alt'></i>
         </button>
       </td>
@@ -61,7 +48,7 @@ const SentReqs = ({ sentRequest, history }) => {
           <tr>
             <th>#</th>
             <th>From</th>
-            <th>To</th>
+            <th>By</th>
             <th>Time</th>
             <th>Info</th>
             <th>Delete</th>
@@ -81,4 +68,8 @@ const SentReqs = ({ sentRequest, history }) => {
   )
 }
 
-export default withRouter(SentReqs)
+SentReqs.propTypes = {
+  deleteReqMsg: PropTypes.func.isRequired,
+}
+
+export default connect(null, { deleteReqMsg })(withRouter(SentReqs))

@@ -76,4 +76,6 @@ router.get('/offer/:id', auth, async (req, res) => {
         res.status(500).json({ errors: [{ msg: error.message }] })
     }
 })
+
+
 module.exports = router

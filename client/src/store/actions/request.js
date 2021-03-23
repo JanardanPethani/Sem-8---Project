@@ -102,9 +102,14 @@ export const matchRides = (from) => async (dispatch) => {
 }
 
 // Send msg to driver
-export const sendMsg = ({email, to, forWhich, from, destination, type}) => async (
-  dispatch
-) => {
+export const sendMsg = ({
+  email,
+  to,
+  forWhich,
+  from,
+  destination,
+  type,
+}) => async (dispatch) => {
   try {
     const config = {
       headers: {
@@ -122,12 +127,13 @@ export const sendMsg = ({email, to, forWhich, from, destination, type}) => async
     }
 
     const res = await axios.post('/api/sendReqMsg/send', body, config)
-    dispatch(getCurrentProfile())
     // console.log(res);
     dispatch({
       type: SEND_MSG,
       payload: res.data,
     })
+    dispatch(getCurrentProfile())
+    dispatch(setAlert('Request Sent', 'success'))
   } catch (error) {
     const errors = error.response.data.errors
     if (errors) {
@@ -137,5 +143,20 @@ export const sendMsg = ({email, to, forWhich, from, destination, type}) => async
       type: MSG_FAILED,
       payload: { msg: error },
     })
+  }
+}
+
+export const deleteReqMsg = (id) => async (dispatch) => {
+  if (window.confirm('Sure? this can not be undone..!')) {
+    try {
+      await axios.delete(`/api/sendReqMsg/msg/${id}`)
+      dispatch(getCurrentProfile())
+      dispatch(setAlert('Request Msg Deleted', 'success'))
+    } catch (error) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: { msg: error },
+      })
+    }
   }
 }

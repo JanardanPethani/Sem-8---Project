@@ -4,29 +4,8 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
 import { deleteReq } from '../../store/actions/request'
+import getTimeInfo from '../../utils/getTimeInfo'
 
-const getTimeInfo = (time) => {
-  const info = new Date(time).toString().split(' ')
-  return info
-    .filter((value, idx) => idx < 5)
-    .map((i, index) => {
-      if (i.includes(':')) {
-        return (
-          <p
-            className='inline-block font-medium pr-1 text-green-400'
-            key={index}
-          >
-            {i}
-          </p>
-        )
-      }
-      return (
-        <p className='inline-block font-medium pr-1' key={index}>
-          {i}
-        </p>
-      )
-    })
-}
 
 const Requests = ({ request, deleteReq, history }) => {
   const requests = request.map((req, index) => (

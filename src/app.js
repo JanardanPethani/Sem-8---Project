@@ -8,7 +8,7 @@ const reqRouter = require('./routers/api/requestRide')
 const offRouter = require('./routers/api/offerRide')
 const authRouter = require('./routers/api/auth')
 const matchRouter = require('./routers/api/matchRide')
-const sendReqMsg = require('./routers/api/sendReqMsg')
+const sendReqMsg = require('./routers/api/ReqMsg')
 
 const app = express()
 

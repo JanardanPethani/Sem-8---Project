@@ -1,25 +1,26 @@
 import React, { Fragment } from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 
-import { deleteOff } from '../../store/actions/offer'
+import { deleteReceMsg } from '../../store/actions/offer'
 import getTimeInfo from '../../utils/getTimeInfo'
 
-const Offers = ({ offer, deleteOff, history }) => {
-  const offers = offer.map((off, index) => (
-    <tr key={off._id} className='hover:bg-gray-100'>
+const ReceReqs = ({ receRequest, history, deleteReceMsg }) => {
+  console.log(receRequest)
+  const requests = receRequest.map((msg, index) => (
+    <tr key={msg._id} className='hover:bg-gray-100'>
       <td>{index + 1}</td>
-      <td>{off.from.slice(0, 10) + ' ...'}</td>
-      <td>{off.to.slice(0, 10) + ' ...'}</td>
-      <td>{getTimeInfo(off.departAt)}</td>
+      <td>{msg.forWhich.from.slice(0, 10) + ' ...'}</td>
+      <td>{msg.reqBy.firstname}</td>
+      <td>{getTimeInfo(msg.created_at)}</td>
       <td>
         <button
           className='btn btn-primary'
           onClick={() =>
             history.push({
-              pathname: '/offerpage',
-              state: { offId: off._id },
+              pathname: '/requestpage',
+              state: { reqId: msg._id },
             })
           }
         >
@@ -30,7 +31,7 @@ const Offers = ({ offer, deleteOff, history }) => {
         <button
           className='btn btn-danger'
           onClick={() => {
-            deleteOff(off._id)
+            deleteReceMsg(msg._id)
           }}
         >
           <i className='fas fa-trash-alt'></i>
@@ -41,24 +42,24 @@ const Offers = ({ offer, deleteOff, history }) => {
 
   return (
     <Fragment>
-      <h2 className='p-6 text-xl font-medium'>All Offers By You</h2>
+      <h2 className='p-6 text-xl font-medium'>Requests Sent To You</h2>
       <table className='table shadow-lg rounded-lg overflow-hidden'>
-        <thead className='bg-primaryColor text-white'>
+        <thead className='bg-primaryColor text-white '>
           <tr>
             <th>#</th>
             <th>From</th>
-            <th>To</th>
+            <th>By</th>
             <th>Time</th>
             <th>Info</th>
             <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          {offers.length !== 0 ? (
-            offers
+          {requests.length !== 0 ? (
+            requests
           ) : (
             <tr>
-              <td colSpan={6}>No offer found</td>
+              <td colSpan={6}>No requests received</td>
             </tr>
           )}
         </tbody>
@@ -67,8 +68,8 @@ const Offers = ({ offer, deleteOff, history }) => {
   )
 }
 
-Offers.propTypes = {
-  offer: PropTypes.array.isRequired,
+ReceReqs.propTypes = {
+  deleteReceMsg: PropTypes.func.isRequired,
 }
 
-export default connect(null, { deleteOff })(withRouter(Offers))
+export default connect(null, { deleteReceMsg })(withRouter(ReceReqs))

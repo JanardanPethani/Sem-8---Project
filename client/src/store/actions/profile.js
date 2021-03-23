@@ -10,10 +10,16 @@ export const getCurrentProfile = () => async (dispatch) => {
     const req = await axios.get('/api/ride/allRequests')
     const off = await axios.get('/api/ride/allOffers')
     const sendReq = await axios.get('/api/sendReqMsg/allReqMsgs')
+    const offerReq = await axios.get('/api/sendReqMsg/allReqMsgsToMe')
     // console.log(sendReq)
     dispatch({
       type: GET_PROFILE,
-      payload: { req: req.data, off: off.data, send: sendReq.data },
+      payload: {
+        req: req.data,
+        off: off.data,
+        send: sendReq.data,
+        received: offerReq.data,
+      },
     })
   } catch (error) {
     // console.log(error);

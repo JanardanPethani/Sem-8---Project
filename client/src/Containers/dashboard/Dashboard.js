@@ -7,6 +7,7 @@ import DashboardActions from './DashboardActions'
 import Requests from './Requests'
 import Offers from './Offers'
 import SentReqs from './RequestSentByYou'
+import ReceReqs from './RequestSentToYou'
 
 import { getCurrentProfile } from '../../store/actions/profile'
 import { deleteUser } from '../../store/actions/auth'
@@ -37,12 +38,14 @@ const Dashboard = ({
       {profile !== null &&
       (profile.req.length !== 0 ||
         profile.off.length !== 0 ||
-        profile.send.length !== 0) ? (
+        profile.send.length !== 0 ||
+        profile.received.length !== 0) ? (
         <Fragment>
           <DashboardActions />
           <Requests request={profile.req} />
           <Offers offer={profile.off} />
           <SentReqs sentRequest={profile.send} />
+          <ReceReqs receRequest={profile.received} />
         </Fragment>
       ) : (
         <Fragment>
