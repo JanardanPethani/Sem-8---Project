@@ -11,6 +11,8 @@ import {
   MATCH_FAILED,
   MSG_FAILED,
   SEND_MSG,
+  ACCEPT_REQ,
+  GET_ACTIVE,
 } from '../actions/types'
 
 const initialState = {
@@ -19,8 +21,8 @@ const initialState = {
   currRequestData: {},
   currRequestMatches: [],
   currOfferData: {},
-  currReqMsgs: [],
-  currReqSend: [],
+  activeRide: [],
+  currReqSend: {},
   error: {},
 }
 
@@ -33,6 +35,12 @@ function profileReducer(state = initialState, action) {
       return {
         ...state,
         profile: payload,
+        loading: false,
+      }
+    case GET_ACTIVE:
+      return {
+        ...state,
+        activeRide: payload,
         loading: false,
       }
     case CLEAR_PROFILE:
@@ -73,6 +81,12 @@ function profileReducer(state = initialState, action) {
       return {
         ...state,
         currReqSend: state.currReqSend.unshift(payload),
+        loading: false,
+      }
+    case ACCEPT_REQ:
+      return {
+        ...state,
+        activeRide: payload,
         loading: false,
       }
     default:

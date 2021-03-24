@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+//* status - panding, accepted, paymentdone
+
 const sentReqSchema = new mongoose.Schema(
   {
     reqBy: {

@@ -3,10 +3,10 @@ import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { deleteReceMsg } from '../../store/actions/offer'
+import { deleteReceMsg, acceptRide } from '../../store/actions/offer'
 import getTimeInfo from '../../utils/getTimeInfo'
 
-const ReceReqs = ({ receRequest, history, deleteReceMsg }) => {
+const ReceReqs = ({ receRequest, history, deleteReceMsg, acceptRide }) => {
   console.log(receRequest)
   const requests = receRequest.map((msg, index) => (
     <tr key={msg._id} className='hover:bg-gray-100'>
@@ -16,15 +16,16 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg }) => {
       <td>{getTimeInfo(msg.created_at)}</td>
       <td>
         <button
-          className='btn btn-primary'
-          onClick={() =>
-            history.push({
-              pathname: '/requestpage',
-              state: { reqId: msg._id },
-            })
-          }
+          className='btn btn-success'
+          onClick={() => {
+            acceptRide(msg._id)
+            // history.push({
+            //   pathname: '/currActiveRide',
+            //   state: { reqId: msg._id },
+            // })
+          }}
         >
-          <i className='fas fa-info-circle'></i>
+          <i className='fas fa-thumbs-up'></i>
         </button>
       </td>
       <td>
@@ -34,7 +35,7 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg }) => {
             deleteReceMsg(msg._id)
           }}
         >
-          <i className='fas fa-trash-alt'></i>
+          <i className='fas fa-thumbs-down'></i>
         </button>
       </td>
     </tr>
@@ -50,8 +51,8 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg }) => {
             <th>From</th>
             <th>By</th>
             <th>Time</th>
-            <th>Info</th>
-            <th>Delete</th>
+            <th>Accept</th>
+            <th>Decline</th>
           </tr>
         </thead>
         <tbody>
@@ -70,6 +71,9 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg }) => {
 
 ReceReqs.propTypes = {
   deleteReceMsg: PropTypes.func.isRequired,
+  acceptRide: PropTypes.func.isRequired,
 }
 
-export default connect(null, { deleteReceMsg })(withRouter(ReceReqs))
+export default connect(null, { deleteReceMsg, acceptRide })(
+  withRouter(ReceReqs)
+)

@@ -14,19 +14,7 @@ const SentReqs = ({ sentRequest, history, deleteReqMsg }) => {
       <td>{msg.forWhich.from.slice(0, 10) + ' ...'}</td>
       <td>{msg.to.firstname}</td>
       <td>{getTimeInfo(msg.created_at)}</td>
-      <td>
-        <button
-          className='btn btn-primary'
-          onClick={() =>
-            history.push({
-              pathname: '/requestpage',
-              state: { reqId: msg._id },
-            })
-          }
-        >
-          <i className='fas fa-info-circle'></i>
-        </button>
-      </td>
+      <td>{msg.status}</td>
       <td>
         <button
           className='btn btn-danger'
@@ -34,7 +22,7 @@ const SentReqs = ({ sentRequest, history, deleteReqMsg }) => {
             deleteReqMsg(msg._id)
           }}
         >
-          <i className='fas fa-trash-alt'></i>
+          <i className='fas fa-times-circle'></i>
         </button>
       </td>
     </tr>
@@ -48,10 +36,10 @@ const SentReqs = ({ sentRequest, history, deleteReqMsg }) => {
           <tr>
             <th>#</th>
             <th>From</th>
-            <th>By</th>
+            <th>To</th>
             <th>Time</th>
-            <th>Info</th>
-            <th>Delete</th>
+            <th>Status</th>
+            <th>Cancel</th>
           </tr>
         </thead>
         <tbody>

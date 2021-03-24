@@ -31,3 +31,6 @@ export const MATCH_FAILED = 'MATCH_FAILED'
 
 export const SEND_MSG = 'SEND_MSG'
 export const MSG_FAILED = 'MSG_FAILED'
+
+export const ACCEPT_REQ = 'ACCEPT_REQ'
+export const GET_ACTIVE = 'GET_ACTIVE'

@@ -8,6 +8,7 @@ import Requests from './Requests'
 import Offers from './Offers'
 import SentReqs from './RequestSentByYou'
 import ReceReqs from './RequestSentToYou'
+import ActiveRide from './ActiveRides'
 
 import { getCurrentProfile } from '../../store/actions/profile'
 import { deleteUser } from '../../store/actions/auth'
@@ -15,7 +16,7 @@ import { deleteUser } from '../../store/actions/auth'
 const Dashboard = ({
   getCurrentProfile,
   auth,
-  profile: { profile, loading },
+  profile: { profile, loading, activeRide },
   deleteUser,
 }) => {
   useEffect(() => {
@@ -41,7 +42,9 @@ const Dashboard = ({
         profile.send.length !== 0 ||
         profile.received.length !== 0) ? (
         <Fragment>
+          <ActiveRide activeRide={activeRide} />
           <DashboardActions />
+      
           <Requests request={profile.req} />
           <Offers offer={profile.off} />
           <SentReqs sentRequest={profile.send} />

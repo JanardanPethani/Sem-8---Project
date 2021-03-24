@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { GET_PROFILE, PROFILE_ERROR } from './types'
+import { GET_PROFILE, PROFILE_ERROR, GET_ACTIVE } from './types'
 
 import { setAlert } from './alert'
 
@@ -11,6 +11,7 @@ export const getCurrentProfile = () => async (dispatch) => {
     const off = await axios.get('/api/ride/allOffers')
     const sendReq = await axios.get('/api/sendReqMsg/allReqMsgs')
     const offerReq = await axios.get('/api/sendReqMsg/allReqMsgsToMe')
+    const activeRide = await axios.get('/api/sendReqMsg/getActive')
     // console.log(sendReq)
     dispatch({
       type: GET_PROFILE,
@@ -20,6 +21,10 @@ export const getCurrentProfile = () => async (dispatch) => {
         send: sendReq.data,
         received: offerReq.data,
       },
+    })
+    dispatch({
+      type: GET_ACTIVE,
+      payload: activeRide.data,
     })
   } catch (error) {
     // console.log(error);

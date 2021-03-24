@@ -58,9 +58,9 @@ const MatchCard = ({ array, send }) => {
                   </div>
                   <div className='self-center text-left ml-2'>
                     {ride.vehicletype === 'car' ? (
-                      <i class='fas fa-car'></i>
+                      <i className='fas fa-car'></i>
                     ) : (
-                      <i class='fas fa-motorcycle'></i>
+                      <i className='fas fa-motorcycle'></i>
                     )}{' '}
                     - {ride.seats}
                   </div>

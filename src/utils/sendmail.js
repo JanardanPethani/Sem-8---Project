@@ -276,7 +276,7 @@ a[x-apple-data-detectors] {
   })
 }
 
-const sendDecMail = async (email, data) => {
+const sendStatusMail = async (email, data) => {
   const html = `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" style="font-family:arial, 'helvetica neue', helvetica, sans-serif">
  <head> 
@@ -369,7 +369,7 @@ a[x-apple-data-detectors] {
                   <td valign="top" align="center" style="padding:0;Margin:0;width:560px"> 
                    <table style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:separate;border-spacing:0px;border-width:0px 0px 0px 6px;border-style:solid;border-color:transparent transparent transparent #BCA76E;background-color:#373A44" width="100%" cellspacing="0" cellpadding="0" bgcolor="#373a44" role="presentation"> 
                      <tr> 
-                      <td align="left" style="Margin:0;padding-top:15px;padding-bottom:15px;padding-left:20px;padding-right:20px"><h2 style="Margin:0;line-height:29px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:24px;font-style:normal;font-weight:normal;color:#FFFFFF">Request Data</h2></td> 
+                      <td align="left" style="Margin:0;padding-top:15px;padding-bottom:15px;padding-left:20px;padding-right:20px"><h2 style="Margin:0;line-height:29px;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:24px;font-style:normal;font-weight:normal;color:#FFFFFF">Status Update</h2></td> 
                      </tr> 
                    </table></td> 
                  </tr> 
@@ -462,5 +462,5 @@ a[x-apple-data-detectors] {
 module.exports = {
   sendemail,
   sendReqMail,
-  sendDecMail,
+  sendStatusMail,
 }
