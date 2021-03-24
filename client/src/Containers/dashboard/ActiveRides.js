@@ -28,19 +28,25 @@ const ActiveRide = ({ activeRide, history }) => {
 
   return (
     <Fragment>
-      <h2 className='p-6 text-xl font-medium'>Active Ride</h2>
-      <table className='table shadow-lg rounded-lg overflow-hidden'>
-        <thead className='bg-primaryColor text-white '>
-          <tr>
-            <th>From</th>
-            <th>Destination</th>
-            <th>Driver</th>
-            <th>Passenger</th>
-            <th>Info</th>
-          </tr>
-        </thead>
-        <tbody>{ride}</tbody>
-      </table>
+      {activeRide.length !== 0 ? (
+        <div>
+          <h2 className='p-6 text-xl font-medium'>Active Ride</h2>
+          <table className='table shadow-lg rounded-lg overflow-hidden'>
+            <thead className='bg-primaryColor text-white '>
+              <tr>
+                <th>From</th>
+                <th>Destination</th>
+                <th>Driver</th>
+                <th>Passenger</th>
+                <th>Info</th>
+              </tr>
+            </thead>
+            <tbody>{ride}</tbody>
+          </table>
+        </div>
+      ) : (
+        ''
+      )}
     </Fragment>
   )
 }

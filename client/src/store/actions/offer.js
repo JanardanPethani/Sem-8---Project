@@ -78,10 +78,7 @@ export const deleteReceMsg = (id) => async (dispatch) => {
       dispatch(getCurrentProfile())
       dispatch(setAlert('Request Msg Deleted', 'success'))
     } catch (error) {
-      const errors = error.response.data.errors
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
-      }
+      
       dispatch({
         type: PROFILE_ERROR,
         payload: { msg: error },
@@ -101,10 +98,7 @@ export const acceptRide = (id) => async (dispatch) => {
       dispatch(getCurrentProfile())
       dispatch(setAlert('Accepted', 'success'))
     } catch (error) {
-      const errors = error.response.data.errors
-      if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
-      }
+      
       dispatch({
         type: PROFILE_ERROR,
         payload: { msg: error },

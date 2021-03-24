@@ -7,7 +7,7 @@ import { deleteReqMsg } from '../../store/actions/request'
 import getTimeInfo from '../../utils/getTimeInfo'
 
 const SentReqs = ({ sentRequest, history, deleteReqMsg }) => {
-  console.log(sentRequest)
+  // console.log(sentRequest)
   const requests = sentRequest.map((msg, index) => (
     <tr key={msg._id} className='hover:bg-gray-100'>
       <td>{index + 1}</td>

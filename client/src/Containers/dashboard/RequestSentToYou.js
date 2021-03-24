@@ -7,7 +7,7 @@ import { deleteReceMsg, acceptRide } from '../../store/actions/offer'
 import getTimeInfo from '../../utils/getTimeInfo'
 
 const ReceReqs = ({ receRequest, history, deleteReceMsg, acceptRide }) => {
-  console.log(receRequest)
+  // console.log(receRequest)
   const requests = receRequest.map((msg, index) => (
     <tr key={msg._id} className='hover:bg-gray-100'>
       <td>{index + 1}</td>

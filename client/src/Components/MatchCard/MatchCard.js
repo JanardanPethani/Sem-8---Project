@@ -11,7 +11,7 @@ const MatchCard = ({ array, send }) => {
         return (
           <div
             key={ride._id}
-            className='px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 '
+            className='px-1 w-full md:w-1/2 lg:my-4 lg:px-3 lg:w-1/2 '
           >
             <article className='overflow-hidden rounded-lg shadow-lg'>
               <div className='max-w-full font-medium pb-2 pt-2 bg-gray-100 '>
