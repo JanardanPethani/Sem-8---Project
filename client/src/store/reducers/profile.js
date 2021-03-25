@@ -12,7 +12,8 @@ import {
   MSG_FAILED,
   SEND_MSG,
   ACCEPT_REQ,
-  GET_ACTIVE,
+  GET_ACTIVE_D,
+  GET_ACTIVE_P,
 } from '../actions/types'
 
 const initialState = {
@@ -21,7 +22,8 @@ const initialState = {
   currRequestData: {},
   currRequestMatches: [],
   currOfferData: {},
-  activeRide: [],
+  activeRideD: [],
+  activeRideP: [],
   currReqSend: {},
   error: {},
 }
@@ -37,10 +39,16 @@ function profileReducer(state = initialState, action) {
         profile: payload,
         loading: false,
       }
-    case GET_ACTIVE:
+    case GET_ACTIVE_D:
       return {
         ...state,
-        activeRide: payload,
+        activeRideD: payload,
+        loading: false,
+      }
+    case GET_ACTIVE_P:
+      return {
+        ...state,
+        activeRideP: payload,
         loading: false,
       }
     case CLEAR_PROFILE:

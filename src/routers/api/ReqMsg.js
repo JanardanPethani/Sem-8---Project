@@ -50,11 +50,27 @@ router.get('/allReqMsgs', auth, async (req, res) => {
 })
 
 // @route   POST api/sendReqMsg
-// @desc    Get active ride
+// @desc    Get active ride for Driver
 // @access  Private
-router.get('/getActive', auth, async (req, res) => {
+router.get('/getActiveForDriver', auth, async (req, res) => {
   try {
     const ride = await SendReq.find({ to: req.user._id, status: 'accepted' })
+      .populate('reqBy')
+      .populate('forWhich')
+      .populate('to')
+
+    res.status(201).json(ride)
+  } catch (error) {
+    res.status(400).json({ errors: [{ msg: error.message }] })
+  }
+})
+
+// @route   POST api/sendReqMsg
+// @desc    Get active ride for Passenger
+// @access  Private
+router.get('/getActiveForPassenger', auth, async (req, res) => {
+  try {
+    const ride = await SendReq.find({ reqBy: req.user._id, status: 'accepted' })
       .populate('reqBy')
       .populate('forWhich')
       .populate('to')

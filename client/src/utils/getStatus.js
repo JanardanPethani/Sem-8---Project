@@ -10,4 +10,5 @@ const getStatus = (time) => {
     }
 }
 
+
 export default getStatus
