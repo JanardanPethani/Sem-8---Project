@@ -8,7 +8,7 @@ import Requests from './Requests'
 import Offers from './Offers'
 import SentReqs from './RequestSentByYou'
 import ReceReqs from './RequestSentToYou'
-import ActiveRide from '../../Components/ActiveRide/ActiveRides'
+import ActiveRide from './ActiveRides'
 
 import { getCurrentProfile } from '../../store/actions/profile'
 import { deleteUser } from '../../store/actions/auth'
@@ -46,10 +46,16 @@ const Dashboard = ({
 
           <ActiveRide activeRide={activeRideD} />
           <ActiveRide activeRide={activeRideP} />
-          <Requests request={profile.req} />
-          <Offers offer={profile.off} />
-          <SentReqs sentRequest={profile.send} />
-          <ReceReqs receRequest={profile.received} />
+          <div className=' bg-white shadow-sm p-2 mb-3 mt-1 rounded-lg overscroll-x-contain'>
+            <Requests request={profile.req} />
+            <div className='border-b-2'></div>
+            <SentReqs sentRequest={profile.send} />
+          </div>
+          <div className=' bg-white shadow-sm p-2 mb-3 mt-1 rounded-lg overscroll-x-contain'>
+            <Offers offer={profile.off} />
+            <div className='border-b-2'></div>
+            <ReceReqs receRequest={profile.received} />
+          </div>
         </Fragment>
       ) : (
         <Fragment>

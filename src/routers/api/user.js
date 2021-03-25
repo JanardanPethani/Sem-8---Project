@@ -47,7 +47,6 @@ router.post(
   }
 )
 
-
 // @route   PATCH api/user
 // @desc    Update a user
 // @access  Private
@@ -73,6 +72,11 @@ router.patch('/me', auth, async (req, res) => {
   }
 })
 
+// @route   get api/user
+// @desc    History
+// @access  Private
+router.get('/history', auth, async (req, res) => {})
+
 // @route   PATCH api/user
 // @desc    Update password
 // @access  Public
@@ -87,13 +91,15 @@ router.patch('/updatePassword', async (req, res) => {
     await user.save()
 
     res.status(200).json({
-      msg: "Password updated"
+      msg: 'Password updated',
     })
   } catch (error) {
     res.status(400).json({
-      errors: [{
-        msg: error.message
-      }]
+      errors: [
+        {
+          msg: error.message,
+        },
+      ],
     })
   }
 })

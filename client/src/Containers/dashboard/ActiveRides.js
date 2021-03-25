@@ -1,54 +1,20 @@
 import React, { Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import getStatus from '../../utils/getActiveRideStatus'
+import { paymentReceived } from '../../store/actions/offer'
 
-const ActiveRide = ({ activeRide, history }) => {
+import getStatus from '../../utils/getActiveRideStatus'
+import getTimeInfo from '../../utils/getTimeInfo'
+
+const ActiveRide = ({ activeRide, auth, paymentReceived, history }) => {
   const ride = activeRide[0]
-  // .map((msg, index) => (
-  //   <tr key={msg._id} className='hover:bg-gray-100'>
-  //     <td>{msg.forWhich.from.slice(0, 10) + ' ...'}</td>
-  //     <td>{msg.forWhich.to.slice(0, 10) + ' ...'}</td>
-  //     <td>{`${msg.to.firstname} ${msg.to.lastname}`}</td>
-  //     <td>{`${msg.reqBy.firstname} ${msg.reqBy.lastname}`}</td>
-  //     <td>
-  //       <button
-  //         className='btn btn-success'
-  //         onClick={() =>
-  //           history.push({
-  //             pathname: '/currActiveRide',
-  //             state: { id: msg._id },
-  //           })
-  //         }
-  //       >
-  //         <i className='fas fa-info-circle'></i>
-  //       </button>
-  //     </td>
-  //   </tr>
-  // ))
 
   return (
     <Fragment>
       {activeRide.length !== 0 ? (
-        // <div>
-        //   <h2 className='p-6 text-xl font-medium'>Active Ride</h2>
-        //   <table className='table shadow-lg rounded-lg overflow-hidden'>
-        //     <thead className='bg-primaryColor text-white '>
-        //       <tr>
-        //         <th>From</th>
-        //         <th>Destination</th>
-        //         <th>Driver</th>
-        //         <th>Passenger</th>
-        //         <th>Info</th>
-        //       </tr>
-        //     </thead>
-        //     <tbody>{ride}</tbody>
-        //   </table>
-        // </div>
-
-        <div className='max-w-lg mx-auto bg-white border-2 border-gray-300 mt-4 rounded-md tracking-wide shadow-lg'>
+        <div className='max-w-lg mx-auto bg-white border-1  mt-4 mb-3 rounded-md tracking-wide shadow-md overflow-hidden'>
           <h2 className='p-2 bg-gray-100 text-xl text-center font-medium'>
             Active Ride
           </h2>
@@ -69,7 +35,7 @@ const ActiveRide = ({ activeRide, history }) => {
             </div>
           </div>
           {/* Data */}
-          <div className='flex flex-col justify-items-center m-3'>
+          <div className='flex flex-col justify-items-center mt-3'>
             <div className='divide-y divide-gray p-4'>
               <div className='flex p-4 text-left'>
                 <div className='w-1/4 flex-shrink-0  lg:pl-3 md:px-0 text-sm font-medium self-center'>
@@ -92,7 +58,7 @@ const ActiveRide = ({ activeRide, history }) => {
                   Depart Time :
                 </div>
                 <div className='self-center text-left  ml-2'>
-                  {ride.forWhich.departAt}
+                  {getTimeInfo(ride.forWhich.departAt)}
                 </div>
               </div>
               <div className='flex p-4 text-left'>
@@ -105,6 +71,21 @@ const ActiveRide = ({ activeRide, history }) => {
               </div>
             </div>
           </div>
+          {/* Payment received button */}
+          {auth.user.email === ride.to.email ? (
+            <div>
+              <span className='flex flex-row justify-center text-gray-500 text-center pl-2 pr-2 rounded-md text-xs'>
+                Click after ride & payment completion.
+              </span>
+              <div className='flex flex-row justify-center  p-3 bg-green-50 hover:bg-green-400 hover:text-white cursor-pointer border-t-2'>
+                <button onClick={() => paymentReceived(ride._id)}>
+                  Payment Received
+                </button>
+              </div>
+            </div>
+          ) : (
+            ''
+          )}
         </div>
       ) : (
         ''
@@ -113,6 +94,15 @@ const ActiveRide = ({ activeRide, history }) => {
   )
 }
 
-ActiveRide.propTypes = {}
+ActiveRide.propTypes = {
+  auth: PropTypes.object.isRequired,
+  paymentReceived: PropTypes.func.isRequired,
+}
 
-export default connect(null, null)(withRouter(ActiveRide))
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+})
+
+export default connect(mapStateToProps, { paymentReceived })(
+  withRouter(ActiveRide)
+)

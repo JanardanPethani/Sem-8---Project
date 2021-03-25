@@ -105,3 +105,18 @@ export const acceptRide = (id) => async (dispatch) => {
     }
   }
 }
+
+export const paymentReceived = (id) => async (dispatch) => {
+  if (window.confirm('Check Again before confirm..')) {
+    try {
+      const ride = await axios.patch(`/api/sendReqMsg/paymentRec/${id}`)
+      dispatch(getCurrentProfile())
+      dispatch(setAlert('System Updated', 'success'))
+    } catch (error) {
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: { msg: error },
+      })
+    }
+  }
+}

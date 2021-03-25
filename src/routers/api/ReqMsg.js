@@ -1,6 +1,7 @@
 const express = require('express')
 const router = new express.Router()
 const SendReq = require('../../models/SendReqToDriver')
+const CompletedRide = require('../../models/CompletedRides')
 const User = require('../../models/User')
 const auth = require('../../middleware/auth')
 
@@ -146,7 +147,7 @@ router.delete('/receMsg/:id', auth, async (req, res) => {
   }
 })
 
-// @route   DELETE api/sendReqMsg
+// @route   PATCH api/sendReqMsg
 // @desc    Accept request
 // @access  Private
 router.patch('/acceptReq/:id', auth, async (req, res) => {
@@ -167,7 +168,7 @@ router.patch('/acceptReq/:id', auth, async (req, res) => {
 
       if (!ride) {
         throw new Error('Request Msg is not available')
-      } else if (ride.status === 'accepted') {
+      } else if (ride.status === 'accepted' || 'Payment Received') {
         throw new Error('Already accepted')
       } else {
         ride.status = 'accepted'
@@ -185,6 +186,49 @@ router.patch('/acceptReq/:id', auth, async (req, res) => {
       }
     }
   } catch (error) {
+    res.status(500).json({ errors: [{ msg: error.message }] })
+  }
+})
+
+// @route   PATCH api/sendReqMsg
+// @desc    Payment confirmation
+// @access  Private
+router.patch('/paymentRec/:id', auth, async (req, res) => {
+  try {
+    const ride = await SendReq.findOne({
+      _id: req.params.id,
+      to: req.user.id,
+    })
+      .populate('reqBy')
+      .populate('forWhich')
+
+    const copyRide = new CompletedRide({
+      reqBy: ride.reqBy._id,
+      to: ride.to,
+      forWhich: ride.forWhich._id,
+    })
+
+    if (!ride) {
+      throw new Error('Request Msg is not available')
+    } else if (ride.status === 'Payment Received') {
+      throw new Error('Already done')
+    } else {
+      ride.status = 'Payment Received'
+      await ride.save()
+      await copyRide.save()
+      await sendStatusMail(ride.reqBy.email, {
+        request_to: `${req.user.firstname} ${req.user.lastname}`,
+        phone: req.user.phone,
+        from: ride.forWhich.from,
+        Destination: ride.forWhich.to,
+        type: ride.forWhich.vehicletype,
+        status: 'Payment Completed',
+      })
+
+      res.status(201).send(ride)
+    }
+  } catch (error) {
+    console.log(error)
     res.status(500).json({ errors: [{ msg: error.message }] })
   }
 })
