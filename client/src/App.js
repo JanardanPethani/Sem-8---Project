@@ -21,6 +21,7 @@ import OfferPage from './Containers/offer/OfferPage'
 import EditProfile from './Containers/profile/EditProfile'
 import ForgotPassword from './Containers/auth/PasswordRecovery/ForgotPassword'
 import PasswordRecover from './Containers/auth/PasswordRecovery/PasswordRecover'
+import History from './Containers/History/History'
 
 import { loadUser } from './store/actions/auth'
 import setAuthToken from './utils/setAuthToken'
@@ -48,13 +49,22 @@ const App = () => {
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/forgotPassword' component={ForgotPassword} />
-              <Route exact path='/passwordRecovery' component={PasswordRecover} />
+              <Route
+                exact
+                path='/passwordRecovery'
+                component={PasswordRecover}
+              />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <PrivateRoute exact path='/request' component={Request} />
               <PrivateRoute exact path='/requestpage' component={RequestPage} />
               <PrivateRoute exact path='/offer' component={Offer} />
               <PrivateRoute exact path='/offerpage' component={OfferPage} />
-              <PrivateRoute exact path='/edit-profile' component={EditProfile} />
+              <PrivateRoute exact path='/history' component={History} />
+              <PrivateRoute
+                exact
+                path='/edit-profile'
+                component={EditProfile}
+              />
             </Switch>
           </section>
           <Footer></Footer>

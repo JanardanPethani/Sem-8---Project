@@ -13,8 +13,8 @@ export const getCurrentProfile = () => async (dispatch) => {
     const offerReq = await axios.get('/api/sendReqMsg/allReqMsgsToMe')
     const activeRideD = await axios.get('/api/sendReqMsg/getActiveForDriver')
     const activeRideP = await axios.get('/api/sendReqMsg/getActiveForPassenger')
-
-    // console.log(sendReq)
+    const history = await axios.get('/api/user/history')
+    // console.log(history)
     dispatch({
       type: GET_PROFILE,
       payload: {
@@ -22,6 +22,7 @@ export const getCurrentProfile = () => async (dispatch) => {
         off: off.data,
         send: sendReq.data,
         received: offerReq.data,
+        history: history.data,
       },
     })
     dispatch({
