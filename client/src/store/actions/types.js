@@ -24,6 +24,7 @@ export const OFFER_FAIL = 'OFFER_FAIL'
 export const DELETE_ACCOUNT = 'DELETE_ACCOUNT'
 
 export const GET_PLACENAME = 'GET_PLACENAME'
+export const CLEAR_PLACE = 'CLEAR_PLACE'
 export const MAP_ERROR = 'MAP_ERROR'
 
 export const MATCH_REQ = 'MATCH_REQ'
