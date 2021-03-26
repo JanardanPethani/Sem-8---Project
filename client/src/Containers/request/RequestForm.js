@@ -58,7 +58,9 @@ const RequestForm = ({ sendRequest, history, matchRides, matchesArray }) => {
         <div className='relative h-96  shadow-lg rounded-lg overflow-hidden'>
           <GMap />
         </div>
-
+        <span className='bg-yellow-100 p-1 text-sm rounded-md'>
+          Click on map to add marker/Click on marker to see location
+        </span>
         <div className='relative mt-5 mb-5 shadow-lg p-4 rounded-lg'>
           <p className='lead'>Add details</p>
           <form className='form' onSubmit={(e) => onSubmit(e)}>

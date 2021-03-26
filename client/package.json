@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.1.1",
+    "@reach/combobox": "^0.13.2",
     "@react-google-maps/api": "^2.1.1",
     "@seanhouli/react-mapbox-search": "^1.0.5",
     "@testing-library/jest-dom": "^5.11.4",
@@ -27,6 +28,7 @@
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
+    "use-places-autocomplete": "^1.9.1",
     "uuid": "^8.3.2",
     "web-vitals": "^1.0.1",
     "worker-loader": "^3.0.8"
