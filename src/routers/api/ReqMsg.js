@@ -172,7 +172,7 @@ router.patch('/acceptReq/:id', auth, async (req, res) => {
 
       if (!ride) {
         throw new Error('Request Msg is not available')
-      } else if (ride.status === 'Payment Received') {
+      } else if (ride.status === 'Accepted') {
         throw new Error('Already accepted')
       } else {
         ride.status = 'Accepted'
@@ -221,12 +221,9 @@ router.patch('/paymentRec/:id', auth, async (req, res) => {
 
     if (!ride) {
       throw new Error('Request Msg is not available')
-    } else if (ride.status === 'Payment Received') {
-      throw new Error('Already done')
     } else {
       ride.status = 'Payment Received'
       await ride.remove()
-      await Offer.deleteOne({ _id: offId })
       await copyRide.save()
       await sendStatusMail(ride.reqBy.email, {
         request_to: `${req.user.firstname} ${req.user.lastname}`,
