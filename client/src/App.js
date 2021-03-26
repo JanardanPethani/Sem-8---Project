@@ -6,24 +6,25 @@ import store from './store/store'
 
 import './styles/App.css'
 
-import Footer from './components/layout/Footer/Footer'
-import Landing from './components/layout/LandingPage/Landing'
-import Navbar from './components/layout/Navbar/Navbar'
-import Login from './components/auth/Login/Login'
-import Register from './components/auth/Register/Register'
-import Alert from './components/layout/Alert/Alert'
-import Dashboard from './components/dashboard/Dashboard'
-import PrivateRoute from './components/routing/PrivateRoute'
-import Request from './components/request/RequestForm'
-import RequestPage from './components/request/RequestPage'
-import OfferPage from './components/offer/OfferPage'
-import EditProfile from './components/profile/EditProfile'
-import ForgotPassword from './components/auth/PasswordRecovery/ForgotPassword'
-import PasswordRecover from './components/auth/PasswordRecovery/PasswordRecover'
+import Footer from './Containers/layout/Footer/Footer'
+import Landing from './Containers/layout/LandingPage/Landing'
+import Navbar from './Containers/layout/Navbar/Navbar'
+import Login from './Containers/auth/Login/Login'
+import Register from './Containers/auth/Register/Register'
+import Alert from './Containers/layout/Alert/Alert'
+import Dashboard from './Containers/dashboard/Dashboard'
+import PrivateRoute from './Containers/routing/PrivateRoute'
+import Request from './Containers/request/RequestForm'
+import RequestPage from './Containers/request/RequestPage'
+import Offer from './Containers/offer/OfferForm'
+import OfferPage from './Containers/offer/OfferPage'
+import EditProfile from './Containers/profile/EditProfile'
+import ForgotPassword from './Containers/auth/PasswordRecovery/ForgotPassword'
+import PasswordRecover from './Containers/auth/PasswordRecovery/PasswordRecover'
+import History from './Containers/History/History'
 
 import { loadUser } from './store/actions/auth'
 import setAuthToken from './utils/setAuthToken'
-import Offer from './components/offer/OfferForm'
 
 if (localStorage.token) {
   setAuthToken(localStorage.token)
@@ -48,13 +49,22 @@ const App = () => {
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/forgotPassword' component={ForgotPassword} />
-              <Route exact path='/passwordRecovery' component={PasswordRecover} />
+              <Route
+                exact
+                path='/passwordRecovery'
+                component={PasswordRecover}
+              />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <PrivateRoute exact path='/request' component={Request} />
               <PrivateRoute exact path='/requestpage' component={RequestPage} />
               <PrivateRoute exact path='/offer' component={Offer} />
               <PrivateRoute exact path='/offerpage' component={OfferPage} />
-              <PrivateRoute exact path='/edit-profile' component={EditProfile} />
+              <PrivateRoute exact path='/history' component={History} />
+              <PrivateRoute
+                exact
+                path='/edit-profile'
+                component={EditProfile}
+              />
             </Switch>
           </section>
           <Footer></Footer>

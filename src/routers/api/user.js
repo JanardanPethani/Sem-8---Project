@@ -2,6 +2,7 @@ const express = require('express')
 const { check, validationResult } = require('express-validator')
 const router = new express.Router()
 const User = require('../../models/User')
+const CompletedRides = require('../../models/CompletedRides')
 const auth = require('../../middleware/auth')
 
 // @route   POST api/user
@@ -47,7 +48,6 @@ router.post(
   }
 )
 
-
 // @route   PATCH api/user
 // @desc    Update a user
 // @access  Private
@@ -67,7 +67,23 @@ router.patch('/me', auth, async (req, res) => {
     updates.forEach((update) => (req.user[update] = req.body[update]))
     //* Do not create new object
     await req.user.save()
-    res.send(req.user)
+    res.status(201).send(req.user)
+  } catch (error) {
+    res.status(400).send({ errors: [{ msg: error.message }] })
+  }
+})
+
+// @route   GET api/user
+// @desc    History
+// @access  Private
+router.get('/history', auth, async (req, res) => {
+  try {
+    const rides_p = await CompletedRides.find({ reqByM: req.user.email })
+
+    const rides_d = await CompletedRides.find({ driverM: req.user.email })
+
+    // console.log(rides_p, rides_d)
+    res.status(201).send([...rides_d, ...rides_p])
   } catch (error) {
     res.status(400).send({ errors: [{ msg: error.message }] })
   }
@@ -87,13 +103,15 @@ router.patch('/updatePassword', async (req, res) => {
     await user.save()
 
     res.status(200).json({
-      msg: "Password updated"
+      msg: 'Password updated',
     })
   } catch (error) {
     res.status(400).json({
-      errors: [{
-        msg: error.message
-      }]
+      errors: [
+        {
+          msg: error.message,
+        },
+      ],
     })
   }
 })

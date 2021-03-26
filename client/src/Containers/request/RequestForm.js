@@ -3,18 +3,21 @@ import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { sendRequest } from '../../store/actions/request'
+import { sendRequest, matchRides } from '../../store/actions/request'
 
 import Map from '../layout/Map/Map'
+import MatchCard from '../../Components/MatchCard/MatchCard'
 
 //TODO: Select type -> seats 
 
-const RequestForm = ({ sendRequest, history }) => {
+const RequestForm = ({ sendRequest, history, matchRides, matchesArray }) => {
     const [formData, setFormData] = useState({
         from: '',
         to: '',
         departAt: ''
     });
+
+    const [getMatch, setMatch] = useState(false)
 
     const {
         from,
@@ -58,11 +61,11 @@ const RequestForm = ({ sendRequest, history }) => {
 
             <h1 className="large text-primary">Request a ride</h1>
             <div className="grid">
-                <div className="relative h-96 shadow-lg rounded-lg overflow-hidden">
+                <div className="relative h-96  shadow-lg rounded-lg overflow-hidden">
                     <Map />
                 </div>
 
-                <div className="relative mt-5 mb-5 shadow-lg p-3 rounded-lg">
+                <div className="relative mt-5 mb-5 shadow-lg p-4 rounded-lg">
                     <p className="lead">
                         Add details
                 </p>
@@ -109,13 +112,52 @@ const RequestForm = ({ sendRequest, history }) => {
                 </Link>
                     </form>
                 </div>
-            </div>
-        </Fragment>
+
+                <div className="flex max-w-full">
+                    {from !== '' ?
+                        <Fragment>
+                            {!getMatch ?
+                                <button
+                                    className='btn btn-primary'
+                                    onClick={() => {
+                                        setMatch(true)
+                                        if (!getMatch) {
+                                            matchRides(from)
+                                        }
+                                    }}
+                                >
+                                    Get Matching Offers
+                            </button> : ''}
+                            {getMatch ?
+                                <div className='text-center container my-5 mx-auto px-4 md:px-12' >
+
+                                    <button
+                                        onClick={() => {
+                                            setMatch(false)
+                                        }}
+                                    ><i className="fas fa-times-circle text-3xl"></i>
+                                    </button>
+                                    <div className='flex flex-wrap -mx-1 lg:-mx-4'>
+                                        {/*//TODO click={sendReq} - send to offer owner*/}
+                                        <MatchCard array={matchesArray} />
+                                    </div>
+                                </div>
+                                : ''}
+                        </Fragment> : 'Enter Pickup point first'}
+                </div>
+            </div >
+        </Fragment >
     )
 }
 
 RequestForm.propTypes = {
-    sendRequest: PropTypes.func.isRequired
+    sendRequest: PropTypes.func.isRequired,
+    matchRides: PropTypes.func.isRequired,
+    matchesArray: PropTypes.array
 }
 
-export default connect(null, { sendRequest })(withRouter(RequestForm))
+const mapStateToProps = (state) => ({
+    matchesArray: state.profile.currRequestMatches
+})
+
+export default connect(mapStateToProps, { sendRequest, matchRides })(withRouter(RequestForm))
