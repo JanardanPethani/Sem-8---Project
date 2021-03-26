@@ -3,6 +3,7 @@ const router = new express.Router()
 const SendReq = require('../../models/SendReqToDriver')
 const CompletedRide = require('../../models/CompletedRides')
 const User = require('../../models/User')
+const Offer = require('../../models/OffRide')
 const auth = require('../../middleware/auth')
 
 const { sendReqMail, sendStatusMail } = require('../../utils/sendmail')
@@ -39,7 +40,10 @@ router.post('/send', auth, async (req, res) => {
 // @access  Private
 router.get('/allReqMsgs', auth, async (req, res) => {
   try {
-    const msgs = await SendReq.find({ reqBy: req.user._id })
+    const msgs = await SendReq.find({
+      reqBy: req.user._id,
+      status: ['Pending', 'Accepted'],
+    })
       .populate('to')
       .populate('forWhich')
       .populate('reqBy')
@@ -202,12 +206,12 @@ router.patch('/paymentRec/:id', auth, async (req, res) => {
       .populate('reqBy')
       .populate('forWhich')
       .populate('to')
-
+    const offId = ride.forWhich._id
     const copyRide = new CompletedRide({
       reqBy: `${ride.reqBy.firstname} ${ride.reqBy.lastname}`,
-      reqByUn: ride.reqBy.email,
+      reqByM: ride.reqBy.email,
       driver: `${ride.to.firstname} ${ride.to.lastname}`,
-      driverUn: ride.to.email,
+      driverM: ride.to.email,
       from: ride.forWhich.from,
       to: ride.forWhich.to,
       vehicleType: ride.forWhich.vehicletype,
@@ -221,7 +225,8 @@ router.patch('/paymentRec/:id', auth, async (req, res) => {
       throw new Error('Already done')
     } else {
       ride.status = 'Payment Received'
-      await ride.save()
+      await ride.remove()
+      await Offer.deleteOne({ _id: offId })
       await copyRide.save()
       await sendStatusMail(ride.reqBy.email, {
         request_to: `${req.user.firstname} ${req.user.lastname}`,

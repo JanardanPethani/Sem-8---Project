@@ -60,8 +60,11 @@ offRideSchema.statics.findByLoc = async (userId, from, to, vehicletype) => {
 // Delete user tasks when user removed
 offRideSchema.pre('remove', async function (next) {
   const offer = this
-  const reqs = await SendReq.findOne({ forWhich: offer.id })
-  if (reqs !== null) {
+  const reqs = await SendReq.find({
+    forWhich: offer.id,
+  })
+  console.log(reqs)
+  if (reqs.length !== 0) {
     throw new Error('Can not delete offer..')
   }
 
