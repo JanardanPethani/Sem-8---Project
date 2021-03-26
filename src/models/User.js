@@ -127,7 +127,7 @@ userSchema.pre('remove', async function (next) {
   const user = this
   await Requests.deleteMany({ reqBy: user.id })
   await Offers.deleteMany({ offBy: user.id })
-
+  
   next()
 })
 

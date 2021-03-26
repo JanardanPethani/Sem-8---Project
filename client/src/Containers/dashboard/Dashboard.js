@@ -13,6 +13,8 @@ import ActiveRide from './ActiveRides'
 import { getCurrentProfile } from '../../store/actions/profile'
 import { deleteUser } from '../../store/actions/auth'
 
+// TODO Reviews Page, Add review button
+
 const Dashboard = ({
   getCurrentProfile,
   auth,
@@ -46,12 +48,12 @@ const Dashboard = ({
 
           <ActiveRide activeRide={activeRideD} />
           <ActiveRide activeRide={activeRideP} />
-          <div className=' bg-white shadow-sm p-2 mb-3 mt-1 rounded-lg overscroll-x-contain'>
+          <div className=' bg-white shadow-sm p-2 mb-3 mt-1 rounded-lg overflow-auto'>
             <Requests request={profile.req} />
             <div className='border-b-2'></div>
             <SentReqs sentRequest={profile.send} />
           </div>
-          <div className=' bg-white shadow-sm p-2 mb-3 mt-1 rounded-lg overscroll-x-contain'>
+          <div className=' bg-white shadow-sm p-2 mb-3 mt-1 rounded-lg overflow-auto'>
             <Offers offer={profile.off} />
             <div className='border-b-2'></div>
             <ReceReqs receRequest={profile.received} />

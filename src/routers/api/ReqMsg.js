@@ -55,7 +55,7 @@ router.get('/allReqMsgs', auth, async (req, res) => {
 // @access  Private
 router.get('/getActiveForDriver', auth, async (req, res) => {
   try {
-    const ride = await SendReq.find({ to: req.user._id, status: 'accepted' })
+    const ride = await SendReq.find({ to: req.user._id, status: 'Accepted' })
       .populate('reqBy')
       .populate('forWhich')
       .populate('to')
@@ -71,7 +71,7 @@ router.get('/getActiveForDriver', auth, async (req, res) => {
 // @access  Private
 router.get('/getActiveForPassenger', auth, async (req, res) => {
   try {
-    const ride = await SendReq.find({ reqBy: req.user._id, status: 'accepted' })
+    const ride = await SendReq.find({ reqBy: req.user._id, status: 'Accepted' })
       .populate('reqBy')
       .populate('forWhich')
       .populate('to')
@@ -87,7 +87,7 @@ router.get('/getActiveForPassenger', auth, async (req, res) => {
 // @access  Private
 router.get('/allReqMsgsToMe', auth, async (req, res) => {
   try {
-    const msgs = await SendReq.find({ to: req.user._id })
+    const msgs = await SendReq.find({ to: req.user._id, status: 'Pending' })
       .populate('reqBy')
       .populate('forWhich')
     // console.log(msgs)
@@ -154,7 +154,7 @@ router.patch('/acceptReq/:id', auth, async (req, res) => {
   try {
     const rides = await SendReq.find({
       to: req.user.id,
-      status: 'accepted',
+      status: 'Accepted',
     })
     if (rides.length > 0) {
       throw new Error('Other ride is in process')
@@ -168,10 +168,10 @@ router.patch('/acceptReq/:id', auth, async (req, res) => {
 
       if (!ride) {
         throw new Error('Request Msg is not available')
-      } else if (ride.status === 'accepted' || 'Payment Received') {
+      } else if (ride.status === 'Payment Received') {
         throw new Error('Already accepted')
       } else {
-        ride.status = 'accepted'
+        ride.status = 'Accepted'
         await ride.save()
         await sendStatusMail(ride.reqBy.email, {
           request_to: `${req.user.firstname} ${req.user.lastname}`,
@@ -201,11 +201,18 @@ router.patch('/paymentRec/:id', auth, async (req, res) => {
     })
       .populate('reqBy')
       .populate('forWhich')
+      .populate('to')
 
     const copyRide = new CompletedRide({
-      reqBy: ride.reqBy._id,
-      to: ride.to,
-      forWhich: ride.forWhich._id,
+      reqBy: `${ride.reqBy.firstname} ${ride.reqBy.lastname}`,
+      reqByUn: ride.reqBy.email,
+      driver: `${ride.to.firstname} ${ride.to.lastname}`,
+      driverUn: ride.to.email,
+      from: ride.forWhich.from,
+      to: ride.forWhich.to,
+      vehicleType: ride.forWhich.vehicletype,
+      departedAt: ride.forWhich.departAt,
+      price: ride.forWhich.price,
     })
 
     if (!ride) {

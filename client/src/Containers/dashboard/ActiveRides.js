@@ -77,10 +77,11 @@ const ActiveRide = ({ activeRide, auth, paymentReceived, history }) => {
               <span className='flex flex-row justify-center text-gray-500 text-center pl-2 pr-2 rounded-md text-xs'>
                 Click after ride & payment completion.
               </span>
-              <div className='flex flex-row justify-center  p-3 bg-green-50 hover:bg-green-400 hover:text-white cursor-pointer border-t-2'>
-                <button onClick={() => paymentReceived(ride._id)}>
-                  Payment Received
-                </button>
+              <div
+                className='flex flex-row justify-center  p-3 bg-green-50 hover:bg-green-400 hover:text-white cursor-pointer border-t-2'
+                onClick={() => paymentReceived(ride._id)}
+              >
+                Payment Received
               </div>
             </div>
           ) : (

@@ -3,18 +3,39 @@ const mongoose = require('mongoose')
 const completedRides = new mongoose.Schema(
   {
     reqBy: {
-      type: mongoose.Types.ObjectId,
-      ref: 'User',
+      type: String,
+      required: true,
+    },
+    reqByM: {
+      type: String,
+      required: true,
+    },
+    driver: {
+      type: String,
+      required: true,
+    },
+    driverM: {
+      type: String,
+      required: true,
+    },
+    from: {
+      type: String,
       required: true,
     },
     to: {
-      type: mongoose.Types.ObjectId,
-      ref: 'User',
+      type: String,
       required: true,
     },
-    forWhich: {
-      type: mongoose.Types.ObjectId,
-      ref: 'Offers',
+    vehicleType: {
+      type: String,
+      required: true,
+    },
+    departedAt: {
+      type: Date,
+      required: true,
+    },
+    price: {
+      type: Number,
       required: true,
     },
   },
@@ -23,5 +44,11 @@ const completedRides = new mongoose.Schema(
   }
 )
 
+completedRides.methods.toJSON = function () {
+  const request = this
+  const reqObj = request.toObject()
+  reqObj.departedAt = reqObj.departedAt.toString()
+  return reqObj
+}
 
 module.exports = SentReq = mongoose.model('Completed', completedRides)

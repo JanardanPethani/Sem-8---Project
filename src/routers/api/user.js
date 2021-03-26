@@ -73,21 +73,16 @@ router.patch('/me', auth, async (req, res) => {
   }
 })
 
-// TODO
 // @route   GET api/user
 // @desc    History
 // @access  Private
 router.get('/history', auth, async (req, res) => {
   try {
-    const rides_p = await CompletedRides.find({ reqBy: req.user._id })
-      .populate('reqBy')
-      .populate('to')
-      .populate('forWhich')
-    const rides_d = await CompletedRides.find({ to: req.user._id })
-      .populate('reqBy')
-      .populate('to')
-      .populate('forWhich')
-    console.log(rides_p, rides_d)
+    const rides_p = await CompletedRides.find({ reqByM: req.user.email })
+
+    const rides_d = await CompletedRides.find({ driverM: req.user.email })
+
+    // console.log(rides_p, rides_d)
     res.status(201).send([...rides_d, ...rides_p])
   } catch (error) {
     res.status(400).send({ errors: [{ msg: error.message }] })

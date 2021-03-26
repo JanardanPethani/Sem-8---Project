@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-//* status - panding, accepted, paymentdone
+//* status - Pending, Accepted, Payment Received
 
 const sentReqSchema = new mongoose.Schema(
   {

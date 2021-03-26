@@ -29,9 +29,11 @@ export const sendRequest = (formData, history) => async (dispatch) => {
     // can't use Redirect bcz Action is not react
     history.push('/dashboard')
   } catch (error) {
-    const errors = error.response.data.errors
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
+    if (error) {
+      const errors = error.response.data.errors
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
+      }
     }
     dispatch({
       type: PROFILE_ERROR,

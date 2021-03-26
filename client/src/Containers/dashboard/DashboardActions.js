@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 const DashboardActions = (props) => {
   return (
-    <div className='justify-center flex  mt-6'>
+    <div className='justify-center flex flex-col lg:flex-row mt-6'>
       <Link
         to='/edit-profile'
         className='m-2 py-2 px-4 font-semibold bg-white rounded-xl shadow-md overflow-hidden hover:bg-gray-200'
