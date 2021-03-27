@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { sendRequest, matchRides } from '../../store/actions/request'
+import { sendRequest, matchRides, sendMsg } from '../../store/actions/request'
 
 import Map from '../layout/Map/Map'
 import GMap from '../layout/GoogleMap/Map'
@@ -11,7 +11,13 @@ import MatchCard from '../../Components/MatchCard/MatchCard'
 
 //TODO: Select type -> seats
 
-const RequestForm = ({ sendRequest, history, matchRides, matchesArray }) => {
+const RequestForm = ({
+  sendRequest,
+  history,
+  matchRides,
+  matchesArray,
+  sendMsg,
+}) => {
   const [formData, setFormData] = useState({
     from: '',
     to: '',
@@ -134,8 +140,15 @@ const RequestForm = ({ sendRequest, history, matchRides, matchesArray }) => {
                     <i className='fas fa-times-circle text-3xl'></i>
                   </button>
                   <div className='flex flex-wrap -mx-1 lg:-mx-4'>
-                    {/*//TODO click={sendReq} - send to offer owner*/}
-                    <MatchCard array={matchesArray} />
+                    {matchesArray.length !== 0 ? (
+                      <MatchCard
+                        array={matchesArray}
+                        send={sendMsg}
+                        showButton={false}
+                      />
+                    ) : (
+                      'No matches'
+                    )}
                   </div>
                 </div>
               ) : (
@@ -154,6 +167,7 @@ const RequestForm = ({ sendRequest, history, matchRides, matchesArray }) => {
 RequestForm.propTypes = {
   sendRequest: PropTypes.func.isRequired,
   matchRides: PropTypes.func.isRequired,
+  sendMsg: PropTypes.func.isRequired,
   matchesArray: PropTypes.array,
 }
 
@@ -161,6 +175,6 @@ const mapStateToProps = (state) => ({
   matchesArray: state.profile.currRequestMatches,
 })
 
-export default connect(mapStateToProps, { sendRequest, matchRides })(
+export default connect(mapStateToProps, { sendRequest, matchRides, sendMsg })(
   withRouter(RequestForm)
 )

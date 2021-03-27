@@ -123,15 +123,14 @@ export const sendMsg = ({
     }
 
     const res = await axios.post('/api/sendReqMsg/send', body, config)
-    // console.log(res);
     dispatch({
       type: SEND_MSG,
       payload: res.data,
     })
     dispatch(getCurrentProfile())
-    dispatch(setAlert('Request Sent', 'success'))
   } catch (error) {
-    dispatch(setAlert('Already Sent', 'warning'))
+    console.log(error)
+    dispatch(setAlert('Request Sent', 'Warning'))
     dispatch({
       type: MSG_FAILED,
       payload: { msg: error },

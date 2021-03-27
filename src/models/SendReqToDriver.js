@@ -29,11 +29,11 @@ const sentReqSchema = new mongoose.Schema(
   }
 )
 
-sentReqSchema.statics.findByUser = async ({ reqBy, to, forWhich }) => {
+sentReqSchema.statics.findByUser = async ({ reqBy, forWhich, to }) => {
   const ride = await SentReq.findOne({
     reqBy,
-    to: mongoose.Types.ObjectId(to),
-    forWhich: mongoose.Types.ObjectId(forWhich),
+    forWhich,
+    to,
   })
   if (ride) {
     console.log('In if')
@@ -41,5 +41,6 @@ sentReqSchema.statics.findByUser = async ({ reqBy, to, forWhich }) => {
   }
   return ride
 }
+const SentReq = mongoose.model('SentReq', sentReqSchema)
 
-module.exports = SentReq = mongoose.model('SentReq', sentReqSchema)
+module.exports = SentReq

@@ -154,7 +154,7 @@ const Locate = ({ panTo, setMarker }) => {
         )
       }}
     >
-      <img src='./maps-and-flags.svg' />
+      <img src='./maps-and-flags.svg' alt='Marker' />
     </button>
   )
 }

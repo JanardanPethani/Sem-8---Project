@@ -61,7 +61,11 @@ const RequestPage = ({
             <i className='fas fa-times-circle text-3xl'></i>
           </button>
           <div className='flex flex-wrap -mx-1 lg:-mx-4'>
-            <MatchCard array={matchesArray} send={sendMsg} />
+            {matchesArray.length !== 0 ? (
+              <MatchCard array={matchesArray} send={sendMsg} showButton />
+            ) : (
+              'No matches'
+            )}
           </div>
         </div>
       ) : null}

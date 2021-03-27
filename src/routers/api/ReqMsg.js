@@ -12,15 +12,18 @@ const { sendReqMail, sendStatusMail } = require('../../utils/sendmail')
 // @desc    Sent request to rider
 // @access  Private
 router.post('/send', auth, async (req, res) => {
-  const dataObj = {
-    reqBy: req.user._id,
+  const request = new SendReq({
+    reqBy: req.user.id,
     to: req.body.to,
     forWhich: req.body.forWhich,
-  }
-  const request = new SendReq(dataObj)
+  })
   try {
     // console.log(req);
-    const ride = await SendReq.findByUser(dataObj)
+    const ride = await SendReq.findByUser({
+      reqBy: req.user.id,
+      to: req.body.to,
+      forWhich: req.body.forWhich,
+    })
     await request.save()
     await sendReqMail(req.body.email, {
       reqBy: `${req.user.firstname} ${req.user.lastname}`,

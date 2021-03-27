@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 import getStatus from '../../utils/getStatus'
 
-const MatchCard = ({ array, send }) => {
+const MatchCard = ({ array, send, showButton }) => {
   return (
     <Fragment>
       {array.map((ride) => {
@@ -70,29 +70,36 @@ const MatchCard = ({ array, send }) => {
                 <div className='bg-gray-100 font-bold text-xl pb-2 pt-2'>
                   {ride.price}
                 </div>
-                <div>
-                  {status.props.children !== 'Expired' ? (
-                    <div
-                      className='hover:bg-green-200 cursor-pointer bg-green-100 text-xl pb-2 pt-2'
-                      onClick={() =>
-                        send({
-                          email: ride.offBy.email,
-                          to: ride.offBy._id,
-                          forWhich: ride._id,
-                          from: ride.from,
-                          destination: ride.to,
-                          type: ride.vehicletype,
-                        })
-                      }
-                    >
-                      Send Request
-                    </div>
-                  ) : (
-                    <div className='text-red-400 bg-green-100 text-xl pb-2 pt-2'>
-                      Departed
-                    </div>
-                  )}
-                </div>
+                {showButton ? (
+                  <div>
+                    {status.props.children !== 'Expired' ? (
+                      <div
+                        className='hover:bg-green-200 cursor-pointer bg-green-100 text-xl pb-2 pt-2'
+                        onClick={() => {
+                          console.log('From Send msgs')
+                          send({
+                            email: ride.offBy.email,
+                            to: ride.offBy._id,
+                            forWhich: ride._id,
+                            from: ride.from,
+                            destination: ride.to,
+                            type: ride.vehicletype,
+                          })
+                        }}
+                      >
+                        Send Request
+                      </div>
+                    ) : (
+                      <div className='text-red-400 bg-green-100 text-xl pb-2 pt-2'>
+                        Departed
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className='text-gray-400 bg-white  text-xl pb-2 pt-2'>
+                    Submit Request First
+                  </div>
+                )}
               </div>
             </article>
           </div>
