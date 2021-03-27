@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import store from './store/store'
 
+import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
+
 import './styles/App.css'
 
 import Footer from './Containers/layout/Footer/Footer'
@@ -30,7 +33,16 @@ if (localStorage.token) {
   setAuthToken(localStorage.token)
 }
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: '6rem',
+    marginBottom: '6rem',
+  },
+}))
+
 const App = () => {
+  const classes = useStyles()
+
   //When the state update it will keep looping to stop, [] is provided to run once
   //this tells reacts that effect doesn't depend on any values
   useEffect(() => {
@@ -43,7 +55,7 @@ const App = () => {
         <Fragment>
           <Navbar></Navbar>
           <Route exact path='/' component={Landing} />
-          <section className='container'>
+          <Container maxWidth='md' className={classes.root}>
             <Alert />
             <Switch>
               <Route exact path='/register' component={Register} />
@@ -66,7 +78,7 @@ const App = () => {
                 component={EditProfile}
               />
             </Switch>
-          </section>
+          </Container>
           <Footer></Footer>
         </Fragment>
       </Router>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import Spinner from '../../Components/Spinner/Spinner'
 import DashboardActions from './DashboardActions'
-import Requests from './Requests'
+// import Requests from './Requests'
 import Offers from './Offers'
 import SentReqs from './RequestSentByYou'
 import ReceReqs from './RequestSentToYou'
@@ -37,6 +37,7 @@ const Dashboard = ({
           </p>
         </div>
       </div>
+      <DashboardActions />
 
       {profile !== null &&
       (profile.req.length !== 0 ||
@@ -44,24 +45,15 @@ const Dashboard = ({
         profile.send.length !== 0 ||
         profile.received.length !== 0) ? (
         <Fragment>
-          <DashboardActions />
-
           <ActiveRide activeRide={activeRideD} />
           <ActiveRide activeRide={activeRideP} />
-          <div className=' bg-white shadow-sm p-2 mb-3 mt-1 rounded-lg overflow-auto'>
-            <Requests request={profile.req} />
-            <div className='border-b-2'></div>
-            <SentReqs sentRequest={profile.send} />
-          </div>
-          <div className=' bg-white shadow-sm p-2 mb-3 mt-1 rounded-lg overflow-auto'>
-            <Offers offer={profile.off} />
-            <div className='border-b-2'></div>
-            <ReceReqs receRequest={profile.received} />
-          </div>
+          <SentReqs sentRequest={profile.send} />
+          <Offers offer={profile.off} />
+          <div className='border-b-2'></div>
+          <ReceReqs receRequest={profile.received} />
         </Fragment>
       ) : (
         <Fragment>
-          <DashboardActions />
           <br />
           <p className='max-w-md mx-auto mt-2 text-center text-500 leading-relaxed'>
             You have not requested / offered a ride

@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "@craco/craco": "^6.1.1",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material/top-app-bar": "^10.0.0",
     "@reach/combobox": "^0.13.2",
     "@react-google-maps/api": "^2.1.1",
     "@seanhouli/react-mapbox-search": "^1.0.5",
@@ -63,6 +66,9 @@
     "autoprefixer": "^9.8.6",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
+  },
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
   },
   "proxy": "http://localhost:5000"
 }
