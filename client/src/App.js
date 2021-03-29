@@ -35,7 +35,7 @@ if (localStorage.token) {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginTop: '6rem',
+    marginTop: '2rem',
     marginBottom: '6rem',
   },
 }))
