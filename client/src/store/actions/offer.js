@@ -5,15 +5,15 @@ import { getCurrentProfile } from './profile'
 import { ACCEPT_REQ, GET_OFFER, OFFER_FAIL, PROFILE_ERROR } from './types'
 
 // Create or Update request
-export const sendOffer = (formData, history) => async (dispatch) => {
+export const sendOffer = (newFormData, history) => async (dispatch) => {
   try {
     const config = {
       headers: {
         'Content-Type': 'application/json',
       },
     }
-    // console.log(formData);
-    await axios.post('/api/ride/offer', formData, config)
+    // console.log(newFormData);
+    await axios.post('/api/ride/offer', newFormData, config)
     dispatch(getCurrentProfile())
 
     dispatch(setAlert('Offer Accepted', 'success'))

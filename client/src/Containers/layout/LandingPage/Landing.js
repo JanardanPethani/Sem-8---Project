@@ -6,7 +6,6 @@ import PropTypes from 'prop-types'
 import './Landing.css'
 
 const Landing = ({ isAuthenticated }) => {
-
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />
   }
@@ -32,11 +31,11 @@ const Landing = ({ isAuthenticated }) => {
 }
 
 Landing.propTypes = {
-  isAuthenticated: PropTypes.bool
-};
+  isAuthenticated: PropTypes.bool,
+}
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 })
 
 export default connect(mapStateToProps, null)(Landing)

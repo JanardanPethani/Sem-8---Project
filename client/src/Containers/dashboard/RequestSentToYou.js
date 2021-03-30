@@ -10,7 +10,7 @@ import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
-
+import Paper from '@material-ui/core/Paper'
 import { deleteReceMsg, acceptRide } from '../../store/actions/offer'
 import getTimeInfo from '../../utils/getTimeInfo'
 
@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     padding: 10,
+  },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: 'center',
   },
 }))
 
@@ -66,27 +70,34 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg, acceptRide }) => {
           </Typography>
         </CardContent>
         <Grid item container>
-          <Button
-            onClick={() => {
-              acceptRide(msg._id)
-              history.push({
-                pathname: '/currActiveRide',
-                state: { reqId: msg._id },
-              })
-            }}
-            color='green'
-          >
-            <i className='fas fa-thumbs-up'></i>
-          </Button>
-
-          <Button
-            onClick={() => {
-              deleteReceMsg(msg._id)
-            }}
-            color='secondary'
-          >
-            <i className='fas fa-thumbs-down'></i>
-          </Button>
+          <Grid xs={6}>
+            <Paper
+              elevation={2}
+              style={{ cursor: 'pointer', color: 'green' }}
+              className={classes.paper}
+              onClick={() => {
+                acceptRide(msg._id)
+                history.push({
+                  pathname: '/currActiveRide',
+                  state: { reqId: msg._id },
+                })
+              }}
+            >
+              <i className='fas fa-thumbs-up'></i>
+            </Paper>
+          </Grid>
+          <Grid xs={6}>
+            <Paper
+              elevation={2}
+              style={{ cursor: 'pointer', color: 'red' }}
+              className={classes.paper}
+              onClick={() => {
+                deleteReceMsg(msg._id)
+              }}
+            >
+              <i className='fas fa-thumbs-down'></i>
+            </Paper>
+          </Grid>
         </Grid>
       </Card>
     </Grid>
@@ -94,7 +105,7 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg, acceptRide }) => {
 
   return (
     <Fragment>
-      <h2 className='p-6 text-xl font-medium'>Requests Sent To You</h2>
+      <h2 className='p-3 text-xl font-medium'>Passengers Requests</h2>
       <Grid item xs={12} className={classes.root} spacing={5}>
         <Grid container>{requests}</Grid>
       </Grid>

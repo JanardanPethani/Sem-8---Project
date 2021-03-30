@@ -8,13 +8,15 @@ import { sendRequest, matchRides, sendMsg } from '../../store/actions/request'
 import GMap from '../layout/GoogleMap/Map'
 
 import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
+import CancelIcon from '@material-ui/icons/Cancel'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
 import Grid from '@material-ui/core/Grid'
-import Button from '@material-ui/core/Button'
+import MenuItem from '@material-ui/core/MenuItem'
 import TextField from '@material-ui/core/TextField'
+import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
 import MatchCard from '../../Components/MatchCard/MatchCard'
 import DateFnsUtils from '@date-io/date-fns'
 import {
@@ -29,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
       width: '30ch',
     },
   },
+  formControl: {
+    minWidth: 150,
+  },
   paper: {
     marginTop: theme.spacing(2),
     display: 'flex',
@@ -40,20 +45,13 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     margin: theme.spacing(1),
   },
-  backBtn: {
-    margin: theme.spacing(3, 'auto'),
-  },
 }))
 
 const RequestForm = ({ history, matchRides, matchesArray, sendMsg }) => {
   const classes = useStyles()
 
-  // Steps
-  const [step, setStep] = useState(0)
-
   // The first commit of Material-UI
   const [selectedDate, setSelectedDate] = useState(new Date())
-
   const handleDateChange = (date) => {
     setSelectedDate(date)
   }
@@ -61,26 +59,41 @@ const RequestForm = ({ history, matchRides, matchesArray, sendMsg }) => {
   const [formData, setFormData] = useState({
     from: '',
     to: '',
-    departAt: '',
+    seats: '',
   })
 
   const [getMatch, setMatch] = useState(false)
 
-  const { from, to, departAt } = formData
+  const { from, to, seats } = formData
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  // className='relative h-96  shadow-lg rounded-lg overflow-hidden'
-  // className='relative mt-5 mb-5 shadow-lg p-4 rounded-lg'
-
   return (
     <Fragment>
-      <h1 className='large text-primary'>Request a ride</h1>
-      <Grid spacing={1}>
+      <Grid container>
+        <Grid xs={11}>
+          <h1 className='large text-primary'>Request a ride</h1>
+        </Grid>
+        <Grid
+          xs={1}
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Link to='/dashboard'>
+            <CancelIcon fontSize='large' />
+          </Link>
+        </Grid>
+      </Grid>
+      <Grid>
         <Grid>
-          <GMap />
+          <Paper elevation={3}>
+            <GMap />
+          </Paper>
           <span className='bg-yellow-100 p-1 text-sm rounded-md'>
             Click on map to add marker/Click on marker to see location
           </span>
@@ -91,76 +104,72 @@ const RequestForm = ({ history, matchRides, matchesArray, sendMsg }) => {
             <CssBaseline />
             <form className={classes.form} noValidate>
               <Grid container spacing={2}>
-                {step === 0 ? (
-                  <Fragment>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        id='outlined-basic'
-                        label='Pickup Location'
-                        required
-                        fullWidth
-                        variant='outlined'
-                        name='from'
-                        value={from}
-                        onChange={(e) => onChange(e)}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <TextField
-                        id='outlined-basic'
-                        required
-                        fullWidth
-                        label='Destination Location'
-                        variant='outlined'
-                        name='to'
-                        value={to}
-                        onChange={(e) => onChange(e)}
-                      />
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <Button
-                        variant='outlined'
-                        
-                        onClick={() => setStep(1)}
-                      >
-                        Next
-                      </Button>
-                    </Grid>
-                  </Fragment>
-                ) : (
-                  <Fragment>
-                    <Grid item xs={12}>
-                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <KeyboardDatePicker
-                          format='MM/dd/yyyy'
-                          value={selectedDate}
-                          onChange={handleDateChange}
-                          minDate={new Date()}
-                          onChange={(e) => onChange(e)}
-                        />
-                      </MuiPickersUtilsProvider>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <Button
-                        variant='outlined'
-                        
-                        onClick={() => setStep(0)}
-                      >
-                        Back
-                      </Button>
-                    </Grid>
-                  </Fragment>
-                )}
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id='outlined-basic'
+                    label='Pickup Location'
+                    required
+                    fullWidth
+                    variant='outlined'
+                    name='from'
+                    value={from}
+                    onChange={(e) => onChange(e)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    id='outlined-basic'
+                    required
+                    fullWidth
+                    label='Destination Location'
+                    variant='outlined'
+                    name='to'
+                    value={to}
+                    onChange={(e) => onChange(e)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <FormControl
+                    variant='outlined'
+                    className={classes.formControl}
+                  >
+                    <InputLabel htmlFor='outlined'>Seats</InputLabel>
+                    <Select
+                      labelId='outlined'
+                      id='outlined'
+                      value={seats}
+                      onChange={(e) => onChange(e)}
+                      name='seats'
+                      label='Seats'
+                    >
+                      <MenuItem value=''>
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={1}>One</MenuItem>
+                      <MenuItem value={2}>Two</MenuItem>
+                      <MenuItem value={3}>Three</MenuItem>
+                      <MenuItem value={4}>Four</MenuItem>
+                    </Select>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={6} style={{ paddingTop: '1rem' }}>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <KeyboardDatePicker
+                      format='MM/dd/yyyy'
+                      name={selectedDate}
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      minDate={new Date()}
+                    />
+                  </MuiPickersUtilsProvider>
+                </Grid>
               </Grid>
             </form>
           </Paper>
-          <Button variant='outlined' className={classes.backBtn}>
-            <Link to='/dashboard'>Go Back</Link>
-          </Button>
         </Grid>
 
-        <Grid className='flex max-w-full'>
-          {step === 1 ? (
+        <div className='flex max-w-full'>
+          {from && to ? (
             <Fragment>
               {!getMatch ? (
                 <button
@@ -205,7 +214,7 @@ const RequestForm = ({ history, matchRides, matchesArray, sendMsg }) => {
           ) : (
             ''
           )}
-        </Grid>
+        </div>
       </Grid>
     </Fragment>
   )

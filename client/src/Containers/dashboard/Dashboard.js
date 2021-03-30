@@ -1,9 +1,8 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import Spinner from '../../Components/Spinner/Spinner'
-import DashboardActions from './DashboardActions'
 // import Requests from './Requests'
 import Offers from './Offers'
 import SentReqs from './RequestSentByYou'
@@ -12,8 +11,20 @@ import ActiveRide from './ActiveRides'
 
 import { getCurrentProfile } from '../../store/actions/profile'
 import { deleteUser } from '../../store/actions/auth'
+import { Grid, Paper } from '@material-ui/core'
 
-// TODO Reviews Page, Add review button
+const getChoice = (choice, data) => {
+  switch (choice) {
+    case 'Offers':
+      return <Offers offer={{ ...data }} />
+    case 'Requests':
+      return <ReceReqs receRequest={{ ...data }} />
+    case 'SentRequests':
+      return <SentReqs sentRequest={{ ...data }} />
+    default:
+      return ''
+  }
+}
 
 const Dashboard = ({
   getCurrentProfile,
@@ -25,12 +36,12 @@ const Dashboard = ({
     getCurrentProfile()
   }, [getCurrentProfile])
 
+  const [choice, setChoice] = useState('offers')
+
   return loading && profile && auth.loading === null ? (
     <Spinner />
   ) : (
     <Fragment>
-      <DashboardActions />
-
       {profile !== null &&
       (profile.req.length !== 0 ||
         profile.off.length !== 0 ||
@@ -41,7 +52,6 @@ const Dashboard = ({
           <ActiveRide activeRide={activeRideP} />
           <SentReqs sentRequest={profile.send} />
           <Offers offer={profile.off} />
-          <div className='border-b-2'></div>
           <ReceReqs receRequest={profile.received} />
         </Fragment>
       ) : (
@@ -52,14 +62,7 @@ const Dashboard = ({
           </p>
         </Fragment>
       )}
-      <div className='justify-center flex mt-8 pb-8'>
-        <button
-          className='btn btn-danger p-2 rounded'
-          onClick={() => deleteUser()}
-        >
-          <i className='fas fa-user-minus'></i> Delete Account
-        </button>
-      </div>
+      
     </Fragment>
   )
 }

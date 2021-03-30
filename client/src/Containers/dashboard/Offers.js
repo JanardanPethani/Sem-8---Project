@@ -82,13 +82,13 @@ const Offers = ({ offer, deleteOff, history }) => {
           <Grid xs={6}>
             <Paper
               elevation={2}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: 'pointer', color: 'red' }}
               className={classes.paper}
               onClick={() => {
                 deleteOff(off._id)
               }}
             >
-              Cancle
+              Cancel
             </Paper>
           </Grid>
         </Grid>

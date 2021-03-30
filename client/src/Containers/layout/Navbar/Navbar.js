@@ -13,6 +13,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 
 import { logout } from '../../../store/actions/auth'
+import { deleteUser } from '../../../store/actions/auth'
 
 // import './Navbar.css'
 
@@ -35,7 +36,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
+const Navbar = ({
+  auth: { isAuthenticated, loading, user },
+  logout,
+  deleteUser,
+}) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const classes = useStyles()
 
@@ -70,16 +75,36 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
         </MenuItem>
         <MenuItem onClick={handleClose}>
           <Link to='/edit-profile'>
-            <i className='fas fa-user-circle text-primary'></i> Edit Profile
+            <i className='fas fa-user-circle '></i> Edit Profile
           </Link>
         </MenuItem>
-        <MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to='/request'>
+            <i className='fas fa-route '></i> Post a Request
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to='/offer'>
+            <i className='fas fa-rupee-sign '></i> Offer a ride
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
           <Link to='/history'>
             <i className='fas fa-history'></i> History
           </Link>
         </MenuItem>
-        <MenuItem onClick={() => logout('all')}>
+        <MenuItem
+          onClick={() => {
+            handleClose()
+            logout('all')
+          }}
+        >
           <i className='fas fa-sign-out-alt' /> Logout All
+        </MenuItem>
+        <MenuItem>
+          <Button onClick={() => deleteUser()}>
+            <span style={{ color: 'red' }}>Delete Account</span>
+          </Button>
         </MenuItem>
       </Menu>
     </Fragment>
@@ -97,6 +122,7 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
           <Typography className={classes.title}>
             <Link to='/'>Get Your Ride</Link>
           </Typography>
+
           <Button onClick={() => logout()}>
             <i className='fas fa-sign-out-alt' /> Logout
           </Button>
@@ -109,10 +135,11 @@ const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  deleteUser: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 })
 
-export default connect(mapStateToProps, { logout })(Navbar)
+export default connect(mapStateToProps, { logout, deleteUser })(Navbar)
