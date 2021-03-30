@@ -44,36 +44,6 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg, acceptRide }) => {
   const cardC = useStylesCard()
   // console.log(receRequest)
   const requests = receRequest.map((msg, index) => (
-    // <tr key={msg._id} className='hover:bg-gray-100'>
-    //   <td>{index + 1}</td>
-    //   <td>{msg.forWhich.from.slice(0, 10) + ' ...'}</td>
-    //   <td>{msg.reqBy.firstname}</td>
-    //   <td>{getTimeInfo(msg.created_at)}</td>
-    //   <td>
-    //     <button
-    //       className='btn btn-success'
-    //       onClick={() => {
-    //         acceptRide(msg._id)
-    //         // history.push({
-    //         //   pathname: '/currActiveRide',
-    //         //   state: { reqId: msg._id },
-    //         // })
-    //       }}
-    //     >
-    //       <i className='fas fa-thumbs-up'></i>
-    //     </button>
-    //   </td>
-    //   <td>
-    //     <button
-    //       className='btn btn-danger'
-    //       onClick={() => {
-    //         deleteReceMsg(msg._id)
-    //       }}
-    //     >
-    //       <i className='fas fa-thumbs-down'></i>
-    //     </button>
-    //   </td>
-    // </tr>
     <Grid key={index} item>
       <Card className={cardC.root} variant='outlined'>
         <CardContent>
@@ -95,7 +65,7 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg, acceptRide }) => {
             {getTimeInfo(msg.created_at)}
           </Typography>
         </CardContent>
-        <CardActions>
+        <Grid item container>
           <Button
             onClick={() => {
               acceptRide(msg._id)
@@ -104,19 +74,20 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg, acceptRide }) => {
                 state: { reqId: msg._id },
               })
             }}
+            color='green'
           >
             <i className='fas fa-thumbs-up'></i>
           </Button>
-        </CardActions>
-        <CardActions>
+
           <Button
             onClick={() => {
               deleteReceMsg(msg._id)
             }}
+            color='secondary'
           >
             <i className='fas fa-thumbs-down'></i>
           </Button>
-        </CardActions>
+        </Grid>
       </Card>
     </Grid>
   ))

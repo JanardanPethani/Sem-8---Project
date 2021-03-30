@@ -11,7 +11,6 @@ import FormatListBulletedIcon from '@material-ui/icons/FormatListBulleted'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
 
 import { logout } from '../../../store/actions/auth'
 
@@ -22,15 +21,21 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  bgColor: {
+    backgroundColor: 'white',
+  },
   menuButton: {
     marginRight: theme.spacing(1),
   },
   title: {
     flexGrow: 1,
+    fontWeight: 600,
+    fontSize: 20,
+    color: 'black',
   },
 }))
 
-const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+const Navbar = ({ auth: { isAuthenticated, loading, user }, logout }) => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const classes = useStyles()
 
@@ -84,20 +89,16 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
   return (
     <div className={classes.root}>
-      <AppBar position='static' color='white'>
-        <Toolbar>  
-            {!loading ? (
-              <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-            ) : null}
-          <Typography variant='h6' className={classes.title}>
-            <Link to='/'>
-              <i className='fas fa-route'></i> Get Your Ride
-            </Link>
+      <AppBar position='static' className={classes.bgColor}>
+        <Toolbar>
+          {!loading ? (
+            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+          ) : null}
+          <Typography className={classes.title}>
+            <Link to='/'>Get Your Ride</Link>
           </Typography>
-          <Button color='inherit'>
-            <a onClick={() => logout()}>
-              <i className='fas fa-sign-out-alt' /> Logout
-            </a>
+          <Button onClick={() => logout()}>
+            <i className='fas fa-sign-out-alt' /> Logout
           </Button>
         </Toolbar>
       </AppBar>

@@ -5,19 +5,59 @@ import { connect } from 'react-redux'
 
 import { sendRequest, matchRides, sendMsg } from '../../store/actions/request'
 
-import Map from '../layout/Map/Map'
 import GMap from '../layout/GoogleMap/Map'
+
+import { makeStyles } from '@material-ui/core/styles'
+import Container from '@material-ui/core/Container'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import Grid from '@material-ui/core/Grid'
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 import MatchCard from '../../Components/MatchCard/MatchCard'
+import DateFnsUtils from '@date-io/date-fns'
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDatePicker,
+} from '@material-ui/pickers'
 
-//TODO: Select type -> seats
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+      width: '30ch',
+    },
+  },
+  paper: {
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '1rem',
+  },
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    margin: theme.spacing(1),
+  },
+  backBtn: {
+    margin: theme.spacing(3, 'auto'),
+  },
+}))
 
-const RequestForm = ({
-  sendRequest,
-  history,
-  matchRides,
-  matchesArray,
-  sendMsg,
-}) => {
+const RequestForm = ({ history, matchRides, matchesArray, sendMsg }) => {
+  const classes = useStyles()
+
+  // Steps
+  const [step, setStep] = useState(0)
+
+  // The first commit of Material-UI
+  const [selectedDate, setSelectedDate] = useState(new Date())
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date)
+  }
+
   const [formData, setFormData] = useState({
     from: '',
     to: '',
@@ -29,91 +69,98 @@ const RequestForm = ({
   const { from, to, departAt } = formData
 
   const onChange = (e) => {
-    if (e.target.name === 'departAt') {
-      // Only in chrome
-      const currDate = new Date().getDate()
-      const currTime = new Date().getTime()
-
-      const dateTime = new Date(e.target.value)
-      const date = dateTime.getDate()
-      const time = dateTime.getTime()
-      console.log('From Request Form: ' + date + ' ' + time)
-      // 60000 ->9 * 60 * 1000 -> 9 min
-      if (date - currDate >= 0 && time - currTime >= 540000) {
-        console.log('DateDiff is ok:' + (date - currDate))
-        console.log('TimeDiff is ok:' + (time - currTime))
-        setFormData({ ...formData, [e.target.name]: e.target.value })
-      } else {
-        setFormData({ ...formData, [e.target.name]: '' })
-        alert('Please select proper date/time')
-      }
-    } else {
-      setFormData({ ...formData, [e.target.name]: e.target.value })
-    }
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-    sendRequest(formData, history)
-  }
+  // className='relative h-96  shadow-lg rounded-lg overflow-hidden'
+  // className='relative mt-5 mb-5 shadow-lg p-4 rounded-lg'
 
   return (
     <Fragment>
       <h1 className='large text-primary'>Request a ride</h1>
-      <div className='grid'>
-        <div className='relative h-96  shadow-lg rounded-lg overflow-hidden'>
+      <Grid spacing={1}>
+        <Grid>
           <GMap />
-        </div>
-        <span className='bg-yellow-100 p-1 text-sm rounded-md'>
-          Click on map to add marker/Click on marker to see location
-        </span>
-        <div className='relative mt-5 mb-5 shadow-lg p-4 rounded-lg'>
-          <p className='lead'>Add details</p>
-          <form className='form' onSubmit={(e) => onSubmit(e)}>
-            <div className='form-group'>
-              <input
-                type='text'
-                placeholder='Enter Pickup Location'
-                name='from'
-                value={from}
-                onChange={(e) => onChange(e)}
-              />
-              <small className='form-text'>Pickup point</small>
-            </div>
-            <div className='form-group'>
-              <input
-                type='text'
-                placeholder='Enter Destination Location'
-                name='to'
-                value={to}
-                onChange={(e) => onChange(e)}
-              />
-              <small className='form-text'>Destination point</small>
-            </div>
-            <div className='form-group'>
-              <input
-                type='datetime-local'
-                name='departAt'
-                value={departAt}
-                onChange={(e) => onChange(e)}
-              />
-              <small className='form-text'>
-                Date/Time{' '}
-                <span className='bg-yellow-100 pl-2 pr-2 rounded-md'>
-                  Set time after 10 min from {new Date().toString()}
-                </span>
-              </small>
-            </div>
+          <span className='bg-yellow-100 p-1 text-sm rounded-md'>
+            Click on map to add marker/Click on marker to see location
+          </span>
+        </Grid>
 
-            <input type='submit' className='btn btn-primary my-1' />
-            <Link className='btn btn-light my-1' to='/dashboard'>
-              Go Back
-            </Link>
-          </form>
-        </div>
+        <Grid>
+          <Paper elevation={3} className={classes.paper}>
+            <CssBaseline />
+            <form className={classes.form} noValidate>
+              <Grid container spacing={2}>
+                {step === 0 ? (
+                  <Fragment>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        id='outlined-basic'
+                        label='Pickup Location'
+                        required
+                        fullWidth
+                        variant='outlined'
+                        name='from'
+                        value={from}
+                        onChange={(e) => onChange(e)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <TextField
+                        id='outlined-basic'
+                        required
+                        fullWidth
+                        label='Destination Location'
+                        variant='outlined'
+                        name='to'
+                        value={to}
+                        onChange={(e) => onChange(e)}
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Button
+                        variant='outlined'
+                        
+                        onClick={() => setStep(1)}
+                      >
+                        Next
+                      </Button>
+                    </Grid>
+                  </Fragment>
+                ) : (
+                  <Fragment>
+                    <Grid item xs={12}>
+                      <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                        <KeyboardDatePicker
+                          format='MM/dd/yyyy'
+                          value={selectedDate}
+                          onChange={handleDateChange}
+                          minDate={new Date()}
+                          onChange={(e) => onChange(e)}
+                        />
+                      </MuiPickersUtilsProvider>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Button
+                        variant='outlined'
+                        
+                        onClick={() => setStep(0)}
+                      >
+                        Back
+                      </Button>
+                    </Grid>
+                  </Fragment>
+                )}
+              </Grid>
+            </form>
+          </Paper>
+          <Button variant='outlined' className={classes.backBtn}>
+            <Link to='/dashboard'>Go Back</Link>
+          </Button>
+        </Grid>
 
-        <div className='flex max-w-full'>
-          {from !== '' ? (
+        <Grid className='flex max-w-full'>
+          {step === 1 ? (
             <Fragment>
               {!getMatch ? (
                 <button
@@ -156,10 +203,10 @@ const RequestForm = ({
               )}
             </Fragment>
           ) : (
-            'Enter Pickup point first'
+            ''
           )}
-        </div>
-      </div>
+        </Grid>
+      </Grid>
     </Fragment>
   )
 }

@@ -70,7 +70,7 @@ const MatchCard = ({ array, send, showButton }) => {
                 <div className='bg-gray-100 font-bold text-xl pb-2 pt-2'>
                   {ride.price}
                 </div>
-                {showButton ? (
+                
                   <div>
                     {status.props.children !== 'Expired' ? (
                       <div
@@ -95,11 +95,7 @@ const MatchCard = ({ array, send, showButton }) => {
                       </div>
                     )}
                   </div>
-                ) : (
-                  <div className='text-gray-400 bg-white  text-xl pb-2 pt-2'>
-                    Submit Request First
-                  </div>
-                )}
+                
               </div>
             </article>
           </div>
