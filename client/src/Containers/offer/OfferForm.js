@@ -117,6 +117,7 @@ const OfferForm = ({ sendOffer, history }) => {
                     variant='outlined'
                     name='from'
                     value={from}
+                    helperText='Enter full address with city and state'
                     onChange={(e) => onChange(e)}
                   />
                 </Grid>
@@ -128,6 +129,7 @@ const OfferForm = ({ sendOffer, history }) => {
                     label='Destination Location'
                     variant='outlined'
                     name='to'
+                    helperText='Enter full address with city and state'
                     value={to}
                     onChange={(e) => onChange(e)}
                   />

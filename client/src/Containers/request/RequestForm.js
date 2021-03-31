@@ -113,6 +113,7 @@ const RequestForm = ({ history, matchRides, matchesArray, sendMsg }) => {
                     variant='outlined'
                     name='from'
                     value={from}
+                    helperText='Enter full address with city and state'
                     onChange={(e) => onChange(e)}
                   />
                 </Grid>
@@ -125,6 +126,7 @@ const RequestForm = ({ history, matchRides, matchesArray, sendMsg }) => {
                     variant='outlined'
                     name='to'
                     value={to}
+                    helperText='Enter full address with city and state'
                     onChange={(e) => onChange(e)}
                   />
                 </Grid>

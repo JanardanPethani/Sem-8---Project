@@ -41,7 +41,7 @@ export const deleteOff = (id) => async (dispatch) => {
     } catch (error) {
       const errors = error.response.data.errors
       if (errors) {
-        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'warning')))
       }
       dispatch({
         type: PROFILE_ERROR,

@@ -2,30 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Snackbar from '@material-ui/core/Snackbar'
-import MuiAlert from '@material-ui/lab/Alert'
-
-function AlertM(props) {
-  return <MuiAlert elevation={6} variant='filled' {...props} />
-}
+import Msg from './SingleAlert'
 
 const Alert = (props) =>
   props.alerts !== null &&
   props.alerts.length > 0 &&
   props.alerts.map((alert) => (
-    
-      <Snackbar
-        key={alert.id}
-        open
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
-        autoHideDuration={3000}
-      >
-        <AlertM severity={alert.alertType}>{alert.msg}</AlertM>
-      </Snackbar>
-    
+    <Msg key={alert.id} msg={alert.msg} type={alert.alertType} />
   ))
 
 Alert.propTypes = {

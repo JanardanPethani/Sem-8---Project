@@ -1,6 +1,20 @@
+const { Point } = require('mapbox-gl')
 const mongoose = require('mongoose')
 const SendReq = require('./SendReqToDriver')
 
+const pointSchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['Point'],
+    required: true,
+  },
+  coordinates: {
+    type: [Number],
+    required: true,
+  },
+})
+
+// longitude comes first while storing point
 const offRideSchema = new mongoose.Schema(
   {
     offBy: {
@@ -9,6 +23,11 @@ const offRideSchema = new mongoose.Schema(
     },
     from: {
       type: String,
+      required: true,
+    },
+    location: {
+      type: pointSchema,
+      index: '2dsphere',
       required: true,
     },
     to: {
@@ -36,6 +55,7 @@ const offRideSchema = new mongoose.Schema(
     timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
   }
 )
+
 offRideSchema.methods.toJSON = function () {
   const request = this
   const reqObj = request.toObject()
@@ -44,13 +64,13 @@ offRideSchema.methods.toJSON = function () {
   return reqObj
 }
 
-offRideSchema.statics.findByLoc = async (userId, from, to, vehicletype) => {
+offRideSchema.statics.findByLoc = async (userId, from, to) => {
   const ride = await OffRide.findOne({
     offBy: userId,
     from: from,
     to: to,
-    vehicletype: vehicletype,
   })
+  // console.log(ride)
   if (ride) {
     throw new Error('Already Offered')
   }
@@ -63,11 +83,10 @@ offRideSchema.pre('remove', async function (next) {
   const reqs = await SendReq.find({
     forWhich: offer.id,
   })
-  console.log(reqs)
+  // console.log(reqs)
   if (reqs.length !== 0) {
     throw new Error('Can not delete offer..')
   }
-
   next()
 })
 

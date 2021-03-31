@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 import setAuthToken from '../../utils/setAuthToken'
+import { getCurrentProfile } from './profile'
 import { setAlert } from './alert'
 import {
   REGISTER_SUCCESS,
@@ -27,6 +28,7 @@ export const loadUser = () => async (dispatch) => {
       type: USER_LOADED,
       payload: res.data,
     })
+    dispatch(getCurrentProfile())
   } catch (err) {
     dispatch({
       type: AUTH_ERROR,

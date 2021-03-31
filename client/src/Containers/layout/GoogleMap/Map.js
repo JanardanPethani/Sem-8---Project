@@ -115,7 +115,7 @@ const Map = ({ place, getPlace, loadingLoc, clearPlace }) => {
             }}
           >
             <div>
-              <p> {!loadingLoc ? `${place.place}` : <em>loading</em>}</p>
+              <p> {!loadingLoc ? `${place.place}` : 'Loadng...'}</p>
             </div>
           </InfoWindow>
         ) : null}
@@ -158,47 +158,6 @@ const Locate = ({ panTo, setMarker }) => {
     </button>
   )
 }
-
-// function Search() {
-//   const {
-//     ready,
-//     value,
-//     suggestions: { status, data },
-//     setValue,
-//     clearSuggestion,
-//   } = usePlacesAutocomplete({
-//     requestOptions: {
-//       location: { lat: () => 21.1702, lng: () => 72.8311 },
-//       radius: 30 * 1000,
-//     },
-//   })
-
-//   return (
-//     <div className='absolute top-2 p-1 z-10 left-1/4 lg:left-12 transform-gpu scale-150'>
-//       <Combobox
-//         onSelect={(address) => {
-//           console.log(address)
-//         }}
-//       >
-//         <ComboboxInput
-//           value={value}
-//           onChange={(e) => {
-//             setValue(e.target.value)
-//           }}
-//           disabled={!ready}
-//           placeholder='Enter address'
-//         />
-//         <ComboboxPopover>
-//           {status === 'Ok' &&
-//             data.map(({ id, description }) => {
-//               console.log(description)
-//               return <ComboboxOption key={id} value={description} />
-//             })}
-//         </ComboboxPopover>
-//       </Combobox>
-//     </div>
-//   )
-// }
 
 Map.prototype = {
   getPlace: PropTypes.func.isRequired,

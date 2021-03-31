@@ -2,56 +2,101 @@ import React, { Fragment, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Spinner from '../../Components/Spinner/Spinner'
-// import Requests from './Requests'
 import Offers from './Offers'
 import SentReqs from './RequestSentByYou'
 import ReceReqs from './RequestSentToYou'
 import ActiveRide from './ActiveRides'
 
 import { getCurrentProfile } from '../../store/actions/profile'
-import { deleteUser } from '../../store/actions/auth'
-import { Grid, Paper } from '@material-ui/core'
+import { Paper, Tab, Tabs, Box, CircularProgress } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 
-const getChoice = (choice, data) => {
-  switch (choice) {
-    case 'Offers':
-      return <Offers offer={{ ...data }} />
-    case 'Requests':
-      return <ReceReqs receRequest={{ ...data }} />
-    case 'SentRequests':
-      return <SentReqs sentRequest={{ ...data }} />
-    default:
-      return ''
+function TabPanel(props) {
+  const { children, value, index, ...other } = props
+
+  return (
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box p={3}>{children}</Box>}
+    </div>
+  )
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+}
+
+function a11yProps(index) {
+  return {
+    id: `scrollable-auto-tab-${index}`,
+    'aria-controls': `scrollable-auto-tabpanel-${index}`,
   }
 }
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+}))
 
 const Dashboard = ({
   getCurrentProfile,
   auth,
   profile: { profile, loading, activeRideP, activeRideD },
 }) => {
+  const classes = useStyles()
   useEffect(() => {
     getCurrentProfile()
   }, [getCurrentProfile])
 
-  const [choice, setChoice] = useState('offers')
+  const [value, setChoice] = useState(0)
+  const handleChange = (event, newValue) => {
+    setChoice(newValue)
+  }
 
-  return loading && profile && auth.loading === null ? (
-    <Spinner />
+  return loading || profile === null ? (
+    <CircularProgress color='inherit' />
   ) : (
     <Fragment>
       {profile !== null &&
-      (profile.req.length !== 0 ||
-        profile.off.length !== 0 ||
+      (profile.off.length !== 0 ||
         profile.send.length !== 0 ||
         profile.received.length !== 0) ? (
         <Fragment>
-          <ActiveRide activeRide={activeRideD} />
-          <ActiveRide activeRide={activeRideP} />
-          <SentReqs sentRequest={profile.send} />
-          <Offers offer={profile.off} />
-          <ReceReqs receRequest={profile.received} />
+          <Paper className={classes.root}>
+            <Tabs
+              value={value}
+              onChange={handleChange}
+              indicatorColor='primary'
+              textColor='primary'
+              variant='scrollable'
+              scrollButtons='on'
+            >
+              <Tab label='Your Offers' {...a11yProps(0)} />
+              <Tab label='Requests received' {...a11yProps(1)} />
+              <Tab label='Requests Sent' {...a11yProps(2)} />
+              <Tab label='Active Ride' {...a11yProps(3)} />
+            </Tabs>
+          </Paper>
+          <TabPanel value={value} index={0}>
+            <Offers offer={profile.off} />
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            <ReceReqs receRequest={profile.received} />
+          </TabPanel>
+          <TabPanel value={value} index={2}>
+            <SentReqs sentRequest={profile.send} />
+          </TabPanel>
+          <TabPanel value={value} index={3}>
+            <ActiveRide activeRide={activeRideD} />
+          </TabPanel>
         </Fragment>
       ) : (
         <Fragment>
