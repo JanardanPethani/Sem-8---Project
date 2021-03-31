@@ -79,16 +79,6 @@ const Navbar = ({
           </Link>
         </MenuItem>
         <MenuItem onClick={handleClose}>
-          <Link to='/request'>
-            <i className='fas fa-route '></i> Post a Request
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
-          <Link to='/offer'>
-            <i className='fas fa-rupee-sign '></i> Offer a ride
-          </Link>
-        </MenuItem>
-        <MenuItem onClick={handleClose}>
           <Link to='/history'>
             <i className='fas fa-history'></i> History
           </Link>
@@ -123,9 +113,25 @@ const Navbar = ({
             <Link to='/'>Get Your Ride</Link>
           </Typography>
 
-          <Button onClick={() => logout()}>
-            <i className='fas fa-sign-out-alt' /> Logout
+          <Button>
+            <Link to='/request' style={{ color: 'black' }}>
+              <i className='fas fa-route '></i> Post a Request
+            </Link>
           </Button>
+          <Button>
+            <Link to='/offer' style={{ color: 'black' }}>
+              <i className='fas fa-rupee-sign '></i> Offer a ride
+            </Link>
+          </Button>
+          {!loading ? (
+            <Fragment>
+              {isAuthenticated ? (
+                <Button onClick={() => logout()}>
+                  <i className='fas fa-sign-out-alt' /> Logout
+                </Button>
+              ) : null}
+            </Fragment>
+          ) : null}
         </Toolbar>
       </AppBar>
     </div>

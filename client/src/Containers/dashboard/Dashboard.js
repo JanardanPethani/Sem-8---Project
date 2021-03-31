@@ -30,7 +30,6 @@ const Dashboard = ({
   getCurrentProfile,
   auth,
   profile: { profile, loading, activeRideP, activeRideD },
-  deleteUser,
 }) => {
   useEffect(() => {
     getCurrentProfile()
@@ -62,14 +61,12 @@ const Dashboard = ({
           </p>
         </Fragment>
       )}
-      
     </Fragment>
   )
 }
 
 Dashboard.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
-  deleteUser: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
 }
@@ -79,6 +76,4 @@ const mapStateToProps = (state) => ({
   profile: state.profile,
 })
 
-export default connect(mapStateToProps, { getCurrentProfile, deleteUser })(
-  Dashboard
-)
+export default connect(mapStateToProps, { getCurrentProfile })(Dashboard)
