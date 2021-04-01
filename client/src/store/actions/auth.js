@@ -114,7 +114,7 @@ export const register = ({
   } catch (error) {
     const errors = error.response.data.errors
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'info')))
     }
     dispatch({
       type: REGISTER_FAIL,

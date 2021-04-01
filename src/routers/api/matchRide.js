@@ -5,6 +5,7 @@ const Offer = require('../../models/OffRide')
 const auth = require('../../middleware/auth')
 const { check, validationResult } = require('express-validator')
 
+const { getLngLat } = require('../../utils/geocode')
 const { matchCount } = require('../../utils/match')
 
 // @route   POST api/match
@@ -25,20 +26,10 @@ router.post(
       const rides = await Offer.find({
         offBy: { $ne: req.user.id },
       }).populate('offBy', ['firstname', 'lastname', 'phone', 'email'])
-
-      const reqString = req.body.from
-      const result = rides.filter((rideObj) => {
-        const offString = rideObj.from
-        const matchedWords = matchCount(reqString, offString)
-        // console.log(matchedWords)
-        if (matchedWords.length >= 2) {
-          return true
-        } else {
-          return false
-        }
+      getLngLat(req.body.from, async (error, response) => {
+        console.log(response)
+        res.status(201).json(rides)
       })
-
-      res.status(201).json(result)
     } catch (error) {
       res.status(400).json({ errors: [{ msg: error.message }] })
     }

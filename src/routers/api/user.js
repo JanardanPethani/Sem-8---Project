@@ -42,8 +42,12 @@ router.post(
       // console.log(user);
       res.status(201).json({ token })
     } catch (error) {
-      // console.log(error);
-      res.status(400).json({ errors: [{ msg: error.message }] })
+      if (error.code == 11000) {
+        res.status(400).json({ errors: [{ msg: 'User available' }] })
+      } else {
+        console.log(error.code)
+        res.status(400).json({ errors: [{ msg: error.message }] })
+      }
     }
   }
 )

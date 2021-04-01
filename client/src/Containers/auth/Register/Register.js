@@ -3,18 +3,50 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
+import { makeStyles } from '@material-ui/core/styles'
+import TextField from '@material-ui/core/TextField'
+import PersonAddIcon from '@material-ui/icons/PersonAdd'
+import Avatar from '@material-ui/core/Avatar'
+import Typography from '@material-ui/core/Typography'
+import { Container, Paper } from '@material-ui/core'
+import Button from '@material-ui/core/Button'
+import CssBaseline from '@material-ui/core/CssBaseline'
+import Grid from '@material-ui/core/Grid'
+
 // Actions
 import { setAlert } from '../../../store/actions/alert'
 import { register } from '../../../store/actions/auth'
 
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: theme.spacing(2),
+  },
+  avatar: {
+    margin: theme.spacing(1),
+    backgroundColor: '#17a2b8',
+  },
+  form: {
+    width: '100%',
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+    backgroundColor: '#17a2b8',
+  },
+}))
+
 // props is destructured into ({setAlert, ... })
 const Register = ({ setAlert, register, isAuthenticated }) => {
+  const classes = useStyles()
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
     email: '',
     phone: '',
-    age: '',
+    age: 18,
     password: '',
     confirmPassword: '',
   })
@@ -49,92 +81,134 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <h1 className='large text-primary'>Sign Up</h1>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Create Your Account
-      </p>
+      <Container component='main' maxWidth='sm'>
+        <CssBaseline />
+        <Paper className={classes.paper} elevation={3}>
+          <Avatar className={classes.avatar}>
+            <PersonAddIcon />
+          </Avatar>
+          <Typography component='h1' variant='h5'>
+            Sign Up
+          </Typography>
 
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='First Name'
-            name='firstname'
-            value={firstname}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Last Name'
-            name='lastname'
-            value={lastname}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='email'
-            placeholder='Email Address'
-            name='email'
-            value={email}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='tel'
-            placeholder='Phone number'
-            name='phone'
-            value={phone}
-            onChange={(e) => onChange(e)}
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='number'
-            placeholder='age'
-            name='age'
-            value={age}
-            onChange={(e) => onChange(e)}
-            min='13'
-            max='80'
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Password'
-            name='password'
-            value={password}
-            onChange={(e) => onChange(e)}
-            minLength='6'
-            required
-          />
-        </div>
-        <div className='form-group'>
-          <input
-            type='password'
-            placeholder='Confirm Password'
-            name='confirmPassword'
-            value={confirmPassword}
-            onChange={(e) => onChange(e)}
-            minLength='6'
-            required
-          />
-        </div>
+          <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  margin='normal'
+                  type='text'
+                  label='First Name'
+                  name='firstname'
+                  value={firstname}
+                  variant='outlined'
+                  onChange={(e) => onChange(e)}
+                  required
+                  fullWidth
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  margin='normal'
+                  type='text'
+                  label='Last Name'
+                  name='lastname'
+                  value={lastname}
+                  variant='outlined'
+                  onChange={(e) => onChange(e)}
+                  required
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
 
-        <input type='submit' className='btn btn-primary' value='Register' />
-      </form>
-      <p className='my-1'>
-        Already have an account? <Link to='/login' className="underline text-black hover:text-primaryColor">Sign In</Link>
-      </p>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  margin='normal'
+                  type='tel'
+                  label='Phone number'
+                  name='phone'
+                  value={phone}
+                  variant='outlined'
+                  onChange={(e) => onChange(e)}
+                  required
+                  fullWidth
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  margin='normal'
+                  type='number'
+                  label='age'
+                  name='age'
+                  value={age}
+                  variant='outlined'
+                  helperText='Between 18 to 50'
+                  inputProps={{ min: '18', max: '50', step: '1' }}
+                  onChange={(e) => onChange(e)}
+                  required
+                  fullWidth
+                />
+              </Grid>
+            </Grid>
+            <TextField
+              margin='normal'
+              type='email'
+              label='Email'
+              name='email'
+              value={email}
+              variant='outlined'
+              onChange={(e) => onChange(e)}
+              required
+              fullWidth
+              // autoComplete="false"
+            />
+            <TextField
+              margin='normal'
+              type='password'
+              label='Password'
+              name='password'
+              value={password}
+              variant='outlined'
+              helperText='Length must be greater than 5'
+              onChange={(e) => onChange(e)}
+              required
+              fullWidth
+              // autoComplete="false"
+            />
+            <TextField
+              margin='normal'
+              type='password'
+              label='Confirm password'
+              name='confirmPassword'
+              value={confirmPassword}
+              variant='outlined'
+              onChange={(e) => onChange(e)}
+              required
+              fullWidth
+              // autoComplete="false"
+            />
+            <Button
+              type='submit'
+              fullWidth
+              variant='contained'
+              color='primary'
+              className={classes.submit}
+            >
+              Sign Up
+            </Button>
+            <Grid container>
+              <Grid item>
+                {'Already have an account? '}
+                <Link to='/login' className='my-link'>
+                  <b>Sign In</b>
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </Paper>
+      </Container>
     </Fragment>
   )
 }

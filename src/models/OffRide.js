@@ -15,6 +15,7 @@ const pointSchema = new mongoose.Schema({
 })
 
 // longitude comes first while storing point
+// Can't run query without index in location
 const offRideSchema = new mongoose.Schema(
   {
     offBy: {
