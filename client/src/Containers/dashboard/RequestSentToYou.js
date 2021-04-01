@@ -75,10 +75,6 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg, acceptRide }) => {
               className={classes.paper}
               onClick={() => {
                 acceptRide(msg._id)
-                history.push({
-                  pathname: '/currActiveRide',
-                  state: { reqId: msg._id },
-                })
               }}
             >
               <i className='fas fa-thumbs-up'></i>

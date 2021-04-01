@@ -127,10 +127,13 @@ export const sendMsg = ({
       type: SEND_MSG,
       payload: res.data,
     })
-    dispatch(setAlert('Request Sent', 'success'))
     dispatch(getCurrentProfile())
+    dispatch(setAlert('Request Sent', 'success'))
   } catch (error) {
-    dispatch(setAlert('already Sent', 'Warning'))
+    const errors = error.response.data.errors
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'info')))
+    }
     dispatch({
       type: MSG_FAILED,
       payload: { msg: error },

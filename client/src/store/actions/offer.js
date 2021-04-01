@@ -21,9 +21,10 @@ export const sendOffer = (newFormData, history) => async (dispatch) => {
     // can't use Redirect bcz Action is not react
     history.push('/dashboard')
   } catch (error) {
+    console.log(error.response)
     const errors = error.response.data.errors
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')))
     }
     dispatch({
       type: PROFILE_ERROR,
@@ -62,7 +63,7 @@ export const getOffer = (id) => async (dispatch) => {
   } catch (error) {
     const errors = error.response.data.errors
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')))
     }
     dispatch({
       type: OFFER_FAIL,

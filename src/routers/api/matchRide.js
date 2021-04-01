@@ -23,11 +23,26 @@ router.post(
     }
 
     try {
-      const rides = await Offer.find({
-        offBy: { $ne: req.user.id },
-      }).populate('offBy', ['firstname', 'lastname', 'phone', 'email'])
       getLngLat(req.body.from, async (error, response) => {
-        console.log(response)
+        if (error) {
+          throw new Error(
+            'Unable to get location data (tip: provide valid address)'
+          )
+        }
+        // console.log(response)
+        // 1st longitude, 2nd latitude
+        const rides = await Offer.find({
+          offBy: { $ne: req.user.id },
+          location: {
+            $near: {
+              $maxDistance: 3000,
+              $geometry: {
+                type: 'Point',
+                coordinates: [response.longitude, response.latitude],
+              },
+            },
+          },
+        }).populate('offBy', ['firstname', 'lastname', 'phone', 'email'])
         res.status(201).json(rides)
       })
     } catch (error) {

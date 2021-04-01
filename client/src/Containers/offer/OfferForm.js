@@ -71,7 +71,7 @@ const OfferForm = ({ sendOffer, history }) => {
   const onSubmit = (e) => {
     e.preventDefault()
     const newFormData = { ...formData, departAt: selectedDate }
-    console.log(newFormData)
+    // console.log(newFormData)
     sendOffer(newFormData, history)
   }
   return (

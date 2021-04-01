@@ -34,6 +34,7 @@ router.post('/send', auth, async (req, res) => {
     })
     res.status(201).json(request)
   } catch (error) {
+    console.log(error)
     res.status(400).json({ errors: [{ msg: error.message }] })
   }
 })

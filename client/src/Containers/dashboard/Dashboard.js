@@ -95,7 +95,11 @@ const Dashboard = ({
             <SentReqs sentRequest={profile.send} />
           </TabPanel>
           <TabPanel value={value} index={3}>
-            <ActiveRide activeRide={activeRideD} />
+            {activeRideD.length !== 0 ? (
+              <ActiveRide activeRide={activeRideD} />
+            ) : (
+              <ActiveRide activeRide={activeRideP} />
+            )}
           </TabPanel>
         </Fragment>
       ) : (

@@ -19,7 +19,6 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      // console.log(errors);
       return res.status(400).json({ errors: errors.array() })
     }
     const offer = new Offer({
@@ -27,7 +26,6 @@ router.post(
       ...req.body,
     })
     try {
-      // console.log(req);
       const ride = await Offer.findByLoc(
         req.user._id,
         req.body.from,
@@ -35,17 +33,18 @@ router.post(
       )
       getLngLat(req.body.from, async (err, response) => {
         if (err) {
-          throw new Error('Problem in saving location')
+          return res.status(400).json({ errors: [{ msg: err }] })
         }
         offer.location = {
           type: 'Point',
+          //* first coordinate must be longitude in mongoDb
           coordinates: [response.longitude, response.latitude],
         }
         await offer.save()
         res.status(201).json(offer)
       })
     } catch (error) {
-      // console.log(error);
+      console.log(error.code)
       res.status(400).json({ errors: [{ msg: error.message }] })
     }
   }

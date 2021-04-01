@@ -85,7 +85,17 @@ const ActiveRide = ({ activeRide, auth, paymentReceived, history }) => {
               </div>
             </div>
           ) : (
-            ''
+            <div>
+              <span className='flex flex-row justify-center text-gray-500 text-center pl-2 pr-2 rounded-md text-xs'>
+                Pay after ride completion
+              </span>
+              <div
+                className='flex flex-row justify-center  p-3 bg-green-50 hover:bg-green-400 hover:text-white cursor-pointer border-t-2'
+                onClick={() => window.alert('Paying')}
+              >
+                Pay
+              </div>
+            </div>
           )}
         </div>
       ) : (

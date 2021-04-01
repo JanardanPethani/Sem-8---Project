@@ -1,108 +1,162 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
+import { sendMsg } from '../../store/actions/request'
+
+import Grid from '@material-ui/core/Grid'
+import { makeStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import Avatar from '@material-ui/core/Avatar'
+import Typography from '@material-ui/core/Typography'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import Divider from '@material-ui/core/Divider'
+import { red } from '@material-ui/core/colors'
+import Icon from '@material-ui/core/Icon'
 import getStatus from '../../utils/getStatus'
+import getTimeInfo from '../../utils/getTimeInfo'
+import { Button } from '@material-ui/core'
 
-const MatchCard = ({ array, send, showButton }) => {
+const useStyles = makeStyles((theme) => ({
+  media: {
+    height: 0,
+    paddingTop: '56.25%', // 16:9
+  },
+  expand: {
+    transform: 'rotate(0deg)',
+    marginLeft: 'auto',
+    transition: theme.transitions.create('transform', {
+      duration: theme.transitions.duration.shortest,
+    }),
+  },
+  expandOpen: {
+    transform: 'rotate(180deg)',
+  },
+  avatar: {
+    backgroundColor: red[500],
+  },
+}))
+
+const MatchCard = ({ array, sendMsg }) => {
+  const classes = useStyles()
   return (
     <Fragment>
       {array.map((ride) => {
         const status = getStatus(ride.departAt)
-
+        const postTime = getTimeInfo(ride.created_at)
+        const name = `${ride.offBy.firstname} ${ride.offBy.lastname}`
         return (
-          <div
-            key={ride._id}
-            className='px-1 w-full md:w-1/2 lg:my-4 lg:px-3 lg:w-1/2 '
-          >
-            <article className='overflow-hidden rounded-lg shadow-lg'>
-              <div className='max-w-full font-medium pb-2 pt-2 bg-gray-100 '>
-                {ride.offBy.firstname}
-              </div>
-              <div className='divide-y divide-gray p-4'>
-                <div className='flex p-4 text-left'>
-                  <div className='w-1/4 flex-shrink-0  lg:pl-3 md:px-0 text-sm font-medium self-center'>
-                    From :
-                  </div>
-                  <div className='self-center text-left  ml-2'>{ride.from}</div>
-                </div>
-                <div className='flex p-4 m-1 text-left'>
-                  <div className='w-1/4 flex-shrink-0  lg:pl-3 md:px-0 text-sm font-medium self-center'>
-                    To :
-                  </div>
-                  <div className='self-center text-left ml-2'>{ride.to}</div>
-                </div>
-                <div className='flex p-4 m-1 text-left'>
-                  <div className='w-1/4 flex-shrink-0  lg:pl-3 md:px-0 text-sm font-medium self-center'>
-                    Phone :
-                  </div>
-                  <div className='self-center text-left ml-2'>
-                    {ride.offBy.phone}
-                  </div>
-                </div>
-                <div className='flex p-4 m-1 text-left'>
-                  <div className='w-1/4 flex-shrink-0  lg:pl-3 md:px-0 text-sm font-medium self-center'>
-                    Leaving At :
-                  </div>
-                  <div className='self-center text-left ml-2'>
-                    {ride.departAt}
-                  </div>
-                </div>
-                <div className='flex p-4 m-1 text-left'>
-                  <div className='w-1/4 flex-shrink-0  lg:pl-3 md:px-0 text-sm font-medium self-center'>
-                    Status :
-                  </div>
-                  <div className='self-center text-left ml-2'>{status}</div>
-                </div>
-                <div className='flex p-4 m-1 text-left'>
-                  <div className='w-1/4 flex-shrink-0  lg:pl-3 md:px-0 text-sm font-medium self-center'>
-                    Seats Offered :
-                  </div>
-                  <div className='self-center text-left ml-2'>
-                    {ride.vehicletype === 'car' ? (
-                      <i className='fas fa-car'></i>
-                    ) : (
-                      <i className='fas fa-motorcycle'></i>
-                    )}{' '}
-                    - {ride.seats}
-                  </div>
-                </div>
-              </div>
-              <div className='grid grid-cols-2 max-w-full '>
-                <div className='bg-gray-100 font-bold text-xl pb-2 pt-2'>
-                  {ride.price}
-                </div>
-                
-                  <div>
-                    {status.props.children !== 'Expired' ? (
-                      <div
-                        className='hover:bg-green-200 cursor-pointer bg-green-100 text-xl pb-2 pt-2'
-                        onClick={() => {
-                          console.log('From Send msgs')
-                          send({
-                            email: ride.offBy.email,
-                            to: ride.offBy._id,
-                            forWhich: ride._id,
-                            from: ride.from,
-                            destination: ride.to,
-                            type: ride.vehicletype,
-                          })
-                        }}
+          <Grid item xs={12} sm={6}>
+            <Card key={ride._id}>
+              {/* <article className='overflow-hidden rounded-lg shadow-lg'> */}
+              <Grid container>
+                <Grid item xs>
+                  <CardHeader
+                    avatar={
+                      <Avatar
+                        aria-label={ride.offBy.firstname}
+                        className={classes.avatar}
                       >
-                        Send Request
-                      </div>
-                    ) : (
-                      <div className='text-red-400 bg-green-100 text-xl pb-2 pt-2'>
-                        Departed
-                      </div>
-                    )}
-                  </div>
-                
-              </div>
-            </article>
-          </div>
+                        {ride.offBy.firstname[0]}
+                      </Avatar>
+                    }
+                    title={name}
+                    subheader={postTime}
+                  />
+                </Grid>
+                <Grid
+                  item
+                  xs={2}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Typography gutterBottom variant='h6'>
+                    {ride.price} ₹
+                  </Typography>
+                </Grid>
+              </Grid>
+              <CardContent>
+                <List component='nav'>
+                  <ListItem>
+                    <Typography variant='body2'>From : {ride.from}</Typography>
+                  </ListItem>
+                  <Divider light />
+                  <ListItem>
+                    <Typography variant='body2'>To : {ride.to}</Typography>
+                  </ListItem>
+                  <Divider light />
+                  <ListItem>
+                    <Typography variant='body2'>
+                      Phone : {ride.offBy.phone}
+                    </Typography>
+                  </ListItem>
+                  <Divider light />
+                  <ListItem>
+                    <Typography variant='body2'>
+                      Leaving At : {ride.departAt}
+                    </Typography>
+                  </ListItem>
+                  <Divider light />
+                  <ListItem>
+                    <Typography variant='body2'>Status : {status}</Typography>
+                  </ListItem>
+                  <Divider light />
+                  <ListItem>
+                    <Typography variant='body2'>
+                      Seats Offered :{' '}
+                      {ride.vehicletype === 'car' ? (
+                        <i className='fas fa-car'></i>
+                      ) : (
+                        <i className='fas fa-motorcycle'></i>
+                      )}{' '}
+                      - {ride.seats}
+                    </Typography>
+                  </ListItem>
+                </List>
+              </CardContent>
+
+              {/* buttons */}
+              <CardActions>
+                {status.props.children !== 'Expired' ? (
+                  <Button
+                    fullWidth
+                    endIcon={<Icon>send</Icon>}
+                    onClick={() => {
+                      sendMsg({
+                        email: ride.offBy.email,
+                        to: ride.offBy._id,
+                        forWhich: ride._id,
+                        from: ride.from,
+                        destination: ride.to,
+                        type: ride.vehicletype,
+                      })
+                    }}
+                  >
+                    Send Request
+                  </Button>
+                ) : (
+                  <Button fullWidth color='secondary'>
+                    Departed
+                  </Button>
+                )}
+              </CardActions>
+            </Card>
+          </Grid>
         )
       })}
     </Fragment>
   )
 }
 
-export default MatchCard
+MatchCard.propTypes = {
+  sendMsg: PropTypes.func.isRequired,
+}
+
+export default connect(null, { sendMsg })(MatchCard)

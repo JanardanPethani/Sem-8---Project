@@ -88,7 +88,7 @@ function profileReducer(state = initialState, action) {
     case SEND_MSG:
       return {
         ...state,
-        currReqSend: state.currReqSend.unshift(payload),
+        currReqSend: payload,
         loading: false,
       }
     case ACCEPT_REQ:
