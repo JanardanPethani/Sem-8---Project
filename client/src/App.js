@@ -55,7 +55,7 @@ const App = () => {
         <Fragment>
           <Navbar></Navbar>
           <Route exact path='/' component={Landing} />
-          <Container maxWidth='md' className={classes.root}>
+          <Container maxWidth='lg' className={classes.root}>
             <Alert />
             <Switch>
               <Route exact path='/register' component={Register} />

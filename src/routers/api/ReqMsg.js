@@ -46,7 +46,7 @@ router.get('/allReqMsgs', auth, async (req, res) => {
   try {
     const msgs = await SendReq.find({
       reqBy: req.user._id,
-      status: ['Pending', 'Accepted'],
+      status: ['Pending'],
     })
       .populate('to')
       .populate('forWhich')

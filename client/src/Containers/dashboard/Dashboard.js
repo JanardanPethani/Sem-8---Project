@@ -8,7 +8,14 @@ import ReceReqs from './RequestSentToYou'
 import ActiveRide from './ActiveRides'
 
 import { getCurrentProfile } from '../../store/actions/profile'
-import { Paper, Tab, Tabs, Box, CircularProgress } from '@material-ui/core'
+import {
+  Paper,
+  Tab,
+  Tabs,
+  Box,
+  CircularProgress,
+  Grid,
+} from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
 function TabPanel(props) {
@@ -68,39 +75,47 @@ const Dashboard = ({
       {profile !== null &&
       (profile.off.length !== 0 ||
         profile.send.length !== 0 ||
-        profile.received.length !== 0) ? (
+        profile.received.length !== 0 ||
+        activeRideP.length !== 0 ||
+        activeRideD.length !== 0) ? (
         <Fragment>
-          <Paper className={classes.root}>
-            <Tabs
-              value={value}
-              onChange={handleChange}
-              indicatorColor='primary'
-              textColor='primary'
-              variant='scrollable'
-              scrollButtons='on'
-            >
-              <Tab label='Your Offers' {...a11yProps(0)} />
-              <Tab label='Requests received' {...a11yProps(1)} />
-              <Tab label='Requests Sent' {...a11yProps(2)} />
-              <Tab label='Active Ride' {...a11yProps(3)} />
-            </Tabs>
-          </Paper>
-          <TabPanel value={value} index={0}>
-            <Offers offer={profile.off} />
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <ReceReqs receRequest={profile.received} />
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <SentReqs sentRequest={profile.send} />
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            {activeRideD.length !== 0 ? (
-              <ActiveRide activeRide={activeRideD} />
-            ) : (
-              <ActiveRide activeRide={activeRideP} />
-            )}
-          </TabPanel>
+          <Grid container spacing={5}>
+            <Grid item xs={12} sm={7}>
+              <Paper className={classes.root}>
+                <Tabs
+                  value={value}
+                  onChange={handleChange}
+                  indicatorColor='primary'
+                  textColor='primary'
+                  variant='scrollable'
+                  scrollButtons='on'
+                  centered
+                >
+                  <Tab label='Your Offers' {...a11yProps(0)} />
+                  <Tab label='Requests received' {...a11yProps(1)} />
+                  <Tab label='Requests Sent' {...a11yProps(2)} />
+                </Tabs>
+              </Paper>
+              <TabPanel value={value} index={0}>
+                <Offers offer={profile.off} />
+              </TabPanel>
+              <TabPanel value={value} index={1}>
+                <ReceReqs receRequest={profile.received} />
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+                <SentReqs sentRequest={profile.send} />
+              </TabPanel>
+            </Grid>
+            <Grid item xs={12} sm={5}>
+              
+                {activeRideD.length !== 0 ? (
+                  <ActiveRide activeRide={activeRideD} />
+                ) : (
+                  <ActiveRide activeRide={activeRideP} />
+                )}
+             
+            </Grid>
+          </Grid>
         </Fragment>
       ) : (
         <Fragment>

@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { sendRequest, matchRides} from '../../store/actions/request'
+import { sendRequest, matchRides } from '../../store/actions/request'
 
 import GMap from '../layout/GoogleMap/Map'
 
@@ -114,7 +114,7 @@ const RequestForm = ({ history, matchRides, matchesArray }) => {
             </AccordionDetails>
           </Accordion>
         </Grid>
-        <Grid item>
+        <Grid item xs>
           <Paper elevation={1} className={classes.paper}>
             <CssBaseline />
             <form className={classes.form} noValidate>
@@ -243,10 +243,7 @@ const RequestForm = ({ history, matchRides, matchesArray }) => {
                       style={{ marginTop: '1rem' }}
                     >
                       {matchesArray.length !== 0 ? (
-                        <MatchCards
-                          array={matchesArray}
-                          showButton={false}
-                        />
+                        <MatchCards array={matchesArray} showButton={false} />
                       ) : (
                         'No matches'
                       )}

@@ -3,7 +3,9 @@ import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import { paymentReceived } from '../../store/actions/offer'
+import { Grid } from '@material-ui/core'
+
+import { paymentReceived, deleteReceMsg } from '../../store/actions/offer'
 
 import getStatus from '../../utils/getActiveRideStatus'
 import getTimeInfo from '../../utils/getTimeInfo'
@@ -24,7 +26,13 @@ async function loadScript(src) {
 
 const __DEV__ = document.domain === 'localhost'
 
-const ActiveRide = ({ activeRide, auth, paymentReceived, history }) => {
+const ActiveRide = ({
+  activeRide,
+  auth,
+  paymentReceived,
+  history,
+  deleteReceMsg,
+}) => {
   const ride = activeRide[0]
 
   async function displayRazorpay(driver, pName, pEmail, pNumber, amount) {
@@ -134,12 +142,24 @@ const ActiveRide = ({ activeRide, auth, paymentReceived, history }) => {
               <span className='flex flex-row justify-center text-gray-500 text-center pl-2 pr-2 rounded-md text-xs'>
                 Click after ride & payment completion.
               </span>
-              <div
-                className='flex flex-row justify-center  p-3 bg-green-50 hover:bg-green-400 hover:text-white cursor-pointer border-t-2'
-                onClick={() => paymentReceived(ride._id)}
-              >
-                Payment Received
-              </div>
+              <Grid container>
+                <Grid item xs={6}>
+                  <div
+                    className='flex flex-row justify-center  p-3 bg-green-50 hover:bg-green-400 hover:text-white cursor-pointer border-t-2'
+                    onClick={() => paymentReceived(ride._id)}
+                  >
+                    Payment Received
+                  </div>
+                </Grid>
+                <Grid item xs={6}>
+                  <div
+                    className='flex flex-row justify-center  p-3 bg-red-50 hover:bg-red-400 hover:text-white cursor-pointer border-t-2'
+                    onClick={() => deleteReceMsg(ride._id)}
+                  >
+                    Cancel
+                  </div>
+                </Grid>
+              </Grid>
             </div>
           ) : (
             <div>
@@ -164,7 +184,7 @@ const ActiveRide = ({ activeRide, auth, paymentReceived, history }) => {
           )}
         </div>
       ) : (
-        ''
+        'No active ride'
       )}
     </Fragment>
   )
@@ -173,12 +193,13 @@ const ActiveRide = ({ activeRide, auth, paymentReceived, history }) => {
 ActiveRide.propTypes = {
   auth: PropTypes.object.isRequired,
   paymentReceived: PropTypes.func.isRequired,
+  deleteReceMsg: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
 })
 
-export default connect(mapStateToProps, { paymentReceived })(
+export default connect(mapStateToProps, { paymentReceived, deleteReceMsg })(
   withRouter(ActiveRide)
 )
