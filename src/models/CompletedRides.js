@@ -34,6 +34,9 @@ const completedRides = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    transaction_id: {
+      type: String,
+    },
     price: {
       type: Number,
       required: true,

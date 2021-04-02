@@ -9,10 +9,11 @@ const offRouter = require('./routers/api/offerRide')
 const authRouter = require('./routers/api/auth')
 const matchRouter = require('./routers/api/matchRide')
 const sendReqMsg = require('./routers/api/ReqMsg')
+const paymentRouter = require('./routers/api/payment')
 
 const app = express()
 
-app.use(cors())
+// app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
@@ -23,5 +24,6 @@ app.use('/api/auth', authRouter)
 app.use('/api/map', mapRouter)
 app.use('/api/match', matchRouter)
 app.use('/api/sendReqMsg', sendReqMsg)
+app.use('/api/pay', paymentRouter)
 
 module.exports = app

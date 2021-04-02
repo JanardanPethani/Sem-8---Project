@@ -8,8 +8,65 @@ import { paymentReceived } from '../../store/actions/offer'
 import getStatus from '../../utils/getActiveRideStatus'
 import getTimeInfo from '../../utils/getTimeInfo'
 
+async function loadScript(src) {
+  return new Promise((resolve) => {
+    const script = document.createElement('script')
+    script.src = src
+    script.onload = () => {
+      resolve(true)
+    }
+    script.onerror = () => {
+      resolve(false)
+    }
+    document.body.appendChild(script)
+  })
+}
+
+const __DEV__ = document.domain === 'localhost'
+
 const ActiveRide = ({ activeRide, auth, paymentReceived, history }) => {
   const ride = activeRide[0]
+
+  async function displayRazorpay(driver, pName, pEmail, pNumber, amount) {
+    const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+
+    if (!res) {
+      alert('Failed to load razorpay')
+    }
+    const values = {
+      amount,
+    }
+
+    const order = await fetch('http://localhost:3000/api/pay/razorpay', {
+      method: 'POST',
+      body: JSON.stringify(values),
+      headers: { 'Content-type': 'application/json' },
+    }).then((t) => t.json())
+
+    // console.log(order)
+
+    const options = {
+      key: __DEV__ ? 'rzp_test_KYByohjsvvTjqS' : 'PRODUCTION_KEY', // Enter the Key ID generated from the Dashboard
+      name: driver,
+      currency: order.currency,
+      amount: order.amount,
+      description: 'Test Transaction',
+      // image: 'https://example.com/your_logo',
+      order_id: order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+      handler: function (response) {
+        alert(response.razorpay_payment_id)
+        alert(response.razorpay_order_id)
+        alert(response.razorpay_signature)
+      },
+      prefill: {
+        name: pName,
+        email: pEmail,
+        contact: pNumber,
+      },
+    }
+    const paymentObject = new window.Razorpay(options)
+    paymentObject.open()
+  }
 
   return (
     <Fragment>
@@ -91,7 +148,15 @@ const ActiveRide = ({ activeRide, auth, paymentReceived, history }) => {
               </span>
               <div
                 className='flex flex-row justify-center  p-3 bg-green-50 hover:bg-green-400 hover:text-white cursor-pointer border-t-2'
-                onClick={() => window.alert('Paying')}
+                onClick={() =>
+                  displayRazorpay(
+                    `${ride.to.firstname} ${ride.to.lastname}`,
+                    `${ride.reqBy.firstname} ${ride.reqBy.lastname}`,
+                    ride.reqBy.email,
+                    ride.reqBy.phone,
+                    ride.forWhich.price
+                  )
+                }
               >
                 Pay
               </div>

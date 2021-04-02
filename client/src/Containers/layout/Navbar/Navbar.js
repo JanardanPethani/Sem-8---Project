@@ -21,10 +21,9 @@ import { deleteUser } from '../../../store/actions/auth'
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  },
-  bgColor: {
     backgroundColor: 'white',
   },
+  bgColor: {},
   menuButton: {
     marginRight: theme.spacing(1),
   },
@@ -103,38 +102,37 @@ const Navbar = ({
   const guestLinks = ''
 
   return (
-    <div className={classes.root}>
-      <AppBar position='static' className={classes.bgColor}>
-        <Toolbar>
-          {!loading ? (
-            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-          ) : null}
-          <Typography className={classes.title}>
-            <Link to='/'>Get Your Ride</Link>
-          </Typography>
+    // <div className={classes.root}>
+    <AppBar position='static' className={classes.root}>
+      <Toolbar>
+        {!loading ? (
+          <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+        ) : null}
+        <Typography className={classes.title}>
+          <Link to='/'>Get Your Ride</Link>
+        </Typography>
 
-          <Button>
-            <Link to='/request' style={{ color: 'black' }}>
-              <i className='fas fa-route '></i> Post a Request
-            </Link>
-          </Button>
-          <Button>
-            <Link to='/offer' style={{ color: 'black' }}>
-              <i className='fas fa-rupee-sign '></i> Offer a ride
-            </Link>
-          </Button>
-          {!loading ? (
-            <Fragment>
-              {isAuthenticated ? (
-                <Button onClick={() => logout()}>
-                  <i className='fas fa-sign-out-alt' /> Logout
-                </Button>
-              ) : null}
-            </Fragment>
-          ) : null}
-        </Toolbar>
-      </AppBar>
-    </div>
+        <Button>
+          <Link to='/request' style={{ color: 'black' }}>
+            <i className='fas fa-route '></i> Post a Request
+          </Link>
+        </Button>
+        <Button>
+          <Link to='/offer' style={{ color: 'black' }}>
+            <i className='fas fa-rupee-sign '></i> Offer a ride
+          </Link>
+        </Button>
+        {!loading ? (
+          <Fragment>
+            {isAuthenticated ? (
+              <Button onClick={() => logout()}>
+                <i className='fas fa-sign-out-alt' /> Logout
+              </Button>
+            ) : null}
+          </Fragment>
+        ) : null}
+      </Toolbar>
+    </AppBar>
   )
 }
 
