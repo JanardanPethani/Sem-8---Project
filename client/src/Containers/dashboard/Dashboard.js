@@ -107,13 +107,11 @@ const Dashboard = ({
               </TabPanel>
             </Grid>
             <Grid item xs={12} sm={5}>
-              
-                {activeRideD.length !== 0 ? (
-                  <ActiveRide activeRide={activeRideD} />
-                ) : (
-                  <ActiveRide activeRide={activeRideP} />
-                )}
-             
+              {activeRideD.length !== 0 ? (
+                <ActiveRide activeRide={activeRideD} />
+              ) : (
+                <ActiveRide activeRide={activeRideP} />
+              )}
             </Grid>
           </Grid>
         </Fragment>

@@ -2,8 +2,7 @@ import React, { Fragment } from 'react'
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 
 import { paymentReceived, deleteReceMsg } from '../../store/actions/offer'
 
@@ -50,8 +49,6 @@ const ActiveRide = ({
       body: JSON.stringify(values),
       headers: { 'Content-type': 'application/json' },
     }).then((t) => t.json())
-
-    // console.log(order)
 
     const options = {
       key: __DEV__ ? 'rzp_test_KYByohjsvvTjqS' : 'PRODUCTION_KEY', // Enter the Key ID generated from the Dashboard
@@ -184,7 +181,20 @@ const ActiveRide = ({
           )}
         </div>
       ) : (
-        'No active ride'
+        <Grid>
+          <img src='./NoRide.png' alt='No ride' />
+          <Typography
+            variant='h5'
+            style={{
+              textAlign: 'center',
+              marginTop: '2rem',
+              fontWeight: '500',
+              color: 'rgb(5, 71, 82)',
+            }}
+          >
+            No active ride
+          </Typography>
+        </Grid>
       )}
     </Fragment>
   )

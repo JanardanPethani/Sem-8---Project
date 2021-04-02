@@ -25,6 +25,7 @@ import EditProfile from './Containers/profile/EditProfile'
 import ForgotPassword from './Containers/auth/PasswordRecovery/ForgotPassword'
 import PasswordRecover from './Containers/auth/PasswordRecovery/PasswordRecover'
 import History from './Containers/History/History'
+import NotFound from './Containers/layout/NotFound/Error'
 
 import { loadUser } from './store/actions/auth'
 import setAuthToken from './utils/setAuthToken'
@@ -77,6 +78,7 @@ const App = () => {
                 path='/edit-profile'
                 component={EditProfile}
               />
+              <Route component={NotFound} />
             </Switch>
           </Container>
           <Footer></Footer>

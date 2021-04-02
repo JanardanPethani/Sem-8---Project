@@ -245,7 +245,29 @@ const RequestForm = ({ history, matchRides, matchesArray }) => {
                       {matchesArray.length !== 0 ? (
                         <MatchCards array={matchesArray} showButton={false} />
                       ) : (
-                        'No matches'
+                        <Grid xs={12}>
+                          <img
+                            src='./NoRide.png'
+                            alt='No ride'
+                            style={{
+                              margin: 'auto',
+                              width: '20%',
+                              height: 'auto',
+                            }}
+                          />
+                          <Typography
+                            variant='h5'
+                            style={{
+                              textAlign: 'center',
+                              marginTop: '2rem',
+                              fontWeight: '500',
+                              color: 'rgb(5, 71, 82)',
+                            }}
+                          >
+                            No rides yet. Drivers usually publish their ride 2-3
+                            days before departure.
+                          </Typography>
+                        </Grid>
                       )}
                     </Grid>
                   </Grid>
