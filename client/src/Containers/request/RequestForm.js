@@ -247,7 +247,7 @@ const RequestForm = ({ history, matchRides, matchesArray }) => {
                       ) : (
                         <Grid xs={12}>
                           <img
-                            src='./NoRide.png'
+                            src='./imgs/NoRide.png'
                             alt='No ride'
                             style={{
                               margin: 'auto',

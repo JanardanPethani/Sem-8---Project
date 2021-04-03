@@ -3,7 +3,9 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import './Landing.css'
+import { Grid, Paper } from '@material-ui/core'
+
+// import './Landing.css'
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -11,22 +13,41 @@ const Landing = ({ isAuthenticated }) => {
   }
 
   return (
-    <section className='landing'>
-      <div className='dark-overlay'>
-        <div className='landing-inner'>
-          <h1 className='x-large'>Share happiness through rides.</h1>
-          <p className='lead'>Find or Share your journy with people.</p>
-          <div className='dash-buttons'>
-            <Link to='/register' className='btn btn-primary'>
-              Sign Up
-            </Link>
-            <Link to='/login' className='btn btn-light'>
-              Login
-            </Link>
-          </div>
+    <Grid container spacing={3}>
+      <Grid
+        xs={12}
+        item
+        style={{
+          marginTop: '5rem',
+          marginBottom: '5rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <img src='Road.svg' style={{ width: '80%', height: 'auto' }} />
+      </Grid>
+      
+      
+      <Grid
+        item
+        xs={12}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <div className='dash-buttons'>
+          <Link to='/register' className='btn btn-primary'>
+            Sign Up
+          </Link>
+          <Link to='/login' className='btn btn-light'>
+            Login
+          </Link>
         </div>
-      </div>
-    </section>
+      </Grid>
+    </Grid>
   )
 }
 

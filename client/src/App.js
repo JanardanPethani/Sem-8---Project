@@ -55,10 +55,10 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar></Navbar>
-          <Route exact path='/' component={Landing} />
           <Container maxWidth='lg' className={classes.root}>
             <Alert />
             <Switch>
+              <Route exact path='/' component={Landing} />
               <Route exact path='/register' component={Register} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/forgotPassword' component={ForgotPassword} />

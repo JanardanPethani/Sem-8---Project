@@ -15,6 +15,7 @@ import {
   Box,
   CircularProgress,
   Grid,
+  Typography,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -118,9 +119,41 @@ const Dashboard = ({
       ) : (
         <Fragment>
           <br />
-          <p className='max-w-md mx-auto mt-2 text-center text-500 leading-relaxed'>
-            You have not requested / offered a ride
-          </p>
+          <Grid
+            item
+            xs={12}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <img src='Request.svg' style={{ width: '100%', height: 'auto' }} />
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <img src='Offer.svg' style={{ width: '100%', height: 'auto' }} />
+          </Grid>
+          <Grid item>
+            <Typography
+              variant='h5'
+              style={{
+                textAlign: 'center',
+                marginTop: '2rem',
+                fontWeight: '500',
+                color: 'rgb(5, 71, 82)',
+              }}
+            >
+              No Request or Offer made.
+            </Typography>
+          </Grid>
         </Fragment>
       )}
     </Fragment>

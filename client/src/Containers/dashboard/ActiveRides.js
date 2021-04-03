@@ -182,7 +182,7 @@ const ActiveRide = ({
         </div>
       ) : (
         <Grid>
-          <img src='./NoRide.png' alt='No ride' />
+          <img src='./imgs/NoRide.png' alt='No ride' />
           <Typography
             variant='h5'
             style={{
