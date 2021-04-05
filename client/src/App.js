@@ -18,9 +18,7 @@ import Alert from './Containers/layout/Alert/Alert'
 import Dashboard from './Containers/dashboard/Dashboard'
 import PrivateRoute from './Containers/routing/PrivateRoute'
 import Request from './Containers/request/RequestForm'
-import RequestPage from './Containers/request/RequestPage'
 import Offer from './Containers/offer/OfferForm'
-import OfferPage from './Containers/offer/OfferPage'
 import EditProfile from './Containers/profile/EditProfile'
 import ForgotPassword from './Containers/auth/PasswordRecovery/ForgotPassword'
 import PasswordRecover from './Containers/auth/PasswordRecovery/PasswordRecover'
@@ -69,9 +67,7 @@ const App = () => {
               />
               <PrivateRoute exact path='/dashboard' component={Dashboard} />
               <PrivateRoute exact path='/request' component={Request} />
-              <PrivateRoute exact path='/requestpage' component={RequestPage} />
               <PrivateRoute exact path='/offer' component={Offer} />
-              <PrivateRoute exact path='/offerpage' component={OfferPage} />
               <PrivateRoute exact path='/history' component={History} />
               <PrivateRoute
                 exact

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 
+import OfferCard from '../../Components/OfferCard/OfferCard'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
@@ -40,58 +42,9 @@ const Offers = ({ offer, deleteOff, history }) => {
   const classes = useStyles()
   const cardC = useStylesCard()
   const offers = offer.map((off, index) => (
-    <Grid key={index} item>
-      <Card className={cardC.root} variant='outlined'>
-        <CardContent>
-          <Typography
-            className={cardC.title}
-            color='textSecondary'
-            gutterBottom
-          >
-            From : {off.from.slice(0, 20) + ' ...'}
-          </Typography>
-          <Typography
-            className={cardC.title}
-            color='textSecondary'
-            gutterBottom
-          >
-            To : {off.to.slice(0, 10) + ' ...'}
-          </Typography>
-          <Typography className={cardC.pos} color='textSecondary'>
-            {getTimeInfo(off.departAt)}
-          </Typography>
-        </CardContent>
-        <Grid item container>
-          <Grid xs={6}>
-            <Paper
-              elevation={2}
-              style={{ cursor: 'pointer' }}
-              className={classes.paper}
-              onClick={() =>
-                history.push({
-                  pathname: '/offerpage',
-                  state: { offId: off._id },
-                })
-              }
-            >
-              Info
-            </Paper>
-          </Grid>
-          <Grid xs={6}>
-            <Paper
-              elevation={2}
-              style={{ cursor: 'pointer', color: 'red' }}
-              className={classes.paper}
-              onClick={() => {
-                deleteOff(off._id)
-              }}
-            >
-              Cancel
-            </Paper>
-          </Grid>
-        </Grid>
-      </Card>
-    </Grid>
+    <Fragment key={index}>
+      <OfferCard offData={off} deleteOffer={deleteOff} />
+    </Fragment>
   ))
 
   return (

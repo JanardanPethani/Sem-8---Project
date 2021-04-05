@@ -26,11 +26,11 @@ router.post(
       ...req.body,
     })
     try {
-      const ride = await Offer.findByLoc(
-        req.user._id,
-        req.body.from,
-        req.body.to
-      )
+      // const ride = await Offer.findByLoc(
+      //   req.user._id,
+      //   req.body.from,
+      //   req.body.to
+      // )
       getLngLat(req.body.from, async (err, response) => {
         if (err) {
           return res.status(400).json({ errors: [{ msg: err }] })
