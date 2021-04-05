@@ -8,6 +8,9 @@ const Offers = require('./OffRide')
 //Schemas
 const userSchema = new mongoose.Schema(
   {
+    profileImage: {
+      type: String,
+    },
     firstname: {
       type: String,
       required: true,
@@ -127,7 +130,7 @@ userSchema.pre('remove', async function (next) {
   const user = this
   await Requests.deleteMany({ reqBy: user.id })
   await Offers.deleteMany({ offBy: user.id })
-  
+
   next()
 })
 

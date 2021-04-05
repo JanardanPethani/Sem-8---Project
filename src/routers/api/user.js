@@ -4,6 +4,56 @@ const router = new express.Router()
 const User = require('../../models/User')
 const CompletedRides = require('../../models/CompletedRides')
 const auth = require('../../middleware/auth')
+const path = require('path')
+const multer = require('multer')
+const fs = require('fs')
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(
+      null,
+      file.fieldname + '-' + Date.now() + path.extname(file.originalname)
+    )
+  },
+})
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/jpeg' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/png'
+  ) {
+    cb(null, true)
+  } else {
+    cb(null, false)
+  }
+}
+
+// limit 5mb
+var upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5,
+  },
+  fileFilter: fileFilter,
+})
+
+// @route   POST api/user
+// @desc    Get images
+// @access  Private
+router.get('/images', (req, res) => {
+  const uploadsDir = path.join('uploads')
+  fs.readdir(uploadsDir, (err, files) => {
+    if (err) {
+      return res.status(400).json({ errors: [{ msg: err.message }] })
+    }
+
+    return res.json({ files })
+  })
+})
 
 // @route   POST api/user
 // @desc    Register a user
@@ -73,7 +123,31 @@ router.patch('/me', auth, async (req, res) => {
     await req.user.save()
     res.status(201).send(req.user)
   } catch (error) {
-    res.status(400).send({ errors: [{ msg: error.message }] })
+    if (error.code == 11000) {
+      res.status(400).json({ errors: [{ msg: 'User available' }] })
+    } else {
+      console.log(error.code)
+      res.status(400).json({ errors: [{ msg: error.message }] })
+    }
+  }
+})
+
+// @route   GET api/user
+// @desc    Upload photo
+// @access  Private
+router.post('/photo', upload.single('profileImage'), auth, async (req, res) => {
+  try {
+    // console.log(req.file)
+    req.user.profileImage = req.file.path
+      ? req.file.path
+      : req.user.profileImage
+    await req.user.save()
+
+    // console.log(user);
+    res.status(201).send('Done')
+  } catch (error) {
+    // console.log(error)
+    res.status(400).json({ errors: [{ msg: error.message }] })
   }
 })
 

@@ -7,7 +7,7 @@ import { setAlert } from './alert'
 // Get current users profile
 export const getCurrentProfile = () => async (dispatch) => {
   try {
-    const req = await axios.get('/api/ride/allRequests')
+    // const req = await axios.get('/api/ride/allRequests')
     const off = await axios.get('/api/ride/allOffers')
     const sendReq = await axios.get('/api/sendReqMsg/allReqMsgs')
     const offerReq = await axios.get('/api/sendReqMsg/allReqMsgsToMe')
@@ -19,7 +19,7 @@ export const getCurrentProfile = () => async (dispatch) => {
     dispatch({
       type: GET_PROFILE,
       payload: {
-        req: req.data,
+        // req: req.data,
         off: off.data,
         send: sendReq.data,
         received: offerReq.data,
@@ -51,12 +51,15 @@ export const editProfile = (formData, history) => async (dispatch) => {
   }
 
   try {
+    console.log(formData)
+
+    // console.log(photo)
     await axios.patch('/api/user/me', formData, config)
     dispatch(getCurrentProfile())
 
     dispatch(
       setAlert(
-        'Profile Updated(Refresh to see changes in Dashboard)',
+        'Profile Updated. (Refresh to see changes in Dashboard)',
         'success'
       )
     )
@@ -65,7 +68,7 @@ export const editProfile = (formData, history) => async (dispatch) => {
   } catch (error) {
     const errors = error.response.data.errors
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')))
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'warning')))
     }
     dispatch({
       type: PROFILE_ERROR,
