@@ -1,28 +1,25 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
+import { makeStyles } from '@material-ui/core/styles'
+import Grid from '@material-ui/core/Grid'
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import Avatar from '@material-ui/core/Avatar'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card'
-import CardContent from '@material-ui/core/CardContent'
-import Paper from '@material-ui/core/Paper'
-import Typography from '@material-ui/core/Typography'
-import { makeStyles } from '@material-ui/core/styles'
 
 import getTimeInfo from '../../utils/getTimeInfo'
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
+    padding: 10,
   },
 }))
 
@@ -30,6 +27,11 @@ const useStylesCard = makeStyles({
   root: {
     minWidth: 275,
     margin: '5px',
+  },
+  bullet: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(0.8)',
   },
   title: {
     fontSize: 14,
@@ -39,7 +41,7 @@ const useStylesCard = makeStyles({
   },
 })
 
-const OfferCard = ({ offData, deleteOffer }) => {
+const SentReqs = ({ deleteMsg, msg }) => {
   const classes = useStyles()
   const cardC = useStylesCard()
   const [open, setOpen] = React.useState(false)
@@ -50,7 +52,8 @@ const OfferCard = ({ offData, deleteOffer }) => {
   const handleClose = () => {
     setOpen(false)
   }
-  return (
+  //   const requests = sentRequest.map((msg, index) => (
+  const data = (
     <Fragment>
       <Grid item>
         <Card className={cardC.root} variant='outlined'>
@@ -60,43 +63,36 @@ const OfferCard = ({ offData, deleteOffer }) => {
               color='textSecondary'
               gutterBottom
             >
-              From : {offData.from.slice(0, 20) + ' ...'}
+              From : {msg.forWhich.from.slice(0, 20) + ' ...'}
             </Typography>
             <Typography
               className={cardC.title}
               color='textSecondary'
               gutterBottom
             >
-              To : {offData.to.slice(0, 10) + ' ...'}
+              To : {msg.forWhich.to.slice(0, 20) + ' ...'}
+            </Typography>
+            <Typography
+              className={cardC.title}
+              color='textSecondary'
+              gutterBottom
+            >
+              To Whom : {msg.to.firstname}
             </Typography>
             <Typography className={cardC.pos} color='textSecondary'>
-              {getTimeInfo(offData.departAt)}
+              {getTimeInfo(msg.created_at)}
             </Typography>
           </CardContent>
-          <Grid item container>
-            <Grid xs={6}>
-              <Paper
-                elevation={2}
-                style={{ cursor: 'pointer' }}
-                className={classes.paper}
-                onClick={() => handleClickOpen()}
-              >
-                Info
-              </Paper>
-            </Grid>
-            <Grid xs={6}>
-              <Paper
-                elevation={2}
-                style={{ cursor: 'pointer', color: 'red' }}
-                className={classes.paper}
-                onClick={() => {
-                  deleteOffer(offData._id)
-                }}
-              >
-                Cancel
-              </Paper>
-            </Grid>
-          </Grid>
+          <CardActions>
+            <Button
+              onClick={() => {
+                deleteMsg(msg._id)
+              }}
+            >
+              Cancle Request
+            </Button>
+            <Button onClick={() => handleClickOpen()}>Info</Button>
+          </CardActions>
         </Card>
       </Grid>
       <Dialog
@@ -105,37 +101,66 @@ const OfferCard = ({ offData, deleteOffer }) => {
         aria-labelledby='responsive-dialog-title'
       >
         <DialogTitle id='responsive-dialog-title'>
-          {'Request Information'}
+          {'Offer Information'}
         </DialogTitle>
         <DialogContent>
           <Grid container spacing={1}>
+            <Grid
+              item
+              xs={2}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <Typography>To Whom : </Typography>
+            </Grid>
+            <Grid item xs={10}>
+              <CardHeader
+                avatar={
+                  <Avatar
+                    aria-label={msg.to.firstname}
+                    src={
+                      'http://localhost:5000/' +
+                      msg.to.profileImage.replace('src\\uploads\\', 'uploads/')
+                    }
+                    className={classes.avatar}
+                  >
+                    {msg.to.firstname[0]}
+                  </Avatar>
+                }
+                title={`${msg.to.firstname} ${msg.to.lastname}`}
+              />
+            </Grid>
             <Grid item xs={2}>
               <Typography>From : </Typography>
             </Grid>
             <Grid item xs={10}>
-              {offData.from}{' '}
+              {msg.forWhich.from}{' '}
             </Grid>
             <Grid item xs={2}>
               <Typography>To : </Typography>
             </Grid>
             <Grid item xs={10}>
-              {offData.to}{' '}
+              {msg.forWhich.to}{' '}
             </Grid>
+
             <Grid item xs={4}>
               <Typography>Departure Time :</Typography>
             </Grid>
             <Grid item xs={8}>
-              {offData.departAt}{' '}
+              {msg.forWhich.departAt}{' '}
             </Grid>
             <br />
             <Grid item xs={4}>
-              Vehicle : {offData.vehicletype}
+              Vehicle : {msg.forWhich.vehicletype}
             </Grid>
             <Grid item xs={4}>
-              Seats : {offData.seats}{' '}
+              Seats : {msg.forWhich.seats}{' '}
             </Grid>
             <Grid item xs={4}>
-              Price : {offData.price}
+              Price : {msg.forWhich.price}
             </Grid>
           </Grid>
         </DialogContent>
@@ -147,6 +172,8 @@ const OfferCard = ({ offData, deleteOffer }) => {
       </Dialog>
     </Fragment>
   )
+
+  return <Grid container>{data}</Grid>
 }
 
-export default OfferCard
+export default SentReqs

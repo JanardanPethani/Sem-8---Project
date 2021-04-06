@@ -6,6 +6,7 @@ import Offers from './Offers'
 import SentReqs from './RequestSentByYou'
 import ReceReqs from './RequestSentToYou'
 import ActiveRide from './ActiveRides'
+// import Card from './ShortInfo'
 
 import { getCurrentProfile } from '../../store/actions/profile'
 import {

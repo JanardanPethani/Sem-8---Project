@@ -42,7 +42,13 @@ router.post(
               },
             },
           },
-        }).populate('offBy', ['firstname', 'lastname', 'phone', 'email'])
+        }).populate('offBy', [
+          'firstname',
+          'lastname',
+          'phone',
+          'email',
+          'profileImage',
+        ])
         res.status(201).json(rides)
       })
     } catch (error) {

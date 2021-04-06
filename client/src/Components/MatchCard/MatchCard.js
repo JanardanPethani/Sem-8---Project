@@ -59,6 +59,13 @@ const MatchCard = ({ array, sendMsg }) => {
                     avatar={
                       <Avatar
                         aria-label={ride.offBy.firstname}
+                        src={
+                          'http://localhost:5000/' +
+                          ride.offBy.profileImage.replace(
+                            'src\\uploads\\',
+                            'uploads/'
+                          )
+                        }
                         className={classes.avatar}
                       >
                         {ride.offBy.firstname[0]}

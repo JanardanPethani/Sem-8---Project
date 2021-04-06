@@ -3,6 +3,8 @@ import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import RequestCard from '../../Components/RequestSentCard/RequestCard'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
@@ -45,44 +47,26 @@ const SentReqs = ({ sentRequest, history, deleteReqMsg }) => {
   // console.log(sentRequest)
 
   const requests = sentRequest.map((msg, index) => (
-    <Grid key={index} item>
-      <Card className={cardC.root} variant='outlined'>
-        <CardContent>
-          <Typography
-            className={cardC.title}
-            color='textSecondary'
-            gutterBottom
-          >
-            For : {msg.forWhich.from.slice(0, 20) + ' ...'}
-          </Typography>
-          <Typography
-            className={cardC.title}
-            color='textSecondary'
-            gutterBottom
-          >
-            To : {msg.to.firstname}
-          </Typography>
-          <Typography className={cardC.pos} color='textSecondary'>
-            {getTimeInfo(msg.created_at)}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button
-            onClick={() => {
-              deleteReqMsg(msg._id)
-            }}
-          >
-            Cancle Request
-          </Button>
-        </CardActions>
-      </Card>
-    </Grid>
+    <Fragment>
+      <RequestCard msg={msg} deleteMsg={deleteReqMsg} />
+    </Fragment>
   ))
 
   return (
     <Fragment>
       <h2 className='p-3 text-xl font-medium'>Requests Sent</h2>
-
+      <Grid
+        item
+        xs={12}
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginBottom: '2rem',
+        }}
+      >
+        <img src='Request.svg' style={{ width: '100%', height: 'auto' }} />
+      </Grid>
       <Grid item xs={12} className={classes.root} spacing={5}>
         <Grid container>{requests}</Grid>
       </Grid>

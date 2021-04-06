@@ -9,6 +9,10 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Paper from '@material-ui/core/Paper'
+import CardHeader from '@material-ui/core/CardHeader'
+import Avatar from '@material-ui/core/Avatar'
+import { green } from '@material-ui/core/colors'
+
 import { deleteReceMsg, acceptRide } from '../../store/actions/offer'
 import getTimeInfo from '../../utils/getTimeInfo'
 
@@ -20,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
+  },
+  avatar: {
+    backgroundColor: green[500],
   },
 }))
 
@@ -48,6 +55,20 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg, acceptRide }) => {
   const requests = receRequest.map((msg, index) => (
     <Grid key={index} item>
       <Card className={cardC.root} variant='outlined'>
+        <CardHeader
+          avatar={
+            <Avatar
+              aria-label='recipe'
+              src={
+                'http://localhost:5000/' +
+                msg.reqBy.profileImage.replace('src\\uploads\\', 'uploads/')
+              }
+              className={classes.avatar}
+            />
+          }
+          title={`${msg.reqBy.firstname} ${msg.reqBy.lastname}`}
+          subheader={msg.created_at.slice(0,25)}
+        />
         <CardContent>
           <Typography
             className={cardC.title}
@@ -61,10 +82,10 @@ const ReceReqs = ({ receRequest, history, deleteReceMsg, acceptRide }) => {
             color='textSecondary'
             gutterBottom
           >
-            By : {msg.reqBy.firstname}
+            To : {msg.forWhich.to.slice(0, 20) + ' ...'}
           </Typography>
-          <Typography className={cardC.pos} color='textSecondary'>
-            {getTimeInfo(msg.created_at)}
+          <Typography className={cardC.pos} color='textSecondary' gutterBottom>
+            Depart at : {getTimeInfo(msg.forWhich.departAt)}
           </Typography>
         </CardContent>
         <Grid item container>

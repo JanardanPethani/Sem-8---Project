@@ -131,7 +131,12 @@ const EditProfile = ({ editProfile, auth: { user, loading }, history }) => {
                   alignItems: 'center',
                 }}
               >
-                <Avatar alt='dp' src={imgData} className={classes.large} />
+                <Avatar
+                  alt='dp'
+                  aria-label={firstname}
+                  src={imgData}
+                  className={classes.large}
+                />
               </Grid>
               <Grid
                 item

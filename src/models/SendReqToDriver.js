@@ -29,6 +29,13 @@ const sentReqSchema = new mongoose.Schema(
   }
 )
 
+sentReqSchema.methods.toJSON = function () {
+  const request = this
+  const reqObj = request.toObject()
+  reqObj.created_at = reqObj.created_at.toString()
+  return reqObj
+}
+
 sentReqSchema.statics.findByUser = async ({ reqBy, forWhich, to }) => {
   const ride = await SentReq.findOne({
     reqBy,
