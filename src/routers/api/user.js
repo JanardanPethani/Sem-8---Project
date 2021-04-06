@@ -7,19 +7,19 @@ const auth = require('../../middleware/auth')
 const path = require('path')
 const multer = require('multer')
 const fs = require('fs')
+const { v4: uuidv4 } = require('uuid')
 
-var storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/uploads/')
+const DIR = './public/'
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, DIR)
   },
-  filename: function (req, file, cb) {
-    cb(
-      null,
-      file.fieldname + '-' + Date.now() + path.extname(file.originalname)
-    )
+  filename: (req, file, cb) => {
+    const fileName = file.originalname.toLowerCase().split(' ').join('-')
+    cb(null, uuidv4() + '-' + fileName)
   },
 })
-
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === 'image/jpeg' ||
@@ -39,20 +39,6 @@ var upload = multer({
     fileSize: 1024 * 1024 * 5,
   },
   fileFilter: fileFilter,
-})
-
-// @route   POST api/user
-// @desc    Get images
-// @access  Private
-router.get('/images', (req, res) => {
-  const uploadsDir = path.join('uploads')
-  fs.readdir(uploadsDir, (err, files) => {
-    if (err) {
-      return res.status(400).json({ errors: [{ msg: err.message }] })
-    }
-
-    return res.json({ files })
-  })
 })
 
 // @route   POST api/user
@@ -137,7 +123,8 @@ router.patch('/me', auth, async (req, res) => {
 // @access  Private
 router.post('/photo', upload.single('profileImage'), auth, async (req, res) => {
   try {
-    // console.log(req.file)
+    // console.log(req.protocol)
+    // console.log(req.get('host'))
     req.user.profileImage = req.file.path
       ? req.file.path
       : req.user.profileImage

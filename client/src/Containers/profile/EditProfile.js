@@ -54,6 +54,7 @@ const EditProfile = ({ editProfile, auth: { user, loading }, history }) => {
   })
 
   const [imgData, setimgData] = useState(null)
+  const [mainUploadData, setMainUploadData] = useState(null)
 
   useEffect(() => {
     if (!user) loadUser()
@@ -64,11 +65,18 @@ const EditProfile = ({ editProfile, auth: { user, loading }, history }) => {
       phone: loading || !user.phone ? '' : user.phone,
       age: loading || !user.age ? '' : user.age,
     })
-    console.log(user.profileImage.replace('\\', '/'))
+
     setimgData(
       loading || !user.profileImage
         ? ''
-        : 'http://localhost:3000/' + user.profileImage.replace('\\', '/')
+        : 'http://localhost:5000/' +
+            user.profileImage.replace('src\\uploads\\', 'uploads/')
+    )
+    setMainUploadData(
+      loading || !user.profileImage
+        ? ''
+        : 'http://localhost:5000/' +
+            user.profileImage.replace('src\\uploads\\', 'uploads/')
     )
   }, [loading, user])
 
@@ -77,16 +85,17 @@ const EditProfile = ({ editProfile, auth: { user, loading }, history }) => {
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
+
   const handlePhoto = (e) => {
-    console.log(e)
-    setimgData(e.target.files[0])
+    setMainUploadData(e.target.files[0])
+    setimgData(URL.createObjectURL(e.target.files[0]))
   }
 
   const onSubmit = (e) => {
     e.preventDefault()
 
     const photoData = new FormData()
-    photoData.append('profileImage', imgData)
+    photoData.append('profileImage', mainUploadData)
     //update-profile
     axios
       .post('http://localhost:3000/api/user/photo/', photoData, {
