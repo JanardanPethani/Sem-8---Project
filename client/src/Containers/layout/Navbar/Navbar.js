@@ -114,12 +114,14 @@ const Navbar = ({
 
         <Button>
           <Link to='/request' style={{ color: 'black' }}>
-            <i className='fas fa-route '></i> Post a Request
+            <i className='fas fa-route '></i>{' '}
+            <span className='hide-sm'>Post a Request</span>
           </Link>
         </Button>
         <Button>
           <Link to='/offer' style={{ color: 'black' }}>
-            <i className='fas fa-rupee-sign '></i> Offer a ride
+            <i className='fas fa-rupee-sign '></i>{' '}
+            <span className='hide-sm'>Offer a ride</span>
           </Link>
         </Button>
         {!loading ? (

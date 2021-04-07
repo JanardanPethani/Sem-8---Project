@@ -6,7 +6,7 @@ import Offers from './Offers'
 import SentReqs from './RequestSentByYou'
 import ReceReqs from './RequestSentToYou'
 import ActiveRide from './ActiveRides'
-// import Card from './ShortInfo'
+import ShortInfoCard from './ShortInfo'
 
 import { getCurrentProfile } from '../../store/actions/profile'
 import {
@@ -82,6 +82,9 @@ const Dashboard = ({
         activeRideD.length !== 0) ? (
         <Fragment>
           <Grid container spacing={5}>
+            <Grid item xs={12}>
+              <ShortInfoCard profileData={profile} user={auth.user} />
+            </Grid>
             <Grid item xs={12} sm={7}>
               <Paper className={classes.root}>
                 <Tabs
@@ -91,7 +94,6 @@ const Dashboard = ({
                   textColor='primary'
                   variant='scrollable'
                   scrollButtons='on'
-                  centered
                 >
                   <Tab label='Your Offers' {...a11yProps(0)} />
                   <Tab label='Requests received' {...a11yProps(1)} />
@@ -120,6 +122,15 @@ const Dashboard = ({
       ) : (
         <Fragment>
           <br />
+          <Grid
+            item
+            xs={12}
+            style={{
+              marginBottom: '1rem',
+            }}
+          >
+            <ShortInfoCard profileData={profile} user={auth.user} />
+          </Grid>
           <Grid
             item
             xs={12}
