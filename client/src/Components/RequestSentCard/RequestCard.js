@@ -85,13 +85,20 @@ const SentReqs = ({ deleteMsg, msg }) => {
           </CardContent>
           <CardActions>
             <Button
+              onClick={() => handleClickOpen()}
+              style={{ color: '#054752' }}
+            >
+              Info
+            </Button>
+
+            <Button
               onClick={() => {
                 deleteMsg(msg._id)
               }}
+              style={{ color: 'red' }}
             >
               Cancle Request
             </Button>
-            <Button onClick={() => handleClickOpen()}>Info</Button>
           </CardActions>
         </Card>
       </Grid>

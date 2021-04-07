@@ -137,7 +137,9 @@ router.delete('/receMsg/:id', auth, async (req, res) => {
       .populate('reqBy')
       .populate('forWhich')
     if (!ride) {
-      throw new Error('Request Msg is not available')
+      throw new Error(
+        'Request Msg is not available or User cancled his/her request'
+      )
     } else {
       await sendStatusMail(ride.reqBy.email, {
         request_to: `${req.user.firstname} ${req.user.lastname}`,
@@ -175,9 +177,9 @@ router.patch('/acceptReq/:id', auth, async (req, res) => {
         .populate('forWhich')
 
       if (!ride) {
-        throw new Error('Request Msg is not available')
-      } else if (ride.status === 'Accepted') {
-        throw new Error('Already accepted')
+        throw new Error(
+          'Request Msg is not available or User cancled his/her request'
+        )
       } else {
         ride.status = 'Accepted'
         await ride.save()

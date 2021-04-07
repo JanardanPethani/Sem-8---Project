@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { Grid, Paper } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 
 // import './Landing.css'
 
@@ -25,10 +25,13 @@ const Landing = ({ isAuthenticated }) => {
           alignItems: 'center',
         }}
       >
-        <img src='Road.svg' style={{ width: '80%', height: 'auto' }} />
+        <img
+          src='Road.svg'
+          style={{ width: '80%', height: 'auto' }}
+          alt='Main img'
+        />
       </Grid>
-      
-      
+
       <Grid
         item
         xs={12}

@@ -1,6 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
@@ -10,21 +8,11 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
-import Paper from '@material-ui/core/Paper'
+import CardActions from '@material-ui/core/CardActions'
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles'
 
 import getTimeInfo from '../../utils/getTimeInfo'
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-  },
-}))
 
 const useStylesCard = makeStyles({
   root: {
@@ -40,7 +28,6 @@ const useStylesCard = makeStyles({
 })
 
 const OfferCard = ({ offData, deleteOffer }) => {
-  const classes = useStyles()
   const cardC = useStylesCard()
   const [open, setOpen] = React.useState(false)
   const handleClickOpen = () => {
@@ -73,30 +60,23 @@ const OfferCard = ({ offData, deleteOffer }) => {
               {getTimeInfo(offData.departAt)}
             </Typography>
           </CardContent>
-          <Grid item container>
-            <Grid xs={6}>
-              <Paper
-                elevation={2}
-                style={{ cursor: 'pointer' }}
-                className={classes.paper}
-                onClick={() => handleClickOpen()}
-              >
-                Info
-              </Paper>
-            </Grid>
-            <Grid xs={6}>
-              <Paper
-                elevation={2}
-                style={{ cursor: 'pointer', color: 'red' }}
-                className={classes.paper}
-                onClick={() => {
-                  deleteOffer(offData._id)
-                }}
-              >
-                Cancel
-              </Paper>
-            </Grid>
-          </Grid>
+          <CardActions>
+            <Button
+              onClick={() => handleClickOpen()}
+              style={{ color: '#054752' }}
+            >
+              Info
+            </Button>
+
+            <Button
+              onClick={() => {
+                deleteOffer(offData._id)
+              }}
+              style={{ color: 'red' }}
+            >
+              Delete Offer
+            </Button>
+          </CardActions>
         </Card>
       </Grid>
       <Dialog

@@ -129,7 +129,11 @@ const Dashboard = ({
               alignItems: 'center',
             }}
           >
-            <img src='Request.svg' style={{ width: '100%', height: 'auto' }} />
+            <img
+              src='Request.svg'
+              style={{ width: '100%', height: 'auto' }}
+              alt='How to Request'
+            />
           </Grid>
           <Grid
             item
@@ -140,7 +144,11 @@ const Dashboard = ({
               alignItems: 'center',
             }}
           >
-            <img src='Offer.svg' style={{ width: '100%', height: 'auto' }} />
+            <img
+              src='Offer.svg'
+              style={{ width: '100%', height: 'auto' }}
+              alt='How to Offer'
+            />
           </Grid>
           <Grid item>
             <Typography

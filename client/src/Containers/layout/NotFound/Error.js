@@ -6,7 +6,11 @@ const NotFound = () => (
   <div>
     <Grid container spacing={5}>
       <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
-        <img src='./imgs/404.png' style={{ width: '40%', height: 'auto' }} />
+        <img
+          src='./imgs/404.png'
+          style={{ width: '40%', height: 'auto' }}
+          alt='404'
+        />
       </Grid>
       <Grid item xs={12} style={{ display: 'flex', justifyContent: 'center' }}>
         <Link
