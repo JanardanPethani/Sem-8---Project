@@ -52,6 +52,15 @@ const SentReqs = ({ deleteMsg, msg }) => {
   const handleClose = () => {
     setOpen(false)
   }
+
+  let profilePic = ''
+  if (msg.to.profileImage) {
+    profilePic =
+      'http://localhost:5000/' +
+      msg.to.profileImage.replace('src\\uploads\\', 'uploads/')
+  } else {
+    profilePic = ''
+  }
   //   const requests = sentRequest.map((msg, index) => (
   const data = (
     <Fragment>
@@ -128,10 +137,7 @@ const SentReqs = ({ deleteMsg, msg }) => {
                 avatar={
                   <Avatar
                     aria-label={msg.to.firstname}
-                    src={
-                      'http://localhost:5000/' +
-                      msg.to.profileImage.replace('src\\uploads\\', 'uploads/')
-                    }
+                    src={profilePic}
                     className={classes.avatar}
                   >
                     {msg.to.firstname[0]}

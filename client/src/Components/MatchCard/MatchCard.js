@@ -49,6 +49,14 @@ const MatchCard = ({ array, sendMsg }) => {
         const status = getStatus(ride.departAt)
         const postTime = getTimeInfo(ride.created_at)
         const name = `${ride.offBy.firstname} ${ride.offBy.lastname}`
+        let profilePic = ''
+        if (ride.offBy.profileImage) {
+          profilePic =
+            'http://localhost:5000/' +
+            ride.offBy.profileImage.replace('src\\uploads\\', 'uploads/')
+        } else {
+          profilePic = ''
+        }
         return (
           <Grid item xs={12} sm={6}>
             <Card key={ride._id}>
@@ -59,13 +67,7 @@ const MatchCard = ({ array, sendMsg }) => {
                     avatar={
                       <Avatar
                         aria-label={ride.offBy.firstname}
-                        src={
-                          'http://localhost:5000/' +
-                          ride.offBy.profileImage.replace(
-                            'src\\uploads\\',
-                            'uploads/'
-                          )
-                        }
+                        src={profilePic}
                         className={classes.avatar}
                       >
                         {ride.offBy.firstname[0]}

@@ -1,6 +1,4 @@
 import React, { Fragment } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { Avatar, Paper, Typography, Grid } from '@material-ui/core'
@@ -26,9 +24,18 @@ const useStyles = makeStyles((theme) => ({
 const ShortInfoCard = ({ profileData, user }) => {
   const classes = useStyles()
   let totalIncome = 0
+  let profilePic = ''
+  if (user.profileImage) {
+    profilePic =
+      'http://localhost:5000/' +
+      user.profileImage.replace('src\\uploads\\', 'uploads/')
+  } else {
+    profilePic = ''
+  }
+
   if (profileData.history.length > 0) {
     profileData.history.forEach((ride) => {
-      if (ride.driverM == user.email) {
+      if (ride.driverM === user.email) {
         totalIncome += ride.price
       }
     })
@@ -47,10 +54,7 @@ const ShortInfoCard = ({ profileData, user }) => {
             >
               <Avatar
                 aria-label='recipe'
-                src={
-                  'http://localhost:5000/' +
-                  user.profileImage.replace('src\\uploads\\', 'uploads/')
-                }
+                src={profilePic}
                 className={`${classes.avatar} ${classes.large}`}
               />
             </Grid>
