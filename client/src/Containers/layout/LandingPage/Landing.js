@@ -1,56 +1,80 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import { Grid } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
+import { Box, Container, Grid, Paper, Typography } from '@material-ui/core'
 
-// import './Landing.css'
+import './LandingPage.css'
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  paper: {
+    height: 140,
+    width: '100%',
+  },
+  control: {
+    padding: theme.spacing(2),
+  },
+}))
 
 const Landing = ({ isAuthenticated }) => {
+  const classes = useStyles()
   if (isAuthenticated) {
     return <Redirect to='/dashboard' />
   }
 
   return (
-    <Grid container spacing={3}>
-      <Grid
-        xs={12}
-        item
-        style={{
-          marginTop: '5rem',
-          marginBottom: '5rem',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <img
-          src='Road.svg'
-          style={{ width: '80%', height: 'auto' }}
-          alt='Main img'
-        />
-      </Grid>
-
-      <Grid
-        item
-        xs={12}
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <div className='dash-buttons'>
+    <Fragment>
+      {/* 1 part - signin/signup */}
+      <Paper className='first-div'>
+        <Typography variant='h2' className='heading'>
+          {' '}
+          Your partner for quick rides
+        </Typography>
+        <Box className='first-div-btn'>
           <Link to='/register' className='btn btn-primary'>
             Sign Up
           </Link>
           <Link to='/login' className='btn btn-light'>
             Login
           </Link>
-        </div>
+        </Box>
+        <img src='./svgs/Order_ride.svg' className='svg_1' />
+      </Paper>
+
+      {/* 2 part - Search ride */}
+      <Grid
+        container
+        style={{ borderBottom: '1px solid black', marginTop: '2rem' }}
+      >
+        <Grid item style={{ padding: '2rem' }}>
+          <Typography variant='h1'>Search rides</Typography>
+        </Grid>
       </Grid>
-    </Grid>
+
+      {/* 3 part - Offer ride */}
+      <Grid
+        container
+        style={{ borderBottom: '1px solid black', marginTop: '2rem' }}
+      >
+        <Grid item xs={8}>
+          {' '}
+        </Grid>
+        <Grid item>
+          <Typography
+            variant='h1'
+            style={{ padding: '2rem', marginBottom: '2rem' }}
+          >
+            Offer rides
+          </Typography>
+        </Grid>
+      </Grid>
+      <Paper></Paper>
+    </Fragment>
   )
 }
 

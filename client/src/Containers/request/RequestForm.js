@@ -17,6 +17,7 @@ import TextField from '@material-ui/core/TextField'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Select from '@material-ui/core/Select'
+import Container from '@material-ui/core/Container'
 import MatchCards from '../../Components/MatchCard/MatchCard'
 import DateFnsUtils from '@date-io/date-fns'
 import {
@@ -31,6 +32,10 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 
 const useStyles = makeStyles((theme) => ({
+  root: {
+    marginTop: '2rem',
+    marginBottom: '6rem',
+  },
   formControl: {
     minWidth: 150,
   },
@@ -75,77 +80,78 @@ const RequestForm = ({ history, matchRides, matchesArray }) => {
 
   return (
     <Fragment>
-      <Grid container>
-        <Grid xs={11}>
-          <h1 className='large text-primary'>Request a ride</h1>
+      <Container className={classes.root}>
+        <Grid container>
+          <Grid xs={11}>
+            <h1 className='large text-primary'>Request a ride</h1>
+          </Grid>
+          <Grid
+            xs={1}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Link to='/dashboard'>
+              <CancelIcon fontSize='large' />
+            </Link>
+          </Grid>
         </Grid>
-        <Grid
-          xs={1}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Link to='/dashboard'>
-            <CancelIcon fontSize='large' />
-          </Link>
-        </Grid>
-      </Grid>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Accordion>
-            <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
-              aria-controls='panel1a-content'
-              id='panel1a-header'
-            >
-              <Typography className={classes.heading}>Map</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Grid style={{ width: '100%' }}>
-                <Paper>
-                  <GMap />
-                </Paper>
-                <span className='bg-yellow-100 p-1 text-sm rounded-md'>
-                  Click on map to add marker/Click on marker to see location
-                </span>
-              </Grid>
-            </AccordionDetails>
-          </Accordion>
-        </Grid>
-        <Grid item xs>
-          <Paper elevation={1} className={classes.paper}>
-            <CssBaseline />
-            <form className={classes.form} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id='outlined-basic'
-                    label='Pickup Location'
-                    required
-                    fullWidth
-                    variant='outlined'
-                    name='from'
-                    value={from}
-                    helperText='Enter full address with city and state'
-                    onChange={(e) => onChange(e)}
-                  />
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Accordion>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls='panel1a-content'
+                id='panel1a-header'
+              >
+                <Typography className={classes.heading}>Map</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <Grid style={{ width: '100%' }}>
+                  <Paper>
+                    <GMap />
+                  </Paper>
+                  <span className='bg-yellow-100 p-1 text-sm rounded-md'>
+                    Click on map to add marker/Click on marker to see location
+                  </span>
                 </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id='outlined-basic'
-                    required
-                    fullWidth
-                    label='Destination Location'
-                    variant='outlined'
-                    name='to'
-                    value={to}
-                    helperText='Enter full address with city and state'
-                    onChange={(e) => onChange(e)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+          <Grid item xs>
+            <Paper elevation={1} className={classes.paper}>
+              <CssBaseline />
+              <form className={classes.form} noValidate>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id='outlined-basic'
+                      label='Pickup Location'
+                      required
+                      fullWidth
+                      variant='outlined'
+                      name='from'
+                      value={from}
+                      helperText='Enter full address with city and state'
+                      onChange={(e) => onChange(e)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id='outlined-basic'
+                      required
+                      fullWidth
+                      label='Destination Location'
+                      variant='outlined'
+                      name='to'
+                      value={to}
+                      helperText='Enter full address with city and state'
+                      onChange={(e) => onChange(e)}
+                    />
+                  </Grid>
+                  {/* <Grid item xs={12} sm={6}>
                   <FormControl
                     variant='outlined'
                     className={classes.formControl}
@@ -168,8 +174,8 @@ const RequestForm = ({ history, matchRides, matchesArray }) => {
                       <MenuItem value={4}>Four</MenuItem>
                     </Select>
                   </FormControl>
-                </Grid>
-                <Grid item xs={12} sm={6} style={{ paddingTop: '1rem' }}>
+                </Grid> */}
+                  {/* <Grid item xs={12} sm={6} style={{ paddingTop: '1rem' }}>
                   <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDatePicker
                       format='MM/dd/yyyy'
@@ -179,44 +185,16 @@ const RequestForm = ({ history, matchRides, matchesArray }) => {
                       minDate={new Date()}
                     />
                   </MuiPickersUtilsProvider>
+                </Grid> */}
                 </Grid>
-              </Grid>
-            </form>
-          </Paper>
-        </Grid>
-        <Grid item xs={12} sm={12}>
-          {from && to ? (
-            <Fragment>
-              {!getMatch ? (
-                <Grid
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Button
-                    className={classes.btn}
-                    variant='contained'
-                    color='primary'
-                    onClick={() => {
-                      setMatch(true)
-                      if (!getMatch) {
-                        matchRides(from)
-                      }
-                    }}
-                  >
-                    Get Matching Offers
-                  </Button>
-                </Grid>
-              ) : (
-                ''
-              )}
-              {getMatch ? (
-                <Grid item>
+              </form>
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={12}>
+            {from && to ? (
+              <Fragment>
+                {!getMatch ? (
                   <Grid
-                    item
-                    xs={12}
                     style={{
                       display: 'flex',
                       justifyContent: 'center',
@@ -228,59 +206,88 @@ const RequestForm = ({ history, matchRides, matchesArray }) => {
                       variant='contained'
                       color='primary'
                       onClick={() => {
-                        setMatch(false)
+                        setMatch(true)
+                        if (!getMatch) {
+                          matchRides(from)
+                        }
                       }}
                     >
-                      Close
+                      Get Matching Offers
                     </Button>
                   </Grid>
+                ) : (
+                  ''
+                )}
+                {getMatch ? (
                   <Grid item>
                     <Grid
-                      container
-                      spacing={2}
+                      item
                       xs={12}
-                      sm={12}
-                      style={{ marginTop: '1rem' }}
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}
                     >
-                      {matchesArray.length !== 0 ? (
-                        <MatchCards array={matchesArray} showButton={false} />
-                      ) : (
-                        <Grid xs={12}>
-                          <img
-                            src='./imgs/NoRide.png'
-                            alt='No ride'
-                            style={{
-                              margin: 'auto',
-                              width: '20%',
-                              height: 'auto',
-                            }}
-                          />
-                          <Typography
-                            variant='h5'
-                            style={{
-                              textAlign: 'center',
-                              marginTop: '2rem',
-                              fontWeight: '500',
-                              color: 'rgb(5, 71, 82)',
-                            }}
-                          >
-                            No rides yet. Drivers usually publish their ride 2-3
-                            days before departure.
-                          </Typography>
-                        </Grid>
-                      )}
+                      <Button
+                        className={classes.btn}
+                        variant='contained'
+                        color='primary'
+                        onClick={() => {
+                          setMatch(false)
+                        }}
+                      >
+                        Close
+                      </Button>
+                    </Grid>
+                    <Grid item>
+                      <Grid
+                        container
+                        spacing={2}
+                        xs={12}
+                        sm={12}
+                        style={{ marginTop: '1rem' }}
+                      >
+                        {matchesArray.length !== 0 ? (
+                          <MatchCards array={matchesArray} showButton={false} />
+                        ) : (
+                          <Grid xs={12}>
+                            <img
+                              src='./imgs/NoRide.png'
+                              alt='No ride'
+                              style={{
+                                margin: 'auto',
+                                width: '20%',
+                                height: 'auto',
+                              }}
+                            />
+                            <Typography
+                              variant='h5'
+                              style={{
+                                textAlign: 'center',
+                                marginTop: '2rem',
+                                fontWeight: '500',
+                                color: 'rgb(5, 71, 82)',
+                              }}
+                            >
+                              No rides yet. Drivers usually publish their ride
+                              2-3 days before departure.
+                            </Typography>
+                          </Grid>
+                        )}
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-              ) : (
-                ''
-              )}
-            </Fragment>
-          ) : (
-            ''
-          )}
+                ) : (
+                  ''
+                )}
+              </Fragment>
+            ) : (
+              ''
+            )}
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Fragment>
   )
 }

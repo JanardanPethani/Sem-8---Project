@@ -15,7 +15,6 @@ import Typography from '@material-ui/core/Typography'
 import { logout } from '../../../store/actions/auth'
 import { deleteUser } from '../../../store/actions/auth'
 
-// import './Navbar.css'
 
 // Material UI CSS
 const useStyles = makeStyles((theme) => ({

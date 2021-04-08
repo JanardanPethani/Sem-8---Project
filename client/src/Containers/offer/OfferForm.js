@@ -24,6 +24,7 @@ import {
   KeyboardDatePicker,
   KeyboardTimePicker,
 } from '@material-ui/pickers'
+import { Container } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +32,10 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       width: '30ch',
     },
+  },
+  rootC: {
+    marginTop: '2rem',
+    marginBottom: '6rem',
   },
   formControl: {
     minWidth: 150,
@@ -76,175 +81,177 @@ const OfferForm = ({ sendOffer, history }) => {
   }
   return (
     <Fragment>
-      <Grid container>
-        <Grid xs={11}>
-          <h1 className='large text-primary'>Offer a ride</h1>
+      <Container className={classes.rootC}>
+        <Grid container>
+          <Grid xs={11}>
+            <h1 className='large text-primary'>Offer a ride</h1>
+          </Grid>
+          <Grid
+            xs={1}
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Link to='/dashboard'>
+              <CancelIcon fontSize='large' />
+            </Link>
+          </Grid>
         </Grid>
-        <Grid
-          xs={1}
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Link to='/dashboard'>
-            <CancelIcon fontSize='large' />
-          </Link>
-        </Grid>
-      </Grid>
-      <Grid>
         <Grid>
-          <Paper elevation={3}>
-            <GMap />
-          </Paper>
-          <span className='bg-yellow-100 p-1 text-sm rounded-md'>
-            Click on map to add marker/Click on marker to see location
-          </span>
-        </Grid>
+          <Grid>
+            <Paper elevation={3}>
+              <GMap />
+            </Paper>
+            <span className='bg-yellow-100 p-1 text-sm rounded-md'>
+              Click on map to add marker/Click on marker to see location
+            </span>
+          </Grid>
 
-        <Grid>
-          <Paper elevation={3} className={classes.paper}>
-            <CssBaseline />
-            <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id='outlined-basic'
-                    label='Pickup Location'
-                    required
-                    fullWidth
-                    variant='outlined'
-                    name='from'
-                    value={from}
-                    helperText='Enter full address with city and state'
-                    onChange={(e) => onChange(e)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id='outlined-basic'
-                    required
-                    fullWidth
-                    label='Destination Location'
-                    variant='outlined'
-                    name='to'
-                    helperText='Enter full address with city and state'
-                    value={to}
-                    onChange={(e) => onChange(e)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    id='outlined-basic'
-                    type='number'
-                    required
-                    fullWidth
-                    label='Price'
-                    variant='outlined'
-                    name='price'
-                    value={price}
-                    onChange={(e) => onChange(e)}
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Grid container spacing={2}>
-                    <Grid item>
-                      <FormControl
-                        variant='outlined'
-                        className={classes.formControl}
-                      >
-                        <InputLabel htmlFor='outlined'>Vehicle</InputLabel>
-                        <Select
-                          required
-                          labelId='outlined'
-                          id='outlined'
-                          value={vehicletype}
-                          onChange={(e) => onChange(e)}
-                          name='vehicletype'
-                          label='Seats'
+          <Grid>
+            <Paper elevation={3} className={classes.paper}>
+              <CssBaseline />
+              <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id='outlined-basic'
+                      label='Pickup Location'
+                      required
+                      fullWidth
+                      variant='outlined'
+                      name='from'
+                      value={from}
+                      helperText='Enter full address with city and state'
+                      onChange={(e) => onChange(e)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id='outlined-basic'
+                      required
+                      fullWidth
+                      label='Destination Location'
+                      variant='outlined'
+                      name='to'
+                      helperText='Enter full address with city and state'
+                      value={to}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      id='outlined-basic'
+                      type='number'
+                      required
+                      fullWidth
+                      label='Price'
+                      variant='outlined'
+                      name='price'
+                      value={price}
+                      onChange={(e) => onChange(e)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Grid container spacing={2}>
+                      <Grid item>
+                        <FormControl
+                          variant='outlined'
+                          className={classes.formControl}
                         >
-                          <MenuItem value={'car'}>
-                            <i className='fas fa-car'></i> Car
-                          </MenuItem>
-                          <MenuItem value={'bike'}>
-                            {' '}
-                            <i className='fas fa-motorcycle'></i> Bike
-                          </MenuItem>
-                        </Select>
-                        <FormHelperText>*required</FormHelperText>
-                      </FormControl>
-                    </Grid>
-                    <Grid item>
-                      <FormControl
-                        variant='outlined'
-                        className={classes.formControl}
-                      >
-                        <InputLabel htmlFor='outlined'>Seats</InputLabel>
-                        <Select
-                          required
-                          labelId='outlined'
-                          id='outlined'
-                          value={seats}
-                          onChange={(e) => onChange(e)}
-                          name='seats'
-                          label='Seats'
+                          <InputLabel htmlFor='outlined'>Vehicle</InputLabel>
+                          <Select
+                            required
+                            labelId='outlined'
+                            id='outlined'
+                            value={vehicletype}
+                            onChange={(e) => onChange(e)}
+                            name='vehicletype'
+                            label='Seats'
+                          >
+                            <MenuItem value={'car'}>
+                              <i className='fas fa-car'></i> Car
+                            </MenuItem>
+                            <MenuItem value={'bike'}>
+                              {' '}
+                              <i className='fas fa-motorcycle'></i> Bike
+                            </MenuItem>
+                          </Select>
+                          <FormHelperText>*required</FormHelperText>
+                        </FormControl>
+                      </Grid>
+                      <Grid item>
+                        <FormControl
+                          variant='outlined'
+                          className={classes.formControl}
                         >
-                          <MenuItem value=''>
-                            <em>None</em>
-                          </MenuItem>
-                          <MenuItem value={1}>One</MenuItem>
-                          <MenuItem value={2}>Two</MenuItem>
-                          <MenuItem value={3}>Three</MenuItem>
-                          <MenuItem value={4}>Four</MenuItem>
-                        </Select>
-                        <FormHelperText>*required</FormHelperText>
-                      </FormControl>
+                          <InputLabel htmlFor='outlined'>Seats</InputLabel>
+                          <Select
+                            required
+                            labelId='outlined'
+                            id='outlined'
+                            value={seats}
+                            onChange={(e) => onChange(e)}
+                            name='seats'
+                            label='Seats'
+                          >
+                            <MenuItem value=''>
+                              <em>None</em>
+                            </MenuItem>
+                            <MenuItem value={1}>One</MenuItem>
+                            <MenuItem value={2}>Two</MenuItem>
+                            <MenuItem value={3}>Three</MenuItem>
+                            <MenuItem value={4}>Four</MenuItem>
+                          </Select>
+                          <FormHelperText>*required</FormHelperText>
+                        </FormControl>
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <Grid container justify='space-around'>
-                      <Grid>
-                        <KeyboardDatePicker
-                          disableToolbar
-                          margin='normal'
-                          format='MM/dd/yyyy'
-                          label='Date picker'
-                          name={selectedDate}
-                          value={selectedDate}
-                          onChange={handleDateChange}
-                          minDate={new Date()}
-                        />
+                  <Grid item xs={12}>
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <Grid container justify='space-around'>
+                        <Grid>
+                          <KeyboardDatePicker
+                            disableToolbar
+                            margin='normal'
+                            format='MM/dd/yyyy'
+                            label='Date picker'
+                            name={selectedDate}
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                            minDate={new Date()}
+                          />
+                        </Grid>
+                        <Grid>
+                          <KeyboardTimePicker
+                            margin='normal'
+                            label='Time picker'
+                            name={selectedDate}
+                            value={selectedDate}
+                            onChange={handleDateChange}
+                          />
+                        </Grid>
                       </Grid>
-                      <Grid>
-                        <KeyboardTimePicker
-                          margin='normal'
-                          label='Time picker'
-                          name={selectedDate}
-                          value={selectedDate}
-                          onChange={handleDateChange}
-                        />
-                      </Grid>
-                    </Grid>
-                  </MuiPickersUtilsProvider>
+                    </MuiPickersUtilsProvider>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <Button
+                      type='submit'
+                      fullWidth
+                      variant='contained'
+                      color='primary'
+                    >
+                      Post
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                  <Button
-                    type='submit'
-                    fullWidth
-                    variant='contained'
-                    color='primary'
-                  >
-                    Post
-                  </Button>
-                </Grid>
-              </Grid>
-            </form>
-          </Paper>
+              </form>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
+      </Container>
     </Fragment>
   )
 }

@@ -17,6 +17,7 @@ import {
   CircularProgress,
   Grid,
   Typography,
+  Container,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -53,6 +54,10 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
+  rootC: {
+    marginTop: '2rem',
+    marginBottom: '6rem',
+  },
 }))
 
 const Dashboard = ({
@@ -81,43 +86,45 @@ const Dashboard = ({
         activeRideP.length !== 0 ||
         activeRideD.length !== 0) ? (
         <Fragment>
-          <Grid container spacing={5}>
-            <Grid item xs={12}>
-              <ShortInfoCard profileData={profile} user={auth.user} />
+          <Container className={classes.rootC}>
+            <Grid container spacing={5}>
+              <Grid item xs={12}>
+                <ShortInfoCard profileData={profile} user={auth.user} />
+              </Grid>
+              <Grid item xs={12} sm={7}>
+                <Paper className={classes.root}>
+                  <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor='primary'
+                    textColor='primary'
+                    variant='scrollable'
+                    scrollButtons='on'
+                  >
+                    <Tab label='Your Offers' {...a11yProps(0)} />
+                    <Tab label='Requests received' {...a11yProps(1)} />
+                    <Tab label='Requests Sent' {...a11yProps(2)} />
+                  </Tabs>
+                </Paper>
+                <TabPanel value={value} index={0}>
+                  <Offers offer={profile.off} />
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                  <ReceReqs receRequest={profile.received} />
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                  <SentReqs sentRequest={profile.send} />
+                </TabPanel>
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                {activeRideD.length !== 0 ? (
+                  <ActiveRide activeRide={activeRideD} />
+                ) : (
+                  <ActiveRide activeRide={activeRideP} />
+                )}
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={7}>
-              <Paper className={classes.root}>
-                <Tabs
-                  value={value}
-                  onChange={handleChange}
-                  indicatorColor='primary'
-                  textColor='primary'
-                  variant='scrollable'
-                  scrollButtons='on'
-                >
-                  <Tab label='Your Offers' {...a11yProps(0)} />
-                  <Tab label='Requests received' {...a11yProps(1)} />
-                  <Tab label='Requests Sent' {...a11yProps(2)} />
-                </Tabs>
-              </Paper>
-              <TabPanel value={value} index={0}>
-                <Offers offer={profile.off} />
-              </TabPanel>
-              <TabPanel value={value} index={1}>
-                <ReceReqs receRequest={profile.received} />
-              </TabPanel>
-              <TabPanel value={value} index={2}>
-                <SentReqs sentRequest={profile.send} />
-              </TabPanel>
-            </Grid>
-            <Grid item xs={12} sm={5}>
-              {activeRideD.length !== 0 ? (
-                <ActiveRide activeRide={activeRideD} />
-              ) : (
-                <ActiveRide activeRide={activeRideP} />
-              )}
-            </Grid>
-          </Grid>
+          </Container>
         </Fragment>
       ) : (
         <Fragment>

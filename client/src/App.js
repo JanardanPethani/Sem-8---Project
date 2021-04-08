@@ -53,7 +53,7 @@ const App = () => {
       <Router>
         <Fragment>
           <Navbar></Navbar>
-          <Container maxWidth='lg' className={classes.root}>
+          {/* <Container className={classes.root}> */}
             <Alert />
             <Switch>
               <Route exact path='/' component={Landing} />
@@ -76,7 +76,7 @@ const App = () => {
               />
               <Route component={NotFound} />
             </Switch>
-          </Container>
+          {/* </Container> */}
           <Footer></Footer>
         </Fragment>
       </Router>

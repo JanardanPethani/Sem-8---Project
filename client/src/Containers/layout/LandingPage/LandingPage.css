@@ -1,0 +1,46 @@
+.first-div {
+  position: relative;
+  height: 40rem;
+}
+
+.heading {
+  position: absolute;
+  top: 30%;
+  left: 10%;
+  width: 35%;
+}
+
+.svg_1 {
+  position: absolute;
+  height: auto;
+  width: 50%;
+  right: 5%;
+  top: 20%;
+}
+
+.first-div-btn {
+  position: absolute;
+  left: 10%;
+  top: 60%;
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 700px) {
+  .first-div {
+    height: 30rem;
+  }
+  .heading {
+    top: 45%;
+    width: 90%;
+  }
+  .first-div-btn {
+    flex-direction: column;
+    left: 60%;
+    top: 77%;
+  }
+  .svg_1 {
+    top: 10%;
+    width: 100%;
+  }
+}
