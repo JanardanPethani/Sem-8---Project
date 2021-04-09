@@ -61,6 +61,7 @@ const App = () => {
             <Route exact path='/login' component={Login} />
             <Route exact path='/forgotPassword' component={ForgotPassword} />
             <Route exact path='/passwordRecovery' component={PasswordRecover} />
+
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
             <PrivateRoute exact path='/request' component={Request} />
             <PrivateRoute exact path='/offer' component={Offer} />
