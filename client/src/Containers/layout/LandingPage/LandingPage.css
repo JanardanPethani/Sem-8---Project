@@ -33,8 +33,35 @@
 }
 
 .img-w {
-  width: 80%;
+  width: 95%;
   height: auto;
+}
+
+.mBtn {
+  background-color: #17a4ba;
+  border: none;
+  color: #6f6cde;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  border-radius: 1rem;
+  box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btnPrimary {
+  background-color: white;
+  color: black;
+  border: 2px solid #17a4ba;
+}
+
+.btnPrimary:hover {
+  background-color: #17a4ba;
+  color: white;
 }
 
 @media (max-width: 700px) {

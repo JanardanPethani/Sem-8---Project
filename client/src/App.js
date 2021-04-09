@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 import store from './store/store'
 
 import { makeStyles } from '@material-ui/core/styles'
-import Container from '@material-ui/core/Container'
 
 import './styles/App.css'
 

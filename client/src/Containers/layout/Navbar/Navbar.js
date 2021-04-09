@@ -101,7 +101,7 @@ const Navbar = ({
 
   return (
     // <div className={classes.root}>
-    <AppBar position='static' className={classes.root}>
+    <AppBar position='static' className={classes.root} elevation={0}>
       <Toolbar>
         {!loading ? (
           <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>

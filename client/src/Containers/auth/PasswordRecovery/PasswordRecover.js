@@ -121,7 +121,7 @@ const PasswordRecover = ({ checkOtp, updatePassword, history, setAlert }) => {
         </Container>
       ) : null}
       {isTrue ? (
-        <Container>
+        <Container component='main' maxWidth='xs'>
           <CssBaseline />
           <Paper className={classes.paper} elevation={3}>
             <Typography className='large text-primary'>

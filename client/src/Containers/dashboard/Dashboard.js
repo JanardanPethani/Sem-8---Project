@@ -76,7 +76,9 @@ const Dashboard = ({
   }
 
   return loading || profile === null ? (
-    <CircularProgress color='inherit' />
+    <Container className={classes.rootC}>
+      <CircularProgress color='inherit' />
+    </Container>
   ) : (
     <Fragment>
       {profile !== null &&
@@ -128,59 +130,30 @@ const Dashboard = ({
         </Fragment>
       ) : (
         <Fragment>
-          <br />
-          <Grid
-            item
-            xs={12}
-            style={{
-              marginBottom: '1rem',
-            }}
-          >
-            <ShortInfoCard profileData={profile} user={auth.user} />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <img
-              src='Request.svg'
-              style={{ width: '100%', height: 'auto' }}
-              alt='How to Request'
-            />
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            <img
-              src='Offer.svg'
-              style={{ width: '100%', height: 'auto' }}
-              alt='How to Offer'
-            />
-          </Grid>
-          <Grid item>
-            <Typography
-              variant='h5'
+          <Container className={classes.rootC}>
+            <Grid
+              item
+              xs={12}
               style={{
-                textAlign: 'center',
-                marginTop: '2rem',
-                fontWeight: '500',
-                color: 'rgb(5, 71, 82)',
+                marginBottom: '1rem',
               }}
             >
-              No Request or Offer made.
-            </Typography>
-          </Grid>
+              <ShortInfoCard profileData={profile} user={auth.user} />
+            </Grid>
+            <Grid item>
+              <Typography
+                variant='h5'
+                style={{
+                  textAlign: 'center',
+                  marginTop: '2rem',
+                  fontWeight: '500',
+                  color: 'rgb(5, 71, 82)',
+                }}
+              >
+                No Request or Offer made.
+              </Typography>
+            </Grid>
+          </Container>
         </Fragment>
       )}
     </Fragment>

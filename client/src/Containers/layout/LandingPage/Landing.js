@@ -35,7 +35,7 @@ const Landing = ({ isAuthenticated }) => {
   return (
     <Fragment>
       {/* 1 part - signin/signup */}
-      <Paper className='first-div'>
+      <Paper className='first-div' elevation={0}>
         <Typography variant='h2' className='heading'>
           {' '}
           Your partner for quick rides
@@ -43,10 +43,10 @@ const Landing = ({ isAuthenticated }) => {
         <Box className='first-div-btn'>
           {!isAuthenticated ? (
             <Fragment>
-              <Link to='/register' className='btn btn-primary'>
+              <Link to='/register' className='mBtn btnPrimary'>
                 Sign Up
               </Link>
-              <Link to='/login' className='btn btn-light'>
+              <Link to='/login' className='mBtn btnPrimary'>
                 Login
               </Link>
             </Fragment>
@@ -60,12 +60,16 @@ const Landing = ({ isAuthenticated }) => {
       </Paper>
 
       {/* 2 part - Search ride */}
-      <Grid
-        container
-        style={{ borderBottom: '1px solid black', marginTop: '2rem' }}
-      >
+      <Grid container style={{ marginTop: '3rem', marginBottom: '3rem' }}>
         <Grid item xs={12} sm={4} style={{ padding: '2rem' }}>
-          <Typography variant='h1'>Search rides</Typography>
+          <Typography
+            variant='h1'
+            style={{
+              color: '#17a2b8',
+            }}
+          >
+            Search rides
+          </Typography>
         </Grid>
         <Grid
           item
@@ -85,9 +89,8 @@ const Landing = ({ isAuthenticated }) => {
       <Grid
         container
         style={{
-          borderBottom: '1px solid black',
-          marginTop: '2rem',
-          marginBottom: '3.5rem',
+          marginTop: '3rem',
+          marginBottom: '4rem',
         }}
       >
         <Grid
@@ -103,7 +106,10 @@ const Landing = ({ isAuthenticated }) => {
           <img className='img-w' src='./svgs/Offer.svg' alt='Offer' />
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Typography variant='h1' style={{ padding: '2rem' }}>
+          <Typography
+            variant='h1'
+            style={{ padding: '2rem', color: '#17a2b8' }}
+          >
             Offer rides
           </Typography>
         </Grid>
