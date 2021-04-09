@@ -30,22 +30,7 @@ const SentReqs = ({ sentRequest, history, deleteReqMsg }) => {
   return (
     <Fragment>
       <h2 className='p-3 text-xl font-medium'>Requests Sent</h2>
-      <Grid
-        item
-        xs={12}
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginBottom: '2rem',
-        }}
-      >
-        <img
-          src='Request.svg'
-          style={{ width: '100%', height: 'auto' }}
-          alt='How to request'
-        />
-      </Grid>
+
       <Grid item xs={12} className={classes.root} spacing={5}>
         <Grid container>{requests}</Grid>
       </Grid>

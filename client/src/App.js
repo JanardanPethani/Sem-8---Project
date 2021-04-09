@@ -54,28 +54,20 @@ const App = () => {
         <Fragment>
           <Navbar></Navbar>
           {/* <Container className={classes.root}> */}
-            <Alert />
-            <Switch>
-              <Route exact path='/' component={Landing} />
-              <Route exact path='/register' component={Register} />
-              <Route exact path='/login' component={Login} />
-              <Route exact path='/forgotPassword' component={ForgotPassword} />
-              <Route
-                exact
-                path='/passwordRecovery'
-                component={PasswordRecover}
-              />
-              <PrivateRoute exact path='/dashboard' component={Dashboard} />
-              <PrivateRoute exact path='/request' component={Request} />
-              <PrivateRoute exact path='/offer' component={Offer} />
-              <PrivateRoute exact path='/history' component={History} />
-              <PrivateRoute
-                exact
-                path='/edit-profile'
-                component={EditProfile}
-              />
-              <Route component={NotFound} />
-            </Switch>
+          <Alert />
+          <Switch>
+            <Route exact path='/' component={Landing} />
+            <Route exact path='/register' component={Register} />
+            <Route exact path='/login' component={Login} />
+            <Route exact path='/forgotPassword' component={ForgotPassword} />
+            <Route exact path='/passwordRecovery' component={PasswordRecover} />
+            <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute exact path='/request' component={Request} />
+            <PrivateRoute exact path='/offer' component={Offer} />
+            <PrivateRoute exact path='/history' component={History} />
+            <PrivateRoute exact path='/edit-profile' component={EditProfile} />
+            <Route component={NotFound} />
+          </Switch>
           {/* </Container> */}
           <Footer></Footer>
         </Fragment>

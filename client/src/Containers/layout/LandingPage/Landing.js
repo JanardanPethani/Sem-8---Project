@@ -3,8 +3,16 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
+// Material UI
 import { makeStyles } from '@material-ui/core/styles'
-import { Box, Container, Grid, Paper, Typography } from '@material-ui/core'
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Paper,
+  Typography,
+} from '@material-ui/core'
 
 import './LandingPage.css'
 
@@ -23,9 +31,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Landing = ({ isAuthenticated }) => {
   const classes = useStyles()
-  if (isAuthenticated) {
-    return <Redirect to='/dashboard' />
-  }
 
   return (
     <Fragment>
@@ -36,12 +41,20 @@ const Landing = ({ isAuthenticated }) => {
           Your partner for quick rides
         </Typography>
         <Box className='first-div-btn'>
-          <Link to='/register' className='btn btn-primary'>
-            Sign Up
-          </Link>
-          <Link to='/login' className='btn btn-light'>
-            Login
-          </Link>
+          {!isAuthenticated ? (
+            <Fragment>
+              <Link to='/register' className='btn btn-primary'>
+                Sign Up
+              </Link>
+              <Link to='/login' className='btn btn-light'>
+                Login
+              </Link>
+            </Fragment>
+          ) : (
+            <Link to='/dashboard' className='btn btn-primary'>
+              Go to Dashboard
+            </Link>
+          )}
         </Box>
         <img src='./svgs/Order_ride.svg' className='svg_1' />
       </Paper>
@@ -51,29 +64,50 @@ const Landing = ({ isAuthenticated }) => {
         container
         style={{ borderBottom: '1px solid black', marginTop: '2rem' }}
       >
-        <Grid item style={{ padding: '2rem' }}>
+        <Grid item xs={12} sm={4} style={{ padding: '2rem' }}>
           <Typography variant='h1'>Search rides</Typography>
+        </Grid>
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <img className='img-w' src='./svgs/Request.svg' alt='Request' />
         </Grid>
       </Grid>
 
       {/* 3 part - Offer ride */}
       <Grid
         container
-        style={{ borderBottom: '1px solid black', marginTop: '2rem' }}
+        style={{
+          borderBottom: '1px solid black',
+          marginTop: '2rem',
+          marginBottom: '3.5rem',
+        }}
       >
-        <Grid item xs={8}>
-          {' '}
+        <Grid
+          item
+          xs={12}
+          sm={8}
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <img className='img-w' src='./svgs/Offer.svg' alt='Offer' />
         </Grid>
-        <Grid item>
-          <Typography
-            variant='h1'
-            style={{ padding: '2rem', marginBottom: '2rem' }}
-          >
+        <Grid item xs={12} sm={4}>
+          <Typography variant='h1' style={{ padding: '2rem' }}>
             Offer rides
           </Typography>
         </Grid>
       </Grid>
-      <Paper></Paper>
     </Fragment>
   )
 }
