@@ -1,0 +1,8 @@
+Features
+- Reviews
+- driver location in Map
+- Otp for ride confirmation
+- sleep generaation
+
+Bugs
+- Marker loading

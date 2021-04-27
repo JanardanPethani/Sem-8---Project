@@ -95,7 +95,7 @@ const Map = ({ place, getPlace, loadingLoc, clearPlace }) => {
             key={marker.time.toISOString()}
             position={{ lat: marker.lat, lng: marker.lng }}
             icon={{
-              url: './placeholder.svg',
+              url: './svgs/placeholder.svg',
               scaledSize: new window.google.maps.Size(20, 20),
               origin: new window.google.maps.Point(0, 0),
             }}
@@ -154,7 +154,7 @@ const Locate = ({ panTo, setMarker }) => {
         )
       }}
     >
-      <img src='./maps-and-flags.svg' alt='Marker' />
+      <img src='svgs/maps-and-flags.svg' alt='Marker' />
     </button>
   )
 }

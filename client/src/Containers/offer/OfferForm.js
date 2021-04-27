@@ -24,7 +24,7 @@ import {
   KeyboardDatePicker,
   KeyboardTimePicker,
 } from '@material-ui/pickers'
-import { Container } from '@material-ui/core'
+import { Container, Typography } from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,7 +84,7 @@ const OfferForm = ({ sendOffer, history }) => {
       <Container className={classes.rootC}>
         <Grid container>
           <Grid xs={11}>
-            <h1 className='large text-primary'>Offer a ride</h1>
+            <Typography variant='h3'>Offer a ride</Typography>
           </Grid>
           <Grid
             xs={1}
