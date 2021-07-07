@@ -3,11 +3,25 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import Spinner from '../../Components/Spinner/Spinner'
+import { Container } from '@material-ui/core'
+import { makeStyles } from '@material-ui/core/styles'
 import HistoryCard from '../../Components/HistoryCard/HistoryCard'
 
 import { getCurrentProfile } from '../../store/actions/profile'
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  rootC: {
+    marginTop: '2rem',
+    marginBottom: '6rem',
+  },
+}))
+
 const History = ({ getCurrentProfile, profile: { profile, loading } }) => {
+  const classes = useStyles()
+
   useEffect(() => {
     getCurrentProfile()
   }, [getCurrentProfile])
@@ -16,7 +30,9 @@ const History = ({ getCurrentProfile, profile: { profile, loading } }) => {
     <Spinner />
   ) : (
     <Fragment>
-      <HistoryCard data={profile.history} />
+      <Container className={classes.rootC}>
+        <HistoryCard data={profile.history} />
+      </Container>
     </Fragment>
   )
 }
